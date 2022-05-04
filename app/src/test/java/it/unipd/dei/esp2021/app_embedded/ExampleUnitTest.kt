@@ -1,4 +1,4 @@
-package com.test.app_embedded
+package it.unipd.dei.esp2021.app_embedded
 
 import org.junit.Test
 

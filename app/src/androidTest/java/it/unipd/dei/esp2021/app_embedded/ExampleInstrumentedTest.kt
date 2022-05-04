@@ -1,4 +1,4 @@
-package com.test.app_embedded
+package it.unipd.dei.esp2021.app_embedded
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

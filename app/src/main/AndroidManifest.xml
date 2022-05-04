@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppEmbedded">
         <activity
-            android:name=".MainActivity"
+            android:name="it.unipd.dei.esp2021.app_embedded.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

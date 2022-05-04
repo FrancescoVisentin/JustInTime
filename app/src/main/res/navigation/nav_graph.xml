@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.test.app_embedded.HomeFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.HomeFragment"
         android:label="HomeFragment" />
 </navigation>

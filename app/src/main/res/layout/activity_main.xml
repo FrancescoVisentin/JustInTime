@@ -9,4 +9,4 @@
     android:name="androidx.navigation.fragment.NavHostFragment"
     app:navGraph="@navigation/nav_graph"
     app:defaultNavHost="true"
-    tools:context=".MainActivity" />
+    tools:context="it.unipd.dei.esp2021.app_embedded.MainActivity" />
