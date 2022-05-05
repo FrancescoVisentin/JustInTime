@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">App-Embedded</string>
+    <string name="home_nav_buttom">Home</string>
+    <string name="tabellone_nav_buttom">Tabellone</string>
+    <string name="stato_treno_nav_buttom">Stato treno</string>
+    <string name="calendario_nav_buttom">Calendario</string>
 </resources>

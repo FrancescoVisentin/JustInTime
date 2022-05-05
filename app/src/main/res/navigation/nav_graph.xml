@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="Home" />
+    <fragment
+        android:id="@+id/calendarioFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.CalendarioFragment"
+        android:label="Calendario" />
+    <fragment
+        android:id="@+id/statoTrenoFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.StatoTrenoFragment"
+        android:label="Stato Treno" />
+    <fragment
+        android:id="@+id/tabelloneFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
+        android:label="Tabellone" />
 </navigation>
