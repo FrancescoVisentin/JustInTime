@@ -4,4 +4,16 @@
     <string name="tabellone_nav_buttom">Tabellone</string>
     <string name="stato_treno_nav_buttom">Stato treno</string>
     <string name="calendario_nav_buttom">Calendario</string>
+
+    <string name="tab_arrivi">ARRIVI</string>
+    <string name="tab_partenze">PARTENZE</string>
+
+    <string name="tab_lunedi">LUNEDI</string>
+    <string name="tab_martedi">MARTEDI</string>
+    <string name="tab_mercoledi">MERCOLEDI</string>
+    <string name="tab_giovedi">GIOVEDI</string>
+    <string name="tab_venerdi">VENERDI</string>
+    <string name="tab_sabato">SABATO</string>
+    <string name="tab_domenica">DOMENICA</string>
+
 </resources>
