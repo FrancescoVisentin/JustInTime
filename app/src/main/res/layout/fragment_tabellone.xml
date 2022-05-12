@@ -8,7 +8,6 @@ android:layout_height="match_parent">
     android:id="@+id/textField"
     android:hint="@string/teabellone_hint"
     app:startIconDrawable="@drawable/search_icon"
-    app:endIconDrawable="@drawable/cancel_icon"
     app:endIconMode="clear_text"
     android:padding="20dp"
     android:layout_width="match_parent"
