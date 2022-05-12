@@ -4,15 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/calendario_icon.xml" value="0.2255" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3575" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
         <entry key="app/src/main/res/drawable/menu_icon.xml" value="0.2255" />
         <entry key="app/src/main/res/drawable/stato_treno_icon.xml" value="0.2255" />
         <entry key="app/src/main/res/drawable/tabellone_icon.xml" value="0.2255" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.27853260869565216" />
-        <entry key="app/src/main/res/layout/fragment_calendario.xml" value="0.33" />
+        <entry key="app/src/main/res/drawable/temp_home.xml" value="0.273" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_add_planner.xml" value="0.27309782608695654" />
+        <entry key="app/src/main/res/layout/fragment_calendario.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_orario.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/fragment_planner.xml" value="0.27309782608695654" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.27309782608695654" />
         <entry key="app/src/main/res/layout/fragment_stato_treno.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/fragment_tabellone.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/menu/app_bar_menu.xml" value="0.35625" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.35625" />
       </map>
     </option>

@@ -7,17 +7,41 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.HomeFragment"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeFragment_to_orarioFragment"
+            app:destination="@id/orarioFragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/calendarioFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.CalendarioFragment"
-        android:label="Calendario" />
+        android:id="@+id/plannerFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.PlannerFragment"
+        android:label="Planner" >
+        <action
+            android:id="@+id/action_plannerFragment_to_addPlannerFragment"
+            app:destination="@id/addPlannerFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/statoTrenoFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.StatoTrenoFragment"
         android:label="Stato Treno" />
+
     <fragment
         android:id="@+id/tabelloneFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
         android:label="Tabellone" />
+
+    <fragment
+        android:id="@+id/orarioFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.OrarioFragment"
+        android:label="Cerca Treno" />
+    <fragment
+        android:id="@+id/addPlannerFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.AddPlannerFragment"
+        android:label="Aggiungi Planner" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.SettingsFragment"
+        android:label="Impostazioni" />
 </navigation>

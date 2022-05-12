@@ -4,20 +4,20 @@
         android:id="@+id/homeFragment"
         android:enabled="true"
         android:icon="@drawable/home_icon"
-        android:title="@string/home_nav_buttom" />
+        android:title="@string/home_nav_button" />
     <item
         android:id="@+id/tabelloneFragment"
         android:enabled="true"
         android:icon="@drawable/tabellone_icon"
-        android:title="@string/tabellone_nav_buttom" />
+        android:title="@string/tabellone_nav_button" />
     <item
         android:id="@+id/statoTrenoFragment"
         android:enabled="true"
         android:icon="@drawable/stato_treno_icon"
-        android:title="@string/stato_treno_nav_buttom"/>
+        android:title="@string/stato_treno_nav_button"/>
     <item
-        android:id="@+id/calendarioFragment"
+        android:id="@+id/plannerFragment"
         android:enabled="true"
-        android:icon="@drawable/calendario_icon"
-        android:title="@string/calendario_nav_buttom"/>
+        android:icon="@drawable/planner_icon"
+        android:title="@string/planner_nav_button"/>
 </menu>
