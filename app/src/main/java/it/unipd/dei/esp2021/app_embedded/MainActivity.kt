@@ -59,10 +59,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavController() {
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when (destination.id) {
-                R.id.settingsFragment   -> bottomNavigationView.visibility = View.GONE
-                R.id.addPlannerFragment -> bottomNavigationView.visibility = View.GONE
-                R.id.orarioFragment     -> bottomNavigationView.visibility = View.GONE
-                else                    -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.settingsFragment              -> bottomNavigationView.visibility = View.GONE
+                R.id.addPlannerFragment            -> bottomNavigationView.visibility = View.GONE
+                R.id.ricercaViaggioFragment        -> bottomNavigationView.visibility = View.GONE
+                R.id.ricercaViaggioResultFragment  -> bottomNavigationView.visibility = View.GONE
+                else                               -> bottomNavigationView.visibility = View.VISIBLE
             }
         }
     }

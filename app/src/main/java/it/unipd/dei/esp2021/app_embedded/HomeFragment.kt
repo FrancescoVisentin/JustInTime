@@ -18,7 +18,7 @@ class HomeFragment : Fragment() {
         val fab = view.findViewById<FloatingActionButton>(R.id.home_fab)
         fab.setOnClickListener {
             view.findNavController()
-                .navigate(R.id.action_homeFragment_to_orarioFragment)
+                .navigate(R.id.action_homeFragment_to_ricercaViaggioFragment)
         }
 
         return view
