@@ -9,8 +9,8 @@
         android:name="it.unipd.dei.esp2021.app_embedded.HomeFragment"
         android:label="Home" >
         <action
-            android:id="@+id/action_homeFragment_to_orarioFragment"
-            app:destination="@id/orarioFragment" />
+            android:id="@+id/action_homeFragment_to_ricercaViaggioFragment"
+            app:destination="@id/ricercaViaggioFragment" />
     </fragment>
 
     <fragment
@@ -31,11 +31,18 @@
         android:id="@+id/tabelloneFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
         android:label="Tabellone" />
-
     <fragment
-        android:id="@+id/orarioFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.OrarioFragment"
-        android:label="Cerca Treno" />
+    android:id="@+id/ricercaViaggioFragment"
+    android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioFragment"
+    android:label="Ricerca Viaggio" >
+    <action
+        android:id="@+id/action_ricercaViaggioFragment_to_ricercaViaggioResultFragment"
+        app:destination="@id/ricercaViaggioResultFragment" />
+    </fragment>
+    <fragment
+    android:id="@+id/ricercaViaggioResultFragment"
+    android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
+    android:label="Risultati ricerca viaggio" />
     <fragment
         android:id="@+id/addPlannerFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.AddPlannerFragment"

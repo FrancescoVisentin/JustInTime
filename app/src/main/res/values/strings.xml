@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">App-Embedded</string>
-    <string name="home_nav_button">Home</string>
-    <string name="tabellone_nav_button">Tabellone</string>
-    <string name="stato_treno_nav_button">Stato treno</string>
+    <string name="home_nav_buttom">Home</string>
+    <string name="tabellone_nav_buttom">Tabellone</string>
+    <string name="stato_treno_nav_buttom">Stato treno</string>
     <string name="planner_nav_button">Planner</string>
     <string name="home_fab_content_desc">Cerca treno</string>
     <string name="planner_fab_content_desc">Aggiungi planner</string>
     <string name="app_bar_settings">Settings</string>
     <string name="teabellone_hint">Ricerca stazione</string>
+    <string name="label1">Stazione partenza</string>
+    <string name="label2">Stazione arrivo</string>
+    <string name="label3">Numero treno</string>
+    <string name="label4">Andata-Ritorno</string>
+    <string name="label5">Data e ora</string>
 </resources>

@@ -1,3 +1,5 @@
+//MainActivity.kt
+
 package it.unipd.dei.esp2021.app_embedded
 
 import androidx.appcompat.app.AppCompatActivity
