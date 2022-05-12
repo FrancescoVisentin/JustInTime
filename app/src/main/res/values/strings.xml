@@ -4,4 +4,9 @@
     <string name="tabellone_nav_buttom">Tabellone</string>
     <string name="stato_treno_nav_buttom">Stato treno</string>
     <string name="calendario_nav_buttom">Calendario</string>
+    <string name="label1">Stazione partenza</string>
+    <string name="label2">Stazione arrivo</string>
+    <string name="label3">Numero treno</string>
+    <string name="label4">Andata-Ritorno</string>
+    <string name="label5">Data e ora</string>
 </resources>

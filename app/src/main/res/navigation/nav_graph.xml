@@ -20,4 +20,16 @@
         android:id="@+id/tabelloneFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
         android:label="Tabellone" />
+    <fragment
+        android:id="@+id/ricercaViaggioFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioFragment"
+        android:label="Ricerca Viaggio" >
+        <action
+            android:id="@+id/action_ricercaViaggioFragment_to_ricercaViaggioResultFragment"
+            app:destination="@id/ricercaViaggioResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ricercaViaggioResultFragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
+        android:label="Risultati ricerca viaggio" />
 </navigation>
