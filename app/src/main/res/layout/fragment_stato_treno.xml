@@ -22,6 +22,7 @@
             android:layout_width="300dp"
             android:layout_height="56dp"
             android:hint="@string/label3"
+            app:startIconDrawable="@drawable/search_icon"
             app:endIconMode="clear_text"
             app:hintTextColor="#6750A4">
 
