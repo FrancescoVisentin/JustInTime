@@ -25,4 +25,15 @@
     <string name="tab_sabato">SABATO</string>
     <string name="tab_domenica">DOMENICA</string>
 
+    <string-array name="train_list">
+        <item>Treno 134</item>
+        <item>Treno 267</item>
+        <item>Treno 646</item>
+        <item>Treno 555</item>
+        <item>Treno 126</item>
+        <item>Treno 968</item>
+        <item>Treno 257</item>
+        <item>Treno 538</item>
+    </string-array>
+
 </resources>

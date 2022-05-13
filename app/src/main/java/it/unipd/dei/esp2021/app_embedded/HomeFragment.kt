@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.test.app_embedded.R
 
@@ -20,6 +21,9 @@ class HomeFragment : Fragment() {
             view.findNavController()
                 .navigate(R.id.action_homeFragment_to_ricercaViaggioFragment)
         }
+
+        val recyclerView : RecyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.adapter= ListAdapter(requireContext().resources.getStringArray(R.array.train_list))
 
         return view
     }
