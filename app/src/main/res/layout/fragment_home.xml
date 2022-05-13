@@ -38,4 +38,12 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.4" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="263dp"
+        android:layout_height="253dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_icon"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
