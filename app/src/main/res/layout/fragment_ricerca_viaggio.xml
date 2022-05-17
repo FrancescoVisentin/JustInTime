@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,13 +22,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="300dp"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/label1"
                 app:startIconDrawable="@drawable/search_icon"
                 app:endIconMode="clear_text"
-                app:hintTextColor="#6750A4"
                 app:layout_constraintBottom_toTopOf="@id/outlinedTextField2"
                 app:layout_constraintEnd_toStartOf="@id/elevatedButton"
                 app:layout_constraintHorizontal_bias="0.7"
@@ -38,19 +35,18 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="300dp"
-                android:layout_height="56dp"
+                android:layout_height="match_parent"
                 android:hint="@string/label2"
                 app:startIconDrawable="@drawable/search_icon"
                 app:endIconMode="clear_text"
-                app:hintTextColor="#6750A4"
                 app:layout_constraintEnd_toStartOf="@id/elevatedButton"
                 app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +55,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textAutoComplete" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,19 +76,18 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/button_hour"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="79dp"
                 android:layout_height="48dp"
                 android:text="12"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textColor = "#FFFFFF"
-                app:backgroundTint = "#79757F"
+                android:textColor = "?attr/colorOnTertiaryContainer"
+                app:backgroundTint = "?attr/colorTertiaryContainer"
                 app:cornerRadius="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView3"
@@ -101,14 +97,14 @@
 
             <Button
                 android:id="@+id/button_min"
-                style="@style/Widget.Material3.Button.TonalButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="79dp"
                 android:layout_height="48dp"
                 android:text="00"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textColor = "#FFFFFF"
-                app:backgroundTint = "#79757F"
+                android:textColor = "?attr/colorOnTertiaryContainer"
+                app:backgroundTint = "?attr/colorTertiaryContainer"
                 app:cornerRadius="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -132,12 +128,12 @@
 
         <Button
             android:id="@+id/outlinedButton"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Cerca"
-            app:backgroundTint="#FFFBFE" />
+            android:padding="5dp"
+            android:text="@string/button_cerca"
+            android:textAlignment="center"/>
 
     </LinearLayout>
 

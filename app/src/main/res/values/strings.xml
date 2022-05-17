@@ -24,6 +24,7 @@
     <string name="tab_venerdi">VENERDI</string>
     <string name="tab_sabato">SABATO</string>
     <string name="tab_domenica">DOMENICA</string>
+    <string name="button_cerca">Cerca</string>
 
     <string-array name="train_list">
         <item>Treno 134</item>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/popup_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/popup_title"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Dettagli viaggio:"
+            app:drawableStartCompat="@drawable/stato_treno_icon"
+            android:drawablePadding="2dp"
+            app:drawableTint="?attr/colorOnPrimaryContainer"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorOnPrimaryContainer" />
+
+        <TextView
+            android:id="@+id/train_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="3982"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:background="@drawable/popup_details"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:padding="5dp"
+            android:gravity="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Tratta:"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorOnBackground"
+            android:padding="5dp"
+            android:gravity="center"/>
+
+
+        <TextView
+            android:id="@+id/train_route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Bologna - Venezia"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:background="@drawable/popup_details"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:padding="5dp"
+            android:gravity="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/train_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Padova"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="?attr/colorOnBackground"
+            android:padding="5dp"
+            android:gravity="center"/>
+
+
+        <TextView
+            android:id="@+id/delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="+ 5min"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:background="@drawable/popup_details"
+            android:textColor="?attr/colorOnSecondaryContainer"
+            android:padding="5dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/train_position"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="Ultimo rilevamento"
+            style="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="?attr/colorOnBackground"
+            android:paddingHorizontal="5dp"
+            android:gravity="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <SeekBar
+                android:id="@+id/step_bar"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:focusable="false"
+                android:paddingHorizontal="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/labels_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"/>
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/exit_button"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp"
+            android:text="Chiudi"
+            android:textAlignment="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
