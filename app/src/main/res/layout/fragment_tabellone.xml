@@ -20,12 +20,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
+            android:id="@+id/text_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textAutoComplete" />
+            android:inputType="text"
+            android:completionThreshold="3" />
+
 
     </com.google.android.material.textfield.TextInputLayout>
 

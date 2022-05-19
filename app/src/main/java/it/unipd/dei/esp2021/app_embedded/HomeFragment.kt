@@ -1,18 +1,23 @@
 package it.unipd.dei.esp2021.app_embedded
 
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 
+
 class HomeFragment : Fragment(), ListAdapter.ClickListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        exitTransition = MaterialFadeThrough()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -44,13 +49,12 @@ class HomeFragment : Fragment(), ListAdapter.ClickListener {
         popupWindow.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
         popupWindow.elevation = 100F
         popupWindow.isOutsideTouchable = true
-        popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0)
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
         exitButton.setOnClickListener() {
             popupWindow.dismiss()
         }
-        //popupWindow.showAsDropDown(view, 0, 0, Gravity.CENTER)
 
         addStationsBar(popupView)
     }
@@ -59,6 +63,12 @@ class HomeFragment : Fragment(), ListAdapter.ClickListener {
         val num = 12
 
         val stepBar = popupView.findViewById<SeekBar>(R.id.step_bar)
+
+        stepBar.setOnTouchListener { _, _ ->
+            true
+        }
+
+        stepBar.progress = 3
         stepBar.max = num
         stepBar.minWidth = num*250
 
