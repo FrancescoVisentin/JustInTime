@@ -28,18 +28,21 @@
                 app:startIconDrawable="@drawable/search_icon"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toTopOf="@id/outlinedTextField2"
-                app:layout_constraintEnd_toStartOf="@id/elevatedButton"
+                app:layout_constraintEnd_toStartOf="@id/swap_button"
                 app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/text_autocomplete1"
+                    android:id="@+id/text_departures"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:completionThreshold="3" />
+                    android:completionThreshold="3"
+                    android:imeOptions="actionDone"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,7 +53,7 @@
                 android:hint="@string/label2"
                 app:startIconDrawable="@drawable/search_icon"
                 app:endIconMode="clear_text"
-                app:layout_constraintEnd_toStartOf="@id/elevatedButton"
+                app:layout_constraintEnd_toStartOf="@id/swap_button"
                 app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/outlinedTextField"
@@ -58,16 +61,19 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/text_autocomplete2"
+                    android:id="@+id/text_arrivals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:completionThreshold="3" />
+                    android:completionThreshold="3"
+                    android:imeOptions="actionDone"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/elevatedButton"
+                android:id="@+id/swap_button"
                 style="@style/Widget.Material3.Button.ElevatedButton.Icon"
                 android:layout_width="48dp"
                 android:layout_height="74dp"
@@ -133,7 +139,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/outlinedButton"
+            android:id="@+id/search_button"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,6 +148,13 @@
             android:textAlignment="center"/>
 
     </LinearLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </LinearLayout>

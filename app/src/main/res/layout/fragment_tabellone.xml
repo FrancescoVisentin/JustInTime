@@ -28,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:completionThreshold="3" />
+            android:completionThreshold="3"
+            android:imeOptions="actionSearch"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -47,5 +48,13 @@
         android:textAlignment="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </LinearLayout>
