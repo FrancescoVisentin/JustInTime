@@ -1,4 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.unipd.dei.esp2021.app_embedded.Tabellone2Fragment"
+    android:orientation="vertical"
+    android:gravity="top">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/sfondo1"
+        android:text="@string/results_for"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnSecondaryContainer"
+        android:padding="5dp"
+        style="@style/TextAppearance.Material3.TitleMedium"/>
+
+    <TextView
+        android:id="@+id/station"
+        style="@style/TextAppearance.Material3.TitleLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="Stazione"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnSecondaryContainer"
+        android:background="@drawable/sfondo1"/>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,3 +62,4 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
