@@ -134,10 +134,53 @@ class RicercaViaggioFragment : Fragment() {
             }
 
             Log.e("Res:", res)
+            parseSolutions(firstStation, secondStation,  res)
             //TODO Aggiungi risultati su putextra
             //view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
         }
         model.searchSolutions(firstStation, secondStation).observe(viewLifecycleOwner, resObserver)
     }
 
+    private fun parseSolutions(firstStation : String, secondStation : String, solutions : String) {
+        var tmp = solutions.replace("\n", "")
+        tmp = tmp.replace("vehicles\":[", "%0%")
+        tmp = tmp.replace("durata\":\"", "%1%")
+        tmp = tmp.replace("orarioPartenza\":\"", "%2%")
+        tmp = tmp.replace("orarioArrivo\":\"", "%3%")
+        tmp = tmp.replace("categoriaDescrizione\":\"", "%4%")
+        tmp = tmp.replace("numeroTreno\":\"", "%5%")
+        val viaggi = mutableSetOf<Viaggio>()
+
+        val viaggiString = tmp.split("%0%") as MutableList<String>
+
+        for (i in 1..viaggiString.lastIndex) {
+            val text = viaggiString[i]
+            val previousText = viaggiString[i-1]
+            val durata = previousText.split("%1%")[1].substringBefore("\"")
+            val partenza = text.split("%2%")[1].substringBefore("\"")
+            val arrivoList = text.split("%3%")
+            val arrivo = arrivoList[arrivoList.lastIndex].substringBefore("\"")
+            val categoriaList = text.split("%4%") as MutableList<String>
+            val it = categoriaList.listIterator()
+            while (it.hasNext()) {
+                val cat = it.next().substringBefore("\"")
+                it.set(cat)
+            }
+            val numTrenoList = text.split("%5%") as MutableList<String>
+            val it2 = numTrenoList.listIterator()
+            while (it2.hasNext()) {
+                val num = it2.next().substringBefore("\"")
+                it2.set(num)
+            }
+            viaggi.add(Viaggio(durata, partenza, arrivo, categoriaList, numTrenoList))
+        }
+    }
+}
+
+class Viaggio(durata_: String, orarioPartenza_: String, orarioArrivo_: String, categoria_: MutableList<String>, numeroTreno_: MutableList<String>){
+    var durata = durata_
+    var orarioPartenza = orarioPartenza_
+    var orarioArrivo = orarioArrivo_
+    var categoria = categoria_
+    var numeroTreno = numeroTreno_
 }
