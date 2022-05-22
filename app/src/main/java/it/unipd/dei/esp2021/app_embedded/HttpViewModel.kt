@@ -60,8 +60,35 @@ class HttpViewModel : ViewModel() {
         return ret
     }
 
-    fun searchTrain() {
+    fun searchTrain(trainID : String) : MutableLiveData<String> {
+        val ret: MutableLiveData<String> by lazy {
+            MutableLiveData<String>()
+        }
 
+        viewModelScope.launch {
+            val trainInfo = getTrainID(trainID).split("|")
+
+            if (trainInfo[0].isEmpty()){
+                ret.value = ""
+                return@launch
+            }
+
+            val trainTokens = trainInfo[1].split("-")
+            val id = trainTokens[0]
+            val origin = trainTokens[1]
+            val date = trainTokens[2]
+
+            if (id.compareTo(trainID) != 0) {
+                ret.value = ""
+                return@launch
+            }
+
+            val trainState = getTrainState(id, origin, date)
+
+            ret.value = trainState
+        }
+
+        return ret
     }
 
     private suspend fun getStationID(station: String) : String {
@@ -121,4 +148,31 @@ class HttpViewModel : ViewModel() {
             }
         }
     }
+
+    private suspend fun getTrainID(trainID: String) : String {
+        return withContext(Dispatchers.IO) {
+            val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/cercaNumeroTrenoTrenoAutocomplete/$trainID")
+            val urlConnection = url.openConnection() as HttpURLConnection
+            try {
+                val stream = BufferedInputStream(urlConnection.inputStream)
+                return@withContext stream.bufferedReader().use { it.readText() }
+            } finally {
+                urlConnection.disconnect()
+            }
+        }
+    }
+
+    private suspend fun getTrainState(trainID: String, origin : String, date : String ) : String {
+        return withContext(Dispatchers.IO) {
+            val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/andamentoTreno/$origin/$trainID/$date")
+            val urlConnection = url.openConnection() as HttpURLConnection
+            try {
+                val stream = BufferedInputStream(urlConnection.inputStream)
+                return@withContext stream.bufferedReader().use { it.readText() }
+            } finally {
+                urlConnection.disconnect()
+            }
+        }
+    }
+
 }

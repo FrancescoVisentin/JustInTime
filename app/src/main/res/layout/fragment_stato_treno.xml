@@ -47,8 +47,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:id="@+id/train_description"
+        android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
@@ -85,7 +93,7 @@
                 android:background="@drawable/state_details"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="12345"
+                android:text="-/- -/-"
                 android:textColor="?attr/colorOnBackground"
                 app:drawableStartCompat="@drawable/stato_treno_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
