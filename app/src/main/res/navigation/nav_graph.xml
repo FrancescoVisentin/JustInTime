@@ -30,7 +30,11 @@
     <fragment
         android:id="@+id/tabelloneFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
-        android:label="Tabellone" />
+        android:label="Tabellone">
+        <action
+            android:id="@+id/action_tabelloneFragment_to_tabellone2Fragment"
+            app:destination="@id/tabellone2Fragment" />
+    </fragment>
     <fragment
     android:id="@+id/ricercaViaggioFragment"
     android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioFragment"
@@ -43,6 +47,10 @@
     android:id="@+id/ricercaViaggioResultFragment"
     android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
     android:label="Risultati ricerca viaggio" />
+    <fragment
+        android:id="@+id/tabellone2Fragment"
+        android:name="it.unipd.dei.esp2021.app_embedded.Tabellone2Fragment"
+        android:label="Risultati Tabellone" />
     <fragment
         android:id="@+id/addPlannerFragment"
         android:name="it.unipd.dei.esp2021.app_embedded.AddPlannerFragment"

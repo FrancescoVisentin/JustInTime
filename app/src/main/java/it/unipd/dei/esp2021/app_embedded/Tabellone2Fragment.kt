@@ -5,7 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.cardview.widget.CardView
+import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
+import org.w3c.dom.Text
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +40,60 @@ class Tabellone2Fragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tabellone2, container, false)
+        //return inflater.inflate(R.layout.fragment_tabellone2, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
+        val tabLayout : TabLayout = view.findViewById(R.id.tabs)
+        val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)
+        val arrivi : MutableList<CardView> = mutableListOf()
+        val partenze : MutableList<CardView> = mutableListOf()
+        for(i in 0..6)
+        {
+            val card = inflater.inflate(R.layout.card_layout, container, false) as CardView
+            card.setOnClickListener{
+                card.findViewById<TextView>(R.id.train_number).text = i.toString()
+            }
+            if(i%2==0) {
+                card.findViewById<TextView>(R.id.departures).text="Orario Provenienza"
+                card.findViewById<TextView>(R.id.arrivals).text=""
+                arrivi.add(card)
+            }
+            else {
+                card.findViewById<TextView>(R.id.departures).text="Orario destinazione"
+                card.findViewById<TextView>(R.id.arrivals).text=""
+                partenze.add(card)
+            }
+        }
+        for (o in arrivi)
+            cardLayout.addView(o)
+        cardLayout.visibility = View.VISIBLE
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if(tab?.text=="ARRIVI") {
+                    for (o in arrivi)
+                        cardLayout.addView(o)
+                    cardLayout.visibility = View.VISIBLE
+                }
+                else {
+                    for (o in partenze)
+                        cardLayout.addView(o)
+                    cardLayout.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                cardLayout.visibility=View.VISIBLE
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                cardLayout.visibility=View.INVISIBLE
+                cardLayout.removeAllViews()
+            }
+        })
+
+        return view
     }
 
     companion object {
@@ -57,4 +115,6 @@ class Tabellone2Fragment : Fragment() {
                 }
             }
     }
+
+
 }
