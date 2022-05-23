@@ -65,7 +65,7 @@ class HttpViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            val trainInfo = getTrainID(trainID).split("|")
+            val trainInfo = getTrainID(trainID).split("\n")[0].split("|")
 
             if (trainInfo[0].isEmpty()){
                 ret.value = ""

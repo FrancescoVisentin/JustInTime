@@ -112,9 +112,8 @@ class StatoTrenoFragment : Fragment() {
         trainView.findViewById<TextView>(R.id.train_position).text = lastDetectionStation
         trainView.findViewById<TextView>(R.id.time_last_detection).text = getDate(lastDetectionTime)
         trainView.findViewById<TextView>(R.id.train_route).text = "${trainStops.first()} - ${trainStops.last()}"
-        trainView.findViewById<TextView>(R.id.delay).text = if (delay.toInt() >= 0) "+$delay" else delay
+        trainView.findViewById<TextView>(R.id.delay).text = if (delay.toInt() >= 0) "+$delay min" else "$delay min"
         addStationsBar(trainView, trainStops, currentStationIndex)
-        //trainView.visibility = View.VISIBLE
 
         crossfade(trainView)
     }
