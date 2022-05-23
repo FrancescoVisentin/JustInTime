@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
@@ -60,6 +61,12 @@ class TabelloneFragment : Fragment() {
             if (textView.text.isNotEmpty()){
                 searchStation(textView.text.toString().lowercase())
             }
+        }
+
+        val bu: Button = view.findViewById(R.id.search_button)
+
+        bu.setOnClickListener { // Perform action on click
+            view.findNavController().navigate(R.id.action_tabelloneFragment_to_tabellone2Fragment)
         }
 
         return  view
