@@ -1,6 +1,5 @@
 package it.unipd.dei.esp2021.app_embedded
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -84,8 +83,9 @@ class HttpViewModel : ViewModel() {
             }
 
             val trainState = getTrainState(id, origin, date)
+            val trainStops = getTrainRoute(id, origin, date)
 
-            ret.value = trainState
+            ret.value = "$trainState|$trainStops"
         }
 
         return ret
@@ -165,6 +165,19 @@ class HttpViewModel : ViewModel() {
     private suspend fun getTrainState(trainID: String, origin : String, date : String ) : String {
         return withContext(Dispatchers.IO) {
             val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/andamentoTreno/$origin/$trainID/$date")
+            val urlConnection = url.openConnection() as HttpURLConnection
+            try {
+                val stream = BufferedInputStream(urlConnection.inputStream)
+                return@withContext stream.bufferedReader().use { it.readText() }
+            } finally {
+                urlConnection.disconnect()
+            }
+        }
+    }
+
+    private suspend fun getTrainRoute(trainID: String, origin : String, date : String ) : String {
+        return withContext(Dispatchers.IO) {
+            val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/tratteCanvas/$origin/$trainID/$date")
             val urlConnection = url.openConnection() as HttpURLConnection
             try {
                 val stream = BufferedInputStream(urlConnection.inputStream)

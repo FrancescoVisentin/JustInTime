@@ -1,9 +1,10 @@
 package it.unipd.dei.esp2021.app_embedded
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 class StatoTrenoFragment : Fragment() {
     private val model : HttpViewModel by activityViewModels()
@@ -36,7 +39,7 @@ class StatoTrenoFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_stato_treno, container, false)
 
         val textView = view.findViewById<TextInputEditText>(R.id.text_train_number)
-        textView.setOnEditorActionListener { v, actionId, event ->
+        textView.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 //Hide keyboard
                 textView.clearFocus()
@@ -76,7 +79,6 @@ class StatoTrenoFragment : Fragment() {
                 return@Observer
             }
 
-            Log.e("Res:", res)
             parseTrainInfo(trainID, res)
         }
         model.searchTrain(trainID).observe(viewLifecycleOwner, resObserver)
@@ -84,45 +86,61 @@ class StatoTrenoFragment : Fragment() {
 
     private fun parseTrainInfo(trainID: String, trainInfo : String) {
 
-        var tmp = trainInfo.replace("\n", "")
-        tmp = tmp.replace("stazione\":\"", "%1%")
-        tmp = tmp.replace("stazioneUltimoRilevamento\":\"", "%2%")
-        tmp = tmp.replace("servizi", "%3%")
+        val tmp = trainInfo.replace("\n", "").split("|")
+        val trainState = tmp[0]
+        val trainRoute = tmp[1]
 
-        val trainStops = tmp.split("%1%") as MutableList<String>
+        val trainStops = trainRoute.split(",{") as MutableList<String>
         val it = trainStops.listIterator()
-        while (it.hasNext()) {
-            val stop = it.next().substringBefore("\"").lowercase()
-            it.set(stop)
+        var currentStationIndex = 0
+        it.forEach { station ->
+            val stationName = station.substringAfter("stazione\":\"").substringBefore("\",")
+            if (station.indexOf("Corrente\":true,") != -1) {
+                currentStationIndex = it.nextIndex()-1
+            }
+
+            it.set(stationName)
         }
 
-        val lastDetection = tmp.split("%2%")[1].substringBefore("\"").lowercase()
-        val delay = tmp.split("%3%")[1].substringAfter("ritardo\":").substringBefore(",")
+        val delay = trainState.substringAfter("],\"ritardo\":").substringBefore(",")
+        val lastDetectionInfo = trainState.substringAfter("oraUltimoRilevamento\":")
+        val lastDetectionTime = lastDetectionInfo.substringBefore(",")
+        val lastDetectionStation = lastDetectionInfo.substringAfter("stazioneUltimoRilevamento\":\"").substringBefore("\",")
 
         val trainView = (view as View).findViewById<LinearLayout>(R.id.train_description)
         trainView.findViewById<TextView>(R.id.train_number).text = trainID
-        trainView.findViewById<TextView>(R.id.train_position).text = lastDetection
-        trainView.findViewById<TextView>(R.id.train_route).text = "${trainStops[1]} - ${trainStops.last()}"
-        trainView.findViewById<TextView>(R.id.delay).text = delay
-        addStationsBar(trainView, trainStops)
-        trainView.visibility = View.VISIBLE
+        trainView.findViewById<TextView>(R.id.train_position).text = lastDetectionStation
+        trainView.findViewById<TextView>(R.id.time_last_detection).text = getDate(lastDetectionTime)
+        trainView.findViewById<TextView>(R.id.train_route).text = "${trainStops.first()} - ${trainStops.last()}"
+        trainView.findViewById<TextView>(R.id.delay).text = if (delay.toInt() >= 0) "+$delay" else delay
+        addStationsBar(trainView, trainStops, currentStationIndex)
+        //trainView.visibility = View.VISIBLE
+
+        crossfade(trainView)
     }
 
-    private fun addStationsBar(trainView: View, stations : MutableList<String>) {
+
+    private fun getDate(date : String) : String {
+        return when (date) {
+            "null" -> "--"
+            else -> SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date.toLong())
+        }
+    }
+
+    private fun addStationsBar(trainView: View, stations : MutableList<String>, currentIndex : Int) {
 
         val stepBar = trainView.findViewById<SeekBar>(R.id.step_bar)
 
-        stepBar.setOnTouchListener { _, _ ->
-            true
-        }
+        stepBar.setOnTouchListener { _, _ -> true}
 
-        stepBar.progress = 3
-        stepBar.max = stations.size-2
-        stepBar.minWidth = (stations.size-2)*250
+        stepBar.progress = currentIndex
+        stepBar.max = stations.size-1
+        stepBar.minWidth = (stations.size-1)*300
 
         val labelsLayout = trainView.findViewById<LinearLayout>(R.id.labels_layout)
+        labelsLayout.removeAllViews()
 
-        for (i in 1 until stations.size) {
+        for (i in 0 until stations.size) {
             val label = TextView(trainView.context)
             label.text = stations[i]
             label.setPadding(0, 0, 10, 0)
@@ -138,7 +156,35 @@ class StatoTrenoFragment : Fragment() {
     }
 
     private fun getLayoutParams(weight: Float): LinearLayout.LayoutParams {
-        return LinearLayout.LayoutParams(250, LinearLayout.LayoutParams.WRAP_CONTENT, weight)
+        return LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.WRAP_CONTENT, weight)
     }
+
+    private fun crossfade(contentView : View) {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+        val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
+
+        contentView.apply {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(1f)
+                .setDuration(time)
+                .setListener(null)
+        }
+
+        loadingView.apply {
+            loadingView.alpha = 1f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(0f)
+                .setDuration(time)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        loadingView.visibility = View.GONE
+                    }
+                })
+        }
+    }
+
 
 }
