@@ -1,9 +1,8 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2021.app_embedded.helpers
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.provider.BaseColumns
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
 {

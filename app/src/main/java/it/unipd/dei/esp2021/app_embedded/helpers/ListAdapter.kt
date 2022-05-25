@@ -1,4 +1,4 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2021.app_embedded.helpers
 
 import android.view.LayoutInflater
 import android.view.View
