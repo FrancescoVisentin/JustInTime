@@ -61,6 +61,13 @@
             android:text="@string/tab_partenze"/>
     </com.google.android.material.tabs.TabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background"/>
+
     <ScrollView
         android:id = "@+id/scroll_tab2"
         android:layout_width="match_parent"
