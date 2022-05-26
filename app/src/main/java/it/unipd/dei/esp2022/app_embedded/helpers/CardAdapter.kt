@@ -1,13 +1,12 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2022.app_embedded.helpers
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
-import org.w3c.dom.Text
+import it.unipd.dei.esp2022.app_embedded.Train
 
 class CardAdapter(private val trains: List<Train>)
     : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {

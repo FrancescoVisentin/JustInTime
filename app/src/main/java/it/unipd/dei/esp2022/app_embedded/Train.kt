@@ -1,4 +1,4 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2022.app_embedded
 
 var trainList = mutableListOf<Train>()
 var trainList2 = mutableListOf<Train>()

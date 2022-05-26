@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.HomeFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.HomeFragment"
         android:label="Home" >
         <action
             android:id="@+id/action_homeFragment_to_ricercaViaggioFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/plannerFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.PlannerFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.PlannerFragment"
         android:label="Planner" >
         <action
             android:id="@+id/action_plannerFragment_to_addPlannerFragment"
@@ -24,12 +24,12 @@
 
     <fragment
         android:id="@+id/statoTrenoFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.StatoTrenoFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.StatoTrenoFragment"
         android:label="Stato Treno" />
 
     <fragment
         android:id="@+id/tabelloneFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.TabelloneFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.TabelloneFragment"
         android:label="Tabellone">
         <action
             android:id="@+id/action_tabelloneFragment_to_tabellone2Fragment"
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
     android:id="@+id/ricercaViaggioFragment"
-    android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioFragment"
+    android:name="it.unipd.dei.esp2022.app_embedded.ui.RicercaViaggioFragment"
     android:label="Ricerca Viaggio" >
     <action
         android:id="@+id/action_ricercaViaggioFragment_to_ricercaViaggioResultFragment"
@@ -45,18 +45,18 @@
     </fragment>
     <fragment
     android:id="@+id/ricercaViaggioResultFragment"
-    android:name="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
+    android:name="it.unipd.dei.esp2022.app_embedded.ui.RicercaViaggioResultFragment"
     android:label="Risultati ricerca viaggio" />
     <fragment
         android:id="@+id/tabellone2Fragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.Tabellone2Fragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.Tabellone2Fragment"
         android:label="Risultati Tabellone" />
     <fragment
         android:id="@+id/addPlannerFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.AddPlannerFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.AddPlannerFragment"
         android:label="Aggiungi Planner" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="it.unipd.dei.esp2021.app_embedded.SettingsFragment"
+        android:name="it.unipd.dei.esp2022.app_embedded.ui.SettingsFragment"
         android:label="Impostazioni" />
 </navigation>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="?android:attr/actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="it.unipd.dei.esp2021.app_embedded.Planner2Fragment">
+    tools:context="it.unipd.dei.esp2022.app_embedded.ui.Planner2Fragment">
 
 
 

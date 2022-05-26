@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?android:attr/actionBarSize"
-    tools:context="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
+    tools:context="it.unipd.dei.esp2022.app_embedded.ui.RicercaViaggioResultFragment"
     android:orientation="vertical"
     android:gravity="top">
 

@@ -1,4 +1,4 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2022.app_embedded.ui
 
 import android.app.Activity
 import android.content.Context
@@ -20,7 +20,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
-import it.unipd.dei.esp2021.app_embedded.helpers.SolutionsViewModel
+import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 
 
 class RicercaViaggioFragment : Fragment() {

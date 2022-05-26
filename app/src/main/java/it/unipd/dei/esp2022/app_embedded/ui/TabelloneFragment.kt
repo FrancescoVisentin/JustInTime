@@ -1,4 +1,4 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2022.app_embedded.ui
 
 import android.app.Activity
 import android.content.Context
@@ -19,7 +19,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
-import it.unipd.dei.esp2021.app_embedded.helpers.StationsViewModel
+import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
 
 class TabelloneFragment : Fragment() {
     private val model : StationsViewModel by activityViewModels()

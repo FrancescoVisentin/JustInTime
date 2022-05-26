@@ -1,18 +1,18 @@
-package it.unipd.dei.esp2021.app_embedded
+package it.unipd.dei.esp2022.app_embedded.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
-import org.w3c.dom.Text
+import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter
+import it.unipd.dei.esp2022.app_embedded.Train
+import it.unipd.dei.esp2022.app_embedded.trainList
+import it.unipd.dei.esp2022.app_embedded.trainList2
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,7 +87,7 @@ class Tabellone2Fragment : Fragment() {
         recyclerView!!.layoutManager=mLayoutManager
         var adapter:RecyclerView.Adapter<CardAdapter.CardViewHolder>?=null
 
-        adapter=CardAdapter(trainList)
+        adapter= CardAdapter(trainList)
         recyclerView.adapter = adapter
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
        /* val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)

@@ -1,4 +1,4 @@
-package it.unipd.dei.esp2021.app_embedded.helpers
+package it.unipd.dei.esp2022.app_embedded.helpers
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +9,6 @@ import kotlinx.coroutines.withContext
 import java.io.BufferedInputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TrainViewModel : ViewModel() {
     private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
