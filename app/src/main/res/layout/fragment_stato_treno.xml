@@ -14,7 +14,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
-            android:hint="@string/label3"
+            android:hint="@string/train_number"
             app:startIconDrawable="@drawable/search_icon"
             app:endIconMode="clear_text"
             android:layout_width="match_parent"

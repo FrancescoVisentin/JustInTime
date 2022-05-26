@@ -71,13 +71,13 @@ class Tabellone2Fragment : Fragment() {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab?.text=="ARRIVI") {
-                    for (o in arrivi)
+                if(tab?.text=="PARTENZE") {
+                    for (o in partenze)
                         cardLayout.addView(o)
                     cardLayout.visibility = View.VISIBLE
                 }
                 else {
-                    for (o in partenze)
+                    for (o in arrivi)
                         cardLayout.addView(o)
                     cardLayout.visibility = View.VISIBLE
                 }
