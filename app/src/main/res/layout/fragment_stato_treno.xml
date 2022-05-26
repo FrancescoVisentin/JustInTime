@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?android:attr/actionBarSize"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,8 +85,6 @@
                     android:padding="5dp"
                     android:text="Dettagli treno"
                     android:textColor="?attr/colorOnBackground"
-                    app:layout_constraintBottom_toTopOf="@id/train_number"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,13 +96,11 @@
                     android:background="@drawable/state_details"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="-/- -/-"
+                    android:text="@string/value_stub"
                     android:textColor="?attr/colorOnBackground"
                     app:drawableStartCompat="@drawable/stato_treno_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/train_state" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -134,7 +131,7 @@
                     android:background="@drawable/state_details"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Bologna - Venezia"
+                    android:text="@string/value_stub"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="Padova"
+                    android:text="@string/value_stub"
                     android:textColor="?attr/colorOnBackground"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -168,7 +165,7 @@
                     android:background="@drawable/state_details"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="+ 5min"
+                    android:text="@string/value_stub"
                     android:textColor="?attr/colorOnSecondaryContainer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -192,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingHorizontal="5dp"
-                    android:text="19:30"
+                    android:text="@string/value_stub"
                     android:textColor="?attr/colorOnBackground"
                     android:background="@drawable/state_details"
                     app:layout_constraintStart_toEndOf="@id/last_detection"
@@ -206,37 +203,21 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <HorizontalScrollView
-                android:layout_width="wrap_content"
+            <ScrollView
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:scrollbars="none"
                 android:padding="10dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:id="@+id/labels_layout"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="10dp"/>
 
-                    <SeekBar
-                        android:id="@+id/step_bar"
-                        style="@style/Widget.AppCompat.SeekBar.Discrete"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:focusable="false"
-                        android:paddingHorizontal="10dp"/>
-
-                    <LinearLayout
-                        android:id="@+id/labels_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="10dp"/>
-
-                </LinearLayout>
-            </HorizontalScrollView>
+            </ScrollView>
         </LinearLayout>
 
         <ProgressBar android:id="@+id/loading_spinner"

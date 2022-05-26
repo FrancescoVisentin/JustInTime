@@ -1,21 +1,4 @@
 <resources>
-
-    <!-- Bestemmie: 13 città
-            <item>ANNA'</item>
-            <item>BENEVENTO RIONE LIBERTA'</item>
-            <item>CASLINO D'ERBA</item>
-            <item>CASTELFRANCO D'EMILIA</item>
-            <item>CIRE'</item>
-            <item>CIRO'</item>
-            <item>COURGNE'</item>
-            <item>LAMBRUGO - LURAGO D'ERBA</item>
-            <item>OZZANO DELL'EMILIA</item>
-            <item>PERUGIA UNIVERSITA'</item>
-            <item>S.NICOLO'</item>
-            <item>SAN GIULIANO D'AREZZO</item>
-            <item>TORRE ANNUNZIATA CITTA'</item>
-    -->
-    
     <string-array name="stations">
         <item>ABANO TERME</item>
         <item>ABBADIA LARIANA</item>
@@ -102,7 +85,7 @@
         <item>ANFITEATRO</item>
         <item>ANGRI</item>
         <item>ANGUILLARA</item>
-        <item>ANNA`</item>
+        <item>ANNA\'</item>
         <item>ANNONE VENETO</item>
         <item>ANTIGNANO</item>
         <item>ANTRODOCO BORGO VELINO</item>
@@ -259,7 +242,7 @@
         <item>BENEVENTO APPIA</item>
         <item>BENEVENTO ARCO TRAIANO</item>
         <item>BENEVENTO PORTA RUFINA</item>
-        <item>BENEVENTO RIONE LIBERTA`</item>
+        <item>BENEVENTO RIONE LIBERTA\'</item>
         <item>BERCETO</item>
         <item>BERCHIDDA</item>
         <item>BERGAMASCO</item>
@@ -574,7 +557,7 @@
         <item>CASINO DI TERRA</item>
         <item>CASLETTO-ROGENO</item>
         <item>CASLINO AL PIANO</item>
-        <item>CASLINO D`ERBA</item>
+        <item>CASLINO D\'ERBA</item>
         <item>CASOLI</item>
         <item>CASORATE SEMPIONE</item>
         <item>CASORIA</item>
@@ -612,7 +595,7 @@
         <item>CASTELFERRETTI</item>
         <item>CASTELFIORENTINO</item>
         <item>CASTELFRANCI</item>
-        <item>CASTELFRANCO D`EMILIA</item>
+        <item>CASTELFRANCO D\'EMILIA</item>
         <item>CASTELFRANCO IN MISCANO</item>
         <item>CASTELFRANCO VENETO</item>
         <item>CASTELGUELFO</item>
@@ -749,9 +732,9 @@
         <item>CIAMPINO</item>
         <item>CIARDES</item>
         <item>CINISI TERRASINI</item>
-        <item>CIRE`</item>
+        <item>CIRE\'</item>
         <item>CIRELLA MAJERA`</item>
-        <item>CIRO`</item>
+        <item>CIRO\'</item>
         <item>CISANO CAPRINO BERGAMASCO</item>
         <item>CISLAGO</item>
         <item>CISMON DEL GRAPPA</item>
@@ -848,7 +831,7 @@
         <item>COSTIGLIOLE SALUZZO</item>
         <item>COTIGNOLA</item>
         <item>COTILIA</item>
-        <item>COURGNE`</item>
+        <item>COURGNE\'</item>
         <item>COZZE</item>
         <item>COZZO</item>
         <item>CREMA</item>
@@ -1237,7 +1220,7 @@
         <item>LAMA</item>
         <item>LAMA DI RENO</item>
         <item>LAMBRINIA</item>
-        <item>LAMBRUGO - LURAGO D`ERBA</item>
+        <item>LAMBRUGO - LURAGO D\'ERBA</item>
         <item>LAMEZIA TERME CENTRALE</item>
         <item>LAMEZIA TERME NICASTRO</item>
         <item>LAMEZIA TERME SAMBIASE</item>
@@ -1750,7 +1733,7 @@
         <item>OVIGLIO</item>
         <item>OZIERI CHILIVANI</item>
         <item>OZIERI FRAIGAS</item>
-        <item>OZZANO DELL`EMILIA</item>
+        <item>OZZANO DELL\'EMILIA</item>
         <item>OZZANO MONFERRATO</item>
         <item>OZZANO TARO</item>
         <item>PALERMO CENTRALE</item>
@@ -1763,7 +1746,6 @@
         <item>PACE DEL MELA</item>
         <item>PACECO</item>
         <item>PACHINO</item>
-        <item>PADERNO</item>
         <item>PADERNO DUGNANO</item>
         <item>PADERNO ROBBIATE</item>
         <item>PADIGLIONE</item>
@@ -1837,7 +1819,7 @@
         <item>PERUGIA</item>
         <item>PERUGIA PONTE S.GIOVANNI</item>
         <item>PERUGIA SILVESTRINI</item>
-        <item>PERUGIA UNIVERSITA`</item>
+        <item>PERUGIA UNIVERSITA\'</item>
         <item>PESARO</item>
         <item>PESCANTINA</item>
         <item>PESCARA</item>
@@ -2339,7 +2321,7 @@
         <item>S.NAZARIO</item>
         <item>S.NICOLA ARCELLA</item>
         <item>S.NICOLA T.</item>
-        <item>S.NICOLO`</item>
+        <item>S.NICOLO\'</item>
         <item>S.PATRIZIO</item>
         <item>S.PIERO A SIEVE</item>
         <item>S.PIETRO A MAIDA</item>
@@ -2400,7 +2382,7 @@
         <item>SAN GIORGIO DI NOGARO</item>
         <item>SAN GIOVANNI</item>
         <item>SAN GIOVANNI IN PERSICETO</item>
-        <item>SAN GIULIANO D`AREZZO</item>
+        <item>SAN GIULIANO D\'AREZZO</item>
         <item>SAN GIUSEPPE DI CAIRO</item>
         <item>SAN LEONARDO DI CUTRO</item>
         <item>SAN MARCO D`ALUNZIO T.</item>
@@ -2686,7 +2668,7 @@
         <item>TORRALBA</item>
         <item>TORRAZZA P.</item>
         <item>TORRE ANNUNZIATA CENTRALE</item>
-        <item>TORRE ANNUNZIATA CITTA`</item>
+        <item>TORRE ANNUNZIATA CITTA\'</item>
         <item>TORRE DEI PASSERI</item>
         <item>TORRE DEL GRECO</item>
         <item>TORRE DEL LAGO PUCCINI</item>
@@ -2945,6 +2927,4 @@
         <item>ZOAGLI</item>
         <item>ZURICH ALTSTETTEN</item>
     </string-array>
-
-    -->
 </resources>

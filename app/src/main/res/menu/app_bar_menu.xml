@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/settings_icon"
-        android:title="@string/app_bar_settings"
-        app:showAsAction="always"/>
+        android:id="@+id/switch_item"
+        android:title="@string/app_bar_switch"
+        app:actionLayout="@layout/switch_layout"
+        app:showAsAction="ifRoom" />
 
 </menu>

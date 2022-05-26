@@ -9,7 +9,7 @@
         android:id="@+id/home_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="0dp"
         android:scaleType="fitCenter"
         android:background="?attr/colorPrimaryContainer"
         app:layout_constraintTop_toTopOf="parent"

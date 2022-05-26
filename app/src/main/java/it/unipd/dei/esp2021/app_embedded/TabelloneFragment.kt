@@ -19,9 +19,10 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
+import it.unipd.dei.esp2021.app_embedded.helpers.StationsViewModel
 
 class TabelloneFragment : Fragment() {
-    private val model : HttpViewModel by activityViewModels()
+    private val model : StationsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

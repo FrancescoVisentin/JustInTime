@@ -5,10 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -142,7 +139,6 @@ class StatoTrenoFragment : Fragment() {
                 label.findViewById<TextView>(R.id.arrival_text).text = getString(R.string.expected_arrival)
                 label.findViewById<TextView>(R.id.departure_value).text = getDate(stations[i].expectedDeparture)
                 label.findViewById<TextView>(R.id.arrival_value).text = getDate(stations[i].expectedArrival)
-                Log.e("Orari", "index: $i, partenza: ${stations[i].expectedDeparture} ed arrivo: ${stations[i].expectedArrival}")
             }
 
             labelsLayout.addView(label)

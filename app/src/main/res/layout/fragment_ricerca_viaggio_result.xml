@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="?android:attr/actionBarSize"
     tools:context="it.unipd.dei.esp2021.app_embedded.RicercaViaggioResultFragment"
     android:orientation="vertical"
     android:gravity="top">
