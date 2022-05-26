@@ -38,6 +38,62 @@ class HTTParser {
             return info
         }
 
+        fun parseSolutionsInfo(solutions: String): MutableList<SolutionInfo> {
+            val tripsList = mutableListOf<SolutionInfo>()
+            var trip : SolutionInfo
+            val tmp = solutions.split(",{\"durata\": \"")
+            var tmp2 : List<String>
+            for(i in 1..tmp.lastIndex)
+            {
+                trip = SolutionInfo(-1)
+                trip.duration = tmp[i].substringBefore("\"")
+                trip.departureTime = tmp[i].substringAfter("orarioPartenza\": \"").substringBefore("\"")
+                tmp2 = tmp[i].split("},")
+                trip.arrivalTime = tmp2.last().substringAfter("orarioArrivo\": \"").substringBefore("\"")
+                for(i in 0..tmp2.lastIndex) {
+                    (trip.category).add(tmp2[i].substringAfter("categoriaDescrizione\": \"").substringBefore("\""))
+                    (trip.trainNumber).add(tmp2[i].substringAfter("numeroTreno\": \"").substringBefore("\""))
+                }
+                trip.changes = tmp2.size
+                tripsList.add(trip)
+            }
+            return tripsList
+        }
+
+        fun parseStationsInfo(departingTrains : String, incomingTrains : String): MutableList<MutableList<TrainStationInfo>> {
+            //DEPARTURES
+            val departuresList = mutableListOf<TrainStationInfo>()
+            var departureTrain : TrainStationInfo
+            val tmp = departingTrains.split("\"numeroTreno\": ")
+            for(i in 1..tmp.lastIndex)
+            {
+                departureTrain = TrainStationInfo("")
+                departureTrain.trainNumber = tmp[i].substringBefore(",")
+                departureTrain.category = tmp[i].substringAfter("categoriaDescrizione\": \"").substringBefore("\"")
+                departureTrain.departureArrivalTime = tmp[i].substringAfter("compOrarioPartenza\": \"").substringBefore("\"")
+                departureTrain.destinationOrigin = tmp[i].substringAfter("destinazione\": \"").substringBefore("\"")
+                departureTrain.delay = tmp[i].substringAfter("ritardo\": ").substringBefore(",")
+                departureTrain.binary = tmp[i].substringAfter("binarioEffettivoPartenzaDescrizione\": \"").substringBefore("\"")
+                departuresList.add(departureTrain)
+            }
+            //ARRIVALS
+            val arrivalsList = mutableListOf<TrainStationInfo>()
+            var arrivalTrain : TrainStationInfo
+            val tmp2 = incomingTrains.split("\"numeroTreno\": ")
+            for(i in 1..tmp2.lastIndex)
+            {
+                arrivalTrain = TrainStationInfo("")
+                arrivalTrain.trainNumber = tmp[i].substringBefore(",")
+                arrivalTrain.category = tmp[i].substringAfter("categoriaDescrizione\": \"").substringBefore("\"")
+                arrivalTrain.departureArrivalTime = tmp[i].substringAfter("compOrarioArrivo\": \"").substringBefore("\"")
+                arrivalTrain.destinationOrigin = tmp[i].substringAfter("origine\": \"").substringBefore("\"")
+                arrivalTrain.delay = tmp[i].substringAfter("ritardo\": ").substringBefore(",")
+                arrivalTrain.binary = tmp[i].substringAfter("binarioEffettivoArrivoDescrizione\": \"").substringBefore("\"")
+                arrivalsList.add(arrivalTrain)
+            }
+            return mutableListOf(departuresList, arrivalsList)
+        }
+
     }
 
     data class TrainInfo(val trainID: String) {
@@ -48,12 +104,30 @@ class HTTParser {
         lateinit var stops : MutableList<StationInfo>
     }
 
-    class StationInfo(val stationName : String, current : Boolean) {
+    data class StationInfo(val stationName : String, val current : Boolean) {
         var scheduledDeparture : String = ""
         var scheduledArrival : String = ""
         var realDeparture : String = ""
         var realArrival : String = ""
         var expectedDeparture : String = "null"
         var expectedArrival : String = "null"
+    }
+
+    data class SolutionInfo(var changes: Int)
+    {
+        var duration : String = ""
+        var departureTime : String = ""
+        var arrivalTime : String = ""
+        lateinit var category : MutableList<String>
+        lateinit var trainNumber : MutableList<String>
+    }
+
+    data class TrainStationInfo(var category: String)
+    {
+        var departureArrivalTime : String = ""
+        var destinationOrigin : String = ""
+        var delay : String = ""
+        var binary : String = ""
+        var trainNumber : String = ""
     }
 }

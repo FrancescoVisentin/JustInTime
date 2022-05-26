@@ -13,35 +13,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StationsViewModel : ViewModel() {
-    //TODO questa va tenuta aggiustando il tipo di MutableLiveData<>
-    private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
-        MutableLiveData<HTTParser.TrainInfo>()
+    private val ret: MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>> by lazy {
+        MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>>()
     }
 
-    fun searchStation(station: String) : MutableLiveData<String> {
-        val ret: MutableLiveData<String> by lazy {//TODO questo ret va eliminato
-            MutableLiveData<String>()
-        }
-
+    fun searchStation(station: String) : MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>> {
         viewModelScope.launch {
             val stationID = getStationID(station)
 
             if (stationID.isEmpty()){
-                ret.value = ""
+                ret.value = null
                 return@launch
             }
 
             val departingTrains = getStationTrains(stationID, "partenze")
             val incomingTrains = getStationTrains(stationID, "arrivi")
 
-            //TODO aggiungere parsing qua e settare il valore a quello non al json
-            ret.value = "$departingTrains|$incomingTrains"
+            ret.value = HTTParser.parseStationsInfo(departingTrains, incomingTrains)
         }
-
         return ret
     }
 
-    fun getStations(): HTTParser.TrainInfo? {
+    fun getStations(): MutableList<MutableList<HTTParser.TrainStationInfo>>? {
         return ret.value
     }
 

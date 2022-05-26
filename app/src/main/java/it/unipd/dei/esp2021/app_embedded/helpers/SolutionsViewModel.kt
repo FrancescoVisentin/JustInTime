@@ -13,37 +13,30 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class SolutionsViewModel : ViewModel() {
-    //TODO questa va tenuta aggiustando il tipo di MutableLiveData<>
-    private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
-        MutableLiveData<HTTParser.TrainInfo>()
+    private val ret: MutableLiveData<MutableList<HTTParser.SolutionInfo>> by lazy {
+        MutableLiveData<MutableList<HTTParser.SolutionInfo>>()
     }
 
-    fun searchSolutions(firstStation : String, secondStation : String) : MutableLiveData<String> {
-        val ret: MutableLiveData<String> by lazy { //TODO questo ret va eliminato
-            MutableLiveData<String>()
-        }
-
+    fun searchSolutions(firstStation : String, secondStation : String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
         viewModelScope.launch {
             val firstStationID = getStationID(firstStation)
             val secondStationID = getStationID(secondStation)
 
 
             if (firstStationID.isEmpty() || secondStationID.isEmpty()){
-                ret.value = ""
+                ret.value = null
                 return@launch
             }
 
             val solutions = getSolutions(firstStationID.drop(1), secondStationID.drop(1))
 
-            //TODO aggiungere parsing qua e settare il valore a quello non al json
-            ret.value = solutions
+            ret.value = HTTParser.parseSolutionsInfo(solutions)
         }
-
         return ret
     }
 
     //funzione per richiedere i dati alla view model senza effettuare nuovamente la query (utili per recuperare stato)
-    fun getSolutions(): HTTParser.TrainInfo? {
+    fun getSolutions(): MutableList<HTTParser.SolutionInfo>? {
         return ret.value
     }
 

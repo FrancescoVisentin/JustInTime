@@ -39,9 +39,7 @@ class TrainViewModel : ViewModel() {
             val trainState = getTrainState(id, origin, date)
             val trainStops = getTrainRoute(id, origin, date)
 
-            val info = HTTParser.parseTrainInfo(trainID, trainState, trainStops)
-
-            ret.value = info
+            ret.value = HTTParser.parseTrainInfo(trainID, trainState, trainStops)
         }
 
         return ret
