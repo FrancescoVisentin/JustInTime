@@ -10,13 +10,14 @@
     <string name="teabellone_hint">Ricerca stazione</string>
     <string name="label1">Stazione partenza</string>
     <string name="label2">Stazione arrivo</string>
-    <string name="label3">Numero treno</string>
+    <string name="train_number">Numero treno:</string>
     <string name="departure">Partenza</string>
     <string name="arrival">Arrivo</string>
     <string name="label5">Data e ora</string>
     <string name="date">Data:</string>
     <string name="time">Orario:</string>
     <string name="results_for">Risultati per:</string>
+    <string name="state">Stato Treno:</string>
 
     <string name="tab_arrivi">ARRIVI</string>
     <string name="tab_partenze">PARTENZE</string>

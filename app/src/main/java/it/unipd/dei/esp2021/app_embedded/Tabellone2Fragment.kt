@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
 import org.w3c.dom.Text
@@ -27,12 +29,46 @@ class Tabellone2Fragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    private fun populateTrain() {
+        val train1 = Train(
+            "1",
+            "10:30",
+            "Nessuna"
+        )
+        trainList.add(train1)
+
+        val train2 = Train(
+            "2",
+            "19:30",
+            "ritardo"
+        )
+        trainList.add(train2)
+
+        val train3 = Train(
+            "3",
+            "09:00",
+            "Binario rotto"
+        )
+        trainList2.add(train3)
+        trainList2.add(train3)
+        trainList2.add(train3)
+        trainList2.add(train3)
+        trainList2.add(train3)
+        trainList2.add(train3)
+        trainList2.add(train3)
     }
 
     override fun onCreateView(
@@ -42,9 +78,19 @@ class Tabellone2Fragment : Fragment() {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_tabellone2, container, false)
 
+
+        populateTrain()
+
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        recyclerView!!.layoutManager=mLayoutManager
+        var adapter:RecyclerView.Adapter<CardAdapter.CardViewHolder>?=null
+
+        adapter=CardAdapter(trainList)
+        recyclerView.adapter = adapter
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
-        val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)
+       /* val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)
         val arrivi : MutableList<CardView> = mutableListOf()
         val partenze : MutableList<CardView> = mutableListOf()
         for(i in 0..6)
@@ -67,29 +113,30 @@ class Tabellone2Fragment : Fragment() {
         for (o in arrivi)
             cardLayout.addView(o)
         cardLayout.visibility = View.VISIBLE
-
+        */
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab?.text=="ARRIVI") {
-                    for (o in arrivi)
-                        cardLayout.addView(o)
-                    cardLayout.visibility = View.VISIBLE
+                if(tab?.text=="PARTENZE") {
+                    adapter = CardAdapter(trainList2)
+                    recyclerView.adapter=adapter
+                    recyclerView.visibility=View.VISIBLE
                 }
                 else {
-                    for (o in partenze)
-                        cardLayout.addView(o)
-                    cardLayout.visibility = View.VISIBLE
+                    adapter = CardAdapter(trainList)
+                    recyclerView.adapter=adapter
+                    recyclerView.visibility=View.VISIBLE
+
                 }
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                cardLayout.visibility=View.VISIBLE
+                recyclerView.visibility=View.VISIBLE
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                cardLayout.visibility=View.INVISIBLE
-                cardLayout.removeAllViews()
+                recyclerView.visibility=View.INVISIBLE
+                recyclerView.removeAllViews()
             }
         })
 
