@@ -12,11 +12,14 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
+import it.unipd.dei.esp2022.app_embedded.helpers.StationsListAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.TrainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -120,41 +123,10 @@ class StatoTrenoFragment : Fragment() {
     }
 
     private fun addStationsBar(trainView: View, stations : MutableList<HTTParser.StationInfo>, currentIndex : Int) {
-        val labelsLayout = trainView.findViewById<LinearLayout>(R.id.labels_layout)
-        labelsLayout.removeAllViews()
-
-        for (i in 0 until stations.size) {
-            val label = layoutInflater.inflate(R.layout.labels_layout, trainView as ViewGroup, false)
-            label.findViewById<TextView>(R.id.station_name).text = stations[i].stationName
-            label.findViewById<TextView>(R.id.scheduled_departure_value).text = getDate(stations[i].scheduledDeparture)
-            label.findViewById<TextView>(R.id.scheduled_arrival_value).text = getDate(stations[i].scheduledArrival)
-
-            if (i <= currentIndex) {
-                label.findViewById<TextView>(R.id.departure_text).text = getString(R.string.real_departure)
-                label.findViewById<TextView>(R.id.arrival_text).text = getString(R.string.real_arrival)
-                label.findViewById<TextView>(R.id.departure_value).text = getDate(stations[i].realDeparture)
-                label.findViewById<TextView>(R.id.arrival_value).text = getDate(stations[i].realArrival)
-
-            } else {
-                label.findViewById<TextView>(R.id.departure_text).text = getString(R.string.expected_departure)
-                label.findViewById<TextView>(R.id.arrival_text).text = getString(R.string.expected_arrival)
-                label.findViewById<TextView>(R.id.departure_value).text = getDate(stations[i].expectedDeparture)
-                label.findViewById<TextView>(R.id.arrival_value).text = getDate(stations[i].expectedArrival)
-            }
-
-            labelsLayout.addView(label)
-
-            if (i == stations.size-1) {
-                label.layoutParams = getLayoutParams(1.0f)
-            }
-            else {
-                label.layoutParams = getLayoutParams(0.0f)
-            }
-        }
-    }
-
-    private fun getLayoutParams(weight: Float): LinearLayout.LayoutParams {
-        return LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, weight)
+        val stationsAdapter = StationsListAdapter(stations, currentIndex)
+        val recyclerView = trainView.findViewById<RecyclerView>(R.id.stations_recycler_view)
+        recyclerView.adapter = stationsAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     private fun crossfade(contentView : View) {

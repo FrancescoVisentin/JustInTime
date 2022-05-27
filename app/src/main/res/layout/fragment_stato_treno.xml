@@ -203,21 +203,11 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/listDivider" />
 
-            <ScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/stations_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:scrollbars="none"
-                android:padding="10dp">
-
-                <LinearLayout
-                    android:id="@+id/labels_layout"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="10dp"/>
-
-            </ScrollView>
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
         <ProgressBar android:id="@+id/loading_spinner"
