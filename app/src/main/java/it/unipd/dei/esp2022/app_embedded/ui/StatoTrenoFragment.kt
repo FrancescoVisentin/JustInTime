@@ -47,16 +47,17 @@ class StatoTrenoFragment : Fragment() {
                     .show()
                 return@Observer
             }
+            //Hide keyboard if present
+            val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+
             updateTrainInfo(info)
         }
 
         val textView = view.findViewById<TextInputEditText>(R.id.text_train_number)
-        textView.setOnEditorActionListener { v, actionId, _ ->
+        textView.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                //Hide keyboard
                 textView.clearFocus()
-                val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                imm?.hideSoftInputFromWindow(v.windowToken, 0)
 
                 if (textView.text.toString().isNotEmpty()) {
                     model.searchTrain(textView.text.toString()).observe(viewLifecycleOwner, resObserver)

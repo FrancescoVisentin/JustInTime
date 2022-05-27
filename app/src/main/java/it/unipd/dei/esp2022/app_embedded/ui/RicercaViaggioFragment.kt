@@ -50,6 +50,9 @@ class RicercaViaggioFragment : Fragment() {
                 return@Observer
             }
 
+            //Hide keyboard if present
+            val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
             fade()
             view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
         }

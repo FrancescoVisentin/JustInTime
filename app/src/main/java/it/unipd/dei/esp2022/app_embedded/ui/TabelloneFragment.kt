@@ -46,6 +46,9 @@ class TabelloneFragment : Fragment() {
                     .show()
                 return@Observer
             }
+            //Hide keyboard if present
+            val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
             fade()
             view.findNavController().navigate(R.id.action_tabelloneFragment_to_tabellone2Fragment)
@@ -56,13 +59,10 @@ class TabelloneFragment : Fragment() {
         val adapter = ArrayAdapter(context as Context, android.R.layout.simple_dropdown_item_1line, items)
         textView.setAdapter(adapter)
 
-        textView.setOnEditorActionListener { v, actionId, _ ->
+        textView.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_SEARCH -> {
-                    //Hide keyboard
                     textView.clearFocus()
-                    val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(v.windowToken, 0)
 
                     if (textView.text.isNotEmpty()){
                         model.searchStation(textView.text.toString().lowercase()).observe(viewLifecycleOwner, resObserver)
