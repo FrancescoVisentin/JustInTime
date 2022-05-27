@@ -13,11 +13,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class StationsViewModel : ViewModel() {
-    private val ret: MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>> by lazy {
-        MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>>()
+    private val ret: MutableLiveData<MutableList<HTTParser.TrainStationInfo>> by lazy {
+        MutableLiveData<MutableList<HTTParser.TrainStationInfo>>()
     }
 
-    fun searchStation(station: String) : MutableLiveData<MutableList<MutableList<HTTParser.TrainStationInfo>>> {
+    fun searchStation(station: String) : MutableLiveData<MutableList<HTTParser.TrainStationInfo>> {
         viewModelScope.launch {
             val stationID = getStationID(station)
 
@@ -34,7 +34,7 @@ class StationsViewModel : ViewModel() {
         return ret
     }
 
-    fun getStations(): MutableList<MutableList<HTTParser.TrainStationInfo>>? {
+    fun getStationTrains(): MutableList<HTTParser.TrainStationInfo>? {
         return ret.value
     }
 

@@ -1,16 +1,19 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter
 import it.unipd.dei.esp2022.app_embedded.Train
+import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
 import it.unipd.dei.esp2022.app_embedded.trainList
 import it.unipd.dei.esp2022.app_embedded.trainList2
 
@@ -29,7 +32,7 @@ class Tabellone2Fragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-
+    private val model : StationsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +85,12 @@ class Tabellone2Fragment : Fragment() {
         populateTrain()
 
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
+
+        val trainsInfo = model.getStationTrains()
+        trainsInfo?.forEach {
+            Log.e("Info treno:", "Numero: ${it.trainNumber}, tipo: ${it.type}")
+        }
+
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.layoutManager=mLayoutManager

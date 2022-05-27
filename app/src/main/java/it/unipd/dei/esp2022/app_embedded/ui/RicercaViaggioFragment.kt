@@ -1,9 +1,10 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,16 +16,19 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
+import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 
 
 class RicercaViaggioFragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
+    private lateinit var resObserver : Observer<MutableList<HTTParser.SolutionInfo>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +40,20 @@ class RicercaViaggioFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio, container, false)
+
+        resObserver = Observer<MutableList<HTTParser.SolutionInfo>> { info ->
+            if (info == null) {
+                val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
+                Snackbar.make(contextView, "Stazioni non valide", Snackbar.LENGTH_SHORT)
+                    .setAction("Chiudi") {}
+                    .show()
+                return@Observer
+            }
+
+            fade()
+            view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
+        }
+
 
         val buttonHour: Button = view.findViewById(R.id.button_hour)
         val buttonMin: Button = view.findViewById(R.id.button_min)
@@ -102,6 +120,7 @@ class RicercaViaggioFragment : Fragment() {
         searchButton.setOnClickListener{
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
                 model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase())
+                     .observe(viewLifecycleOwner, resObserver)
             }
         }
 
@@ -125,20 +144,21 @@ class RicercaViaggioFragment : Fragment() {
         }
     }
 
-    private fun searchSolutions(firstStation : String, secondStation : String) {
-        val resObserver = Observer<String> {res ->
-            if (res.isEmpty()) {
-                val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
-                Snackbar.make(contextView, "Stazioni non valide", Snackbar.LENGTH_SHORT)
-                    .setAction("Chiudi") {}
-                    .show()
-                return@Observer
-            }
+    private fun fade() {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+        val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
-            Log.e("Res:", res)
-            //TODO Aggiungi risultati su putextra
-            //view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
+        loadingView.apply {
+            loadingView.alpha = 1f
+            visibility = View.VISIBLE
+            animate()
+                .alpha(0f)
+                .setDuration(time)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        loadingView.visibility = View.GONE
+                    }
+                })
         }
-        model.searchSolutions(firstStation, secondStation).observe(viewLifecycleOwner, resObserver)
     }
 }
