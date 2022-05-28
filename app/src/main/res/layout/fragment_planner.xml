@@ -26,4 +26,14 @@
         android:contentDescription="@string/planner_fab_content_desc"
         app:srcCompat="@drawable/add_icon"/>
 
+    <Button
+        android:id="@+id/button_prova"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pass temporaneo a planner 2"
+        app:layout_constraintTop_toBottomOf="@+id/planner_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

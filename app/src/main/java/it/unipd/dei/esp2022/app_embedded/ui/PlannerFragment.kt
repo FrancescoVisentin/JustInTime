@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -63,6 +64,12 @@ class PlannerFragment : Fragment() {
                 recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
             }
         }
+
+        val bu = view.findViewById<Button>(R.id.button_prova)
+        bu.setOnClickListener(){
+            view.findNavController().navigate(R.id.action_plannerFragment_to_planner2Fragment)
+        }
+
 
         return  view
     }

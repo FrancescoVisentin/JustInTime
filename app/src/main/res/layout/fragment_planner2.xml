@@ -1,61 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:layout_marginTop="?android:attr/actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="it.unipd.dei.esp2022.app_embedded.ui.Planner2Fragment">
 
-
-
-    <com.google.android.material.tabs.TabLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabIndicatorFullWidth="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        android:layout_gravity="center"
+        android:background="@drawable/sfondo1"
+        android:text="@string/planner_name"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnSecondaryContainer"
+        android:padding="5dp"
+        style="@style/TextAppearance.Material3.TitleLarge"/>
+
+    <com.google.android.material.tabs.TabLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:tabMode="scrollable"
+    app:tabIndicatorFullWidth="true"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toTopOf="parent" >
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_lunedi"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_lunedi"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_martedi"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_martedi"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_mercoledi"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_mercoledi"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_giovedi"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_giovedi"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_venerdi"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_venerdi"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_sabato"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_sabato"/>
 
         <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_domenica"/>
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tab_domenica"/>
 
     </com.google.android.material.tabs.TabLayout>
 
+    <Button
+        android:id="@+id/add_train_button"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginVertical="15dp"
+        android:color="?attr/colorPrimaryContainer"
+        android:text="@string/add_train"
+        android:textColor="?attr/colorOnPrimaryContainer"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconSize="30dp" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
