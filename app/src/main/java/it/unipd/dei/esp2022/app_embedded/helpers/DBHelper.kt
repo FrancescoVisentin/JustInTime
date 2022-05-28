@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
 {
@@ -17,8 +16,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 ");"
 
         val plannerTable = "CREATE TABLE Planner(\n" +
-                "    Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT CHECK(Id>0),\n" +
-                "    Nome VARCHAR(30)\n" +
+                "    Nome VARCHAR(30) NOT NULL PRIMARY KEY\n" +
                 ");"
 
         val dateTable = "CREATE TABLE Giorno(\n" +
@@ -27,12 +25,12 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
 
         val combinationTable  = "CREATE TABLE Associazione(\n" +
                 "Numero INTEGER NOT NULL CHECK(Numero>0),\n" +
-                "Id INTEGER NOT NULL CHECK(Id>0),\n" +
+                "NomePlanner VARCHAR(30),\n" +
                 "Nome VARCHAR(10) NOT NULL,\n" +
-                "PRIMARY KEY (Numero, Id, Nome),\n" +
+                "PRIMARY KEY (Numero, NomePlanner, Nome),\n" +
                 "FOREIGN KEY(Numero) REFERENCES Treno(Numero)\n" +
                 "ON DELETE CASCADE ON UPDATE CASCADE,\n" +
-                "FOREIGN KEY(Id) REFERENCES Planner(Id)\n" +
+                "FOREIGN KEY(NomePlanner) REFERENCES Planner(Nome)\n" +
                 "ON DELETE CASCADE ON UPDATE CASCADE,\n" +
                 "FOREIGN KEY(Nome) REFERENCES Giorno(Nome)\n" +
                 "ON DELETE CASCADE ON UPDATE CASCADE\n" +
@@ -54,14 +52,18 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.execSQL(dateValues)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        if (oldVersion != newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS Planner")
+            db.execSQL("DROP TABLE IF EXISTS Treno")
+            db.execSQL("DROP TABLE IF EXISTS Giorno")
+            db.execSQL("DROP TABLE IF EXISTS Associazione")
+            onCreate(db)
+        }
+    }
 
     fun addPlanner(name : String): Boolean {
-        val id = getPlannersCount()
-        Log.e("ID:", "$id")
-
         val cv = ContentValues()
-        cv.put("Id", id)
         cv.put("Nome", name)
         return writableDatabase.insert("Planner", null, cv) != -1L
     }
@@ -82,7 +84,11 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         cursor.moveToFirst()
         val ret = cursor.getInt(0)
         cursor.close()
-        return ret+1
+        return ret
+    }
+
+    fun deletePlanner(name : String): Boolean {
+        return writableDatabase.delete("Planner", "Nome='$name'", null) != 0
     }
 
     companion object

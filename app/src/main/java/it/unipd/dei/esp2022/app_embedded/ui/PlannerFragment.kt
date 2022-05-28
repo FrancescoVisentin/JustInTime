@@ -3,25 +3,26 @@ package it.unipd.dei.esp2022.app_embedded.ui
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.PopupWindow
+import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.PlannerListAdapter
 
-class PlannerFragment : Fragment() {
+class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
+    private lateinit var db : DBHelper
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var plannerImageView : LinearLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,10 +34,14 @@ class PlannerFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_planner, container, false)
 
-        val db = DBHelper(context as Context)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.planner_recycler_view)
-        recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
+        db = DBHelper(context as Context)
+        recyclerView = view.findViewById(R.id.planner_recycler_view)
+        plannerImageView = view.findViewById(R.id.no_planners_image)
+
+        recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
         recyclerView.layoutManager = LinearLayoutManager(context)
+        registerForContextMenu(recyclerView)
+        checkPlannersCount()
 
         val fab = view.findViewById<FloatingActionButton>(R.id.planner_fab)
         fab.setOnClickListener {
@@ -65,7 +70,7 @@ class PlannerFragment : Fragment() {
             }
 
             val cancelButton = popupView.findViewById<Button>(R.id.exit_button)
-            cancelButton.setOnClickListener() {
+            cancelButton.setOnClickListener {
                 popupWindow.dismiss()
             }
 
@@ -76,8 +81,16 @@ class PlannerFragment : Fragment() {
                     val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                     imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
 
-                    db.addPlanner(popupTextView.text.toString())
-                    recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
+                    if (db.addPlanner(popupTextView.text.toString())) {
+                        recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
+                        checkPlannersCount()
+                    } else {
+                        val contextView = view.findViewById<View>(R.id.coordinator_layout)
+                        Snackbar.make(contextView, "Nome non valido", Snackbar.LENGTH_SHORT)
+                            .setAction("Chiudi") {}
+                            .show()
+                    }
+
                     popupWindow.dismiss()
                 }
 
@@ -85,5 +98,36 @@ class PlannerFragment : Fragment() {
         }
 
         return  view
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete_option -> {
+                val name = (recyclerView.adapter as PlannerListAdapter).selectedPlannerName
+                val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
+                if (db.deletePlanner(name)){
+                    Snackbar.make(contextView, "Planner $name eliminato", Snackbar.LENGTH_SHORT)
+                        .setAction("Chiudi") {}
+                        .show()
+
+                    recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
+                    checkPlannersCount()
+                } else  {
+                    Snackbar.make(contextView, "Errore", Snackbar.LENGTH_SHORT)
+                        .setAction("Chiudi") {}
+                        .show()
+                }
+            }
+        }
+
+        return super.onContextItemSelected(item)
+    }
+
+    override fun onEvent() {
+        (view as View).findNavController().navigate(R.id.action_plannerFragment_to_addPlannerFragment)
+    }
+
+    private fun checkPlannersCount() {
+            plannerImageView.visibility = if (db.getPlannersCount() == 0) View.VISIBLE else View.INVISIBLE
     }
 }
