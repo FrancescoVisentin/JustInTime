@@ -19,26 +19,34 @@ class CardAdapter(private val trains: List<Train>)
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber : TextView
         val trainTime : TextView
+        val trainPlace : TextView
+        val trainBinary : TextView
         val trainInfo : TextView
         init {
             trainNumber=itemView.findViewById<View>(R.id.train_number) as TextView
             trainTime=itemView.findViewById<View>(R.id.orario) as TextView
+            trainPlace=itemView.findViewById<View>(R.id.place) as TextView
+            trainBinary=itemView.findViewById<View>(R.id.binario) as TextView
             trainInfo=itemView.findViewById<View>(R.id.information) as TextView
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_model, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout_tabellone, parent, false)
         view.setOnClickListener(onClickListener)
         return CardViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.trainNumber.text = trains[position].number
+        holder.trainNumber.text = trains[position].numero
         holder.trainNumber.visibility=View.VISIBLE
         holder.trainTime.text = trains[position].orario
         holder.trainTime.visibility=View.VISIBLE
-        holder.trainInfo.text = trains[position].state
+        holder.trainPlace.text = trains[position].luogo
+        holder.trainPlace.visibility=View.VISIBLE
+        holder.trainBinary.text = trains[position].binario
+        holder.trainBinary.visibility=View.VISIBLE
+        holder.trainInfo.text = trains[position].ritardo
         holder.trainInfo.visibility=View.VISIBLE
     }
 

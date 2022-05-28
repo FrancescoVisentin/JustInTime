@@ -45,7 +45,7 @@ class Tabellone2Fragment : Fragment() {
         }
     }
 
-    private fun populateTrain() {
+    /*private fun populateTrain() {
         val train1 = Train(
             "1",
             "10:30",
@@ -72,7 +72,7 @@ class Tabellone2Fragment : Fragment() {
         trainList2.add(train3)
         trainList2.add(train3)
         trainList2.add(train3)
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,13 +82,22 @@ class Tabellone2Fragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_tabellone2, container, false)
 
 
-        populateTrain()
+        //populateTrain()
 
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
-
         val trainsInfo = model.getStationTrains()
         trainsInfo?.forEach {
             Log.e("Info treno:", "Numero: ${it.trainNumber}, tipo: ${it.type}")
+            val train=Train(
+                it.trainNumber,
+                it.departureArrivalTime,
+                it.destinationOrigin,
+                it.binary,
+                it.category,
+                it.delay,
+                it.type
+            )
+            trainList.add(train)
         }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
@@ -127,7 +136,7 @@ class Tabellone2Fragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text=="PARTENZE") {
-                    adapter = CardAdapter(trainList2)
+                    adapter = CardAdapter(trainList)
                     recyclerView.adapter=adapter
                     recyclerView.visibility=View.VISIBLE
                 }
