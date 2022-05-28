@@ -10,18 +10,19 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="?attr/materialCardViewFilledStyle"
         android:layout_marginTop="5dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/planner_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:text="Nome planner"
                 android:textSize="25sp"
                 android:padding="5dp"
@@ -29,9 +30,44 @@
                 android:drawablePadding="5dp"
                 tools:ignore="HardcodedText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="5dp"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="normal"
+                    android:text="@string/planner_treni_seguiti"/>
+
+                <TextView
+                    android:id="@+id/train_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:padding="5dp"
+                    android:background="@drawable/popup_details_inverse"
+                    style="@style/TextAppearance.Material3.BodyMedium"
+                    android:textStyle="normal"
+                    android:textColor="?attr/colorOnTertiaryContainer"
+                    android:text="@string/value_stub"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
 
 </LinearLayout>

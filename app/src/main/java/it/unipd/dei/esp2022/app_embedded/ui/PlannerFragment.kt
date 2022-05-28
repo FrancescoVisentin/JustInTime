@@ -1,11 +1,14 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.PopupWindow
@@ -19,10 +22,6 @@ import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.PlannerListAdapter
 
 class PlannerFragment : Fragment() {
-
-    lateinit var recyclerView: RecyclerView
-    lateinit var db: DBHelper
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,8 +33,8 @@ class PlannerFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_planner, container, false)
 
-        db = DBHelper(context as Context)
-        recyclerView = view.findViewById(R.id.planner_recycler_view)
+        val db = DBHelper(context as Context)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.planner_recycler_view)
         recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -51,6 +50,20 @@ class PlannerFragment : Fragment() {
             popupWindow.isOutsideTouchable = true
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
+            val popupTextView = popupView.findViewById<AutoCompleteTextView>(R.id.text_autocomplete)
+            popupTextView.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    popupTextView.clearFocus()
+                    //hide keyboard
+                    val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
+
+                    return@setOnEditorActionListener true
+                }
+
+                return@setOnEditorActionListener false
+            }
+
             val cancelButton = popupView.findViewById<Button>(R.id.exit_button)
             cancelButton.setOnClickListener() {
                 popupWindow.dismiss()
@@ -58,9 +71,16 @@ class PlannerFragment : Fragment() {
 
             val addButton = popupView.findViewById<Button>(R.id.add_button)
             addButton.setOnClickListener {
-                val name = popupView.findViewById<AutoCompleteTextView>(R.id.text_autocomplete).text.toString()
-                db.addPlanner(name)
-                recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
+                if (popupTextView.text.isNotEmpty()) {
+                    //hide keyboard
+                    val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
+
+                    db.addPlanner(popupTextView.text.toString())
+                    recyclerView.adapter = PlannerListAdapter(db.getPlannersName())
+                    popupWindow.dismiss()
+                }
+
             }
         }
 
