@@ -97,12 +97,6 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
             }
         }
 
-        val bu = view.findViewById<Button>(R.id.button_prova)
-        bu.setOnClickListener(){
-            view.findNavController().navigate(R.id.action_plannerFragment_to_planner2Fragment)
-        }
-
-
         return  view
     }
 
@@ -130,7 +124,7 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
     }
 
     override fun onEvent() {
-        (view as View).findNavController().navigate(R.id.action_plannerFragment_to_addPlannerFragment)
+        (view as View).findNavController().navigate(R.id.action_plannerFragment_to_planner2Fragment)
     }
 
     private fun checkPlannersCount() {
