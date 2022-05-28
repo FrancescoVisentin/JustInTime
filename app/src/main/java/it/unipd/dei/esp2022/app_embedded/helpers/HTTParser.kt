@@ -22,10 +22,10 @@ class HTTParser {
                 newStation.scheduledArrival = station.substringAfter("arrivo_teorico\":").substringBefore(",")
                 newStation.realDeparture = station.substringAfter("partenzaReale\":").substringBefore(",")
                 newStation.realArrival = station.substringAfter("arrivoReale\":").substringBefore(",")
-                if (index != trainStops.size-1) {
+                if (index != trainStops.size-1 && newStation.scheduledDeparture.compareTo("null") != 0) {
                     newStation.expectedDeparture = (newStation.scheduledDeparture.toLong() + info.delay.toLong()*60000).toString()
                 }
-                if (index != 0){
+                if (index != 0 && newStation.scheduledArrival.compareTo("null") != 0){
                     newStation.expectedArrival = (newStation.scheduledArrival.toLong() + info.delay.toLong()*60000).toString()
                 }
 
