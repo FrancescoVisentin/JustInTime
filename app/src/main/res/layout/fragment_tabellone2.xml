@@ -32,12 +32,6 @@
         android:textColor="?attr/colorOnSecondaryContainer"
         android:background="@drawable/sfondo1"/>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="it.unipd.dei.esp2022.app_embedded.ui.Tabellone2Fragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -61,7 +55,6 @@
             android:layout_height="wrap_content"
             android:text="@string/tab_partenze"/>
     </com.google.android.material.tabs.TabLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

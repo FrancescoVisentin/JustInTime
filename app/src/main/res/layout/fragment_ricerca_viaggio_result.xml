@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/sfondo1"
-        android:padding="10dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/departure"

@@ -41,7 +41,7 @@ class HTTParser {
         fun parseSolutionsInfo(solutions: String): MutableList<SolutionInfo> {
             val tripsList = mutableListOf<SolutionInfo>()
             var trip : SolutionInfo
-            val tmp = solutions.split(",{\"durata\":\"")
+            val tmp = solutions.split("{\"durata\":\"")
             var tmp2 : List<String>
             for(i in 1..tmp.lastIndex)
             {
@@ -50,7 +50,7 @@ class HTTParser {
                 trip.trainNumber = mutableListOf()
                 trip.duration = tmp[i].substringBefore("\"")
                 trip.departureTime = tmp[i].substringAfter("orarioPartenza\":\"").substringBefore("\"")
-                tmp2 = tmp[i].split("},")
+                tmp2 = tmp[i].split("},{")
                 trip.arrivalTime = tmp2.last().substringAfter("orarioArrivo\":\"").substringBefore("\"")
                 for(j in 0..tmp2.lastIndex) {
                     (trip.category).add(tmp2[j].substringAfter("categoriaDescrizione\":\"").substringBefore("\""))

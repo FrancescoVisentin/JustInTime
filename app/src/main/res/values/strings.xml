@@ -18,6 +18,8 @@
     <string name="time">Orario:</string>
     <string name="results_for">Risultati per:</string>
     <string name="state">Stato Treno:</string>
+    <string name="planner_name">Nome planner</string>
+    <string name="add_train">Aggiungi treno</string>
 
     <string name="tab_arrivi">ARRIVI</string>
     <string name="tab_partenze">PARTENZE</string>
@@ -54,5 +56,7 @@
         <item>Treno 257</item>
         <item>Treno 538</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
