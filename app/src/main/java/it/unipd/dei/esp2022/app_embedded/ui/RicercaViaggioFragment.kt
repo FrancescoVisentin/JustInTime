@@ -1,7 +1,5 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -53,7 +51,7 @@ class RicercaViaggioFragment : Fragment() {
             //Hide keyboard if present
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
-            fade()
+            stopFade()
             view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
         }
 
@@ -124,6 +122,7 @@ class RicercaViaggioFragment : Fragment() {
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
                 model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase())
                      .observe(viewLifecycleOwner, resObserver)
+                startFade()
             }
         }
 
@@ -147,21 +146,23 @@ class RicercaViaggioFragment : Fragment() {
         }
     }
 
-    private fun fade() {
+    private fun startFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
         loadingView.apply {
-            loadingView.alpha = 1f
+            loadingView.alpha = 0f
             visibility = View.VISIBLE
-            animate()
-                .alpha(0f)
-                .setDuration(time)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        loadingView.visibility = View.GONE
-                    }
-                })
+            animate().alpha(1f).duration = time
+        }
+    }
+
+    private fun stopFade() {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+
+        loadingView.apply {
+            loadingView.alpha = 0f
+            visibility = View.INVISIBLE
         }
     }
 }

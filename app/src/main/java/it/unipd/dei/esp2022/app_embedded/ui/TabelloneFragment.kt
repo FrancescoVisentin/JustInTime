@@ -50,7 +50,7 @@ class TabelloneFragment : Fragment() {
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
-            fade()
+            stopFade()
             view.findNavController().navigate(R.id.action_tabelloneFragment_to_tabellone2Fragment)
         }
 
@@ -66,6 +66,7 @@ class TabelloneFragment : Fragment() {
 
                     if (textView.text.isNotEmpty()){
                         model.searchStation(textView.text.toString().lowercase()).observe(viewLifecycleOwner, resObserver)
+                        startFade()
                     }
                     true
                 }
@@ -77,27 +78,30 @@ class TabelloneFragment : Fragment() {
         searchButton.setOnClickListener{
             if (textView.text.isNotEmpty()) {
                 model.searchStation(textView.text.toString().lowercase()).observe(viewLifecycleOwner, resObserver)
+                startFade()
             }
         }
 
         return  view
     }
 
-    private fun fade() {
+    private fun startFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
         loadingView.apply {
-            loadingView.alpha = 1f
+            loadingView.alpha = 0f
             visibility = View.VISIBLE
-            animate()
-                .alpha(0f)
-                .setDuration(time)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        loadingView.visibility = View.GONE
-                    }
-                })
+            animate().alpha(1f).duration = time
+        }
+    }
+
+    private fun stopFade() {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+
+        loadingView.apply {
+            loadingView.alpha = 0f
+            visibility = View.INVISIBLE
         }
     }
 }
