@@ -57,7 +57,7 @@ class RicercaViaggioFragment : Fragment() {
             //Hide keyboard if present
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
-            fade()
+            stopFade()
             val action = RicercaViaggioFragmentDirections.actionRicercaViaggioFragmentToRicercaViaggioResultFragment("$departure|$destination|$time")
             view.findNavController().navigate(action)
         }
@@ -131,6 +131,7 @@ class RicercaViaggioFragment : Fragment() {
                 destination = textViewArrivals.text.toString().lowercase()
                 time = "${buttonHour.text}:${buttonMin.text}"
                 model.searchSolutions(departure, destination).observe(viewLifecycleOwner, resObserver)
+                startFade()
             }
         }
 
@@ -154,21 +155,23 @@ class RicercaViaggioFragment : Fragment() {
         }
     }
 
-    private fun fade() {
+    private fun startFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
         loadingView.apply {
-            loadingView.alpha = 1f
+            loadingView.alpha = 0f
             visibility = View.VISIBLE
-            animate()
-                .alpha(0f)
-                .setDuration(time)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        loadingView.visibility = View.GONE
-                    }
-                })
+            animate().alpha(1f).duration = time
+        }
+    }
+
+    private fun stopFade() {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+
+        loadingView.apply {
+            loadingView.alpha = 0f
+            visibility = View.INVISIBLE
         }
     }
 }
