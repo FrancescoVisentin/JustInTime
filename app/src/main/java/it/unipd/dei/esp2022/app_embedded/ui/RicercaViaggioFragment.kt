@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -24,6 +25,8 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class RicercaViaggioFragment : Fragment() {
@@ -65,6 +68,8 @@ class RicercaViaggioFragment : Fragment() {
 
         val buttonHour: Button = view.findViewById(R.id.button_hour)
         val buttonMin: Button = view.findViewById(R.id.button_min)
+        buttonHour.text = SimpleDateFormat("HH", Locale.ENGLISH).format(Date())
+        buttonMin.text = SimpleDateFormat("mm", Locale.ENGLISH).format(Date())
         buttonHour.setOnClickListener {
             setUpCLock(buttonHour, buttonMin)
         }
@@ -130,7 +135,7 @@ class RicercaViaggioFragment : Fragment() {
                 departure = textViewDepartures.text.toString().lowercase()
                 destination = textViewArrivals.text.toString().lowercase()
                 time = "${buttonHour.text}:${buttonMin.text}"
-                model.searchSolutions(departure, destination).observe(viewLifecycleOwner, resObserver)
+                model.searchSolutions(departure, destination, time).observe(viewLifecycleOwner, resObserver)
                 startFade()
             }
         }

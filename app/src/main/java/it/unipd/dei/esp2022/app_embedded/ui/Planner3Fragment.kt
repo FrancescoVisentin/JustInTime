@@ -29,6 +29,7 @@ import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 class Planner3Fragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<MutableList<HTTParser.SolutionInfo>>
+    private var time : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,7 +122,8 @@ class Planner3Fragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
-                model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase())
+                time = "${buttonHour.text}:${buttonMin.text}"
+                model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase(), time)
                     .observe(viewLifecycleOwner, resObserver)
             }
         }

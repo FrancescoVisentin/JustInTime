@@ -35,7 +35,7 @@ class Tabellone2Fragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
         val message = Tabellone2FragmentArgs.fromBundle(requireArguments()).message
-        view.findViewById<TextView>(R.id.station).text = message
+        view.findViewById<TextView>(R.id.station).text = message.capitalize()
         Log.e("Message:", message)
         val trainStationInfo = model.getStationTrains()
         Log.e("trainInfo: ",trainStationInfo?.get(0).toString())

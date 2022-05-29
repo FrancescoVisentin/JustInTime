@@ -17,7 +17,7 @@ class SolutionsViewModel : ViewModel() {
         MutableLiveData<MutableList<HTTParser.SolutionInfo>>()
     }
 
-    fun searchSolutions(firstStation : String, secondStation : String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
+    fun searchSolutions(firstStation : String, secondStation : String, time: String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
         viewModelScope.launch {
             val firstStationID = getStationID(firstStation)
             val secondStationID = getStationID(secondStation)
@@ -28,7 +28,7 @@ class SolutionsViewModel : ViewModel() {
                 return@launch
             }
 
-            val solutions = getSolutions(firstStationID.drop(1), secondStationID.drop(1))
+            val solutions = getSolutions(firstStationID.drop(1), secondStationID.drop(1), time)
 
             ret.value = HTTParser.parseSolutionsInfo(solutions)
         }
@@ -68,11 +68,11 @@ class SolutionsViewModel : ViewModel() {
         }
     }
 
-    private suspend fun getSolutions(firstStationID: String, secondStationID: String) : String {
+    private suspend fun getSolutions(firstStationID: String, secondStationID: String, time: String) : String {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date()) //TODO controlla come si comporta il format orario di trenitalia
 
         return withContext(Dispatchers.IO) {
-            val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/soluzioniViaggioNew/$firstStationID/$secondStationID/${date}T00:00:00")
+            val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/soluzioniViaggioNew/$firstStationID/$secondStationID/${date}T$time:00")
             val urlConnection = url.openConnection() as HttpURLConnection
             try {
                 val stream = BufferedInputStream(urlConnection.inputStream)

@@ -29,8 +29,8 @@ class RicercaViaggioResultFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio_result, container, false)
         val message = RicercaViaggioResultFragmentArgs.fromBundle(requireArguments()).message
-        view.findViewById<TextView>(R.id.departure).text = message.substringBefore("|")
-        view.findViewById<TextView>(R.id.arrival).text = message.substringAfter("|").substringBeforeLast("|")
+        view.findViewById<TextView>(R.id.departure).text = message.substringBefore("|").capitalize()
+        view.findViewById<TextView>(R.id.arrival).text = message.substringAfter("|").substringBeforeLast("|").capitalize()
         view.findViewById<TextView>(R.id.time2).text = message.substringAfterLast("|")
         view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
         Log.e("Message: ", message)
