@@ -29,6 +29,10 @@ import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 class RicercaViaggioFragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<MutableList<HTTParser.SolutionInfo>>
+    private var departure : String = ""
+    private var destination : String = ""
+    private var time : String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +58,8 @@ class RicercaViaggioFragment : Fragment() {
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
             fade()
-            view.findNavController().navigate(R.id.action_ricercaViaggioFragment_to_ricercaViaggioResultFragment)
+            val action = RicercaViaggioFragmentDirections.actionRicercaViaggioFragmentToRicercaViaggioResultFragment("$departure|$destination|$time")
+            view.findNavController().navigate(action)
         }
 
 
@@ -122,8 +127,10 @@ class RicercaViaggioFragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
-                model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase())
-                     .observe(viewLifecycleOwner, resObserver)
+                departure = textViewDepartures.text.toString().lowercase()
+                destination = textViewArrivals.text.toString().lowercase()
+                time = "${buttonHour.text}:${buttonMin.text}"
+                model.searchSolutions(departure, destination).observe(viewLifecycleOwner, resObserver)
             }
         }
 

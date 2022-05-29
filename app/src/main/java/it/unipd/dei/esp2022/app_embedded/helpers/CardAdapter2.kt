@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.Train
 
-class CardAdapter2(private val trains: List<Train>)
+class CardAdapter2(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>)
     : RecyclerView.Adapter<CardAdapter2.CardViewHolder2>() {
 
     private val onClickListener = View.OnClickListener { v ->
@@ -17,11 +17,11 @@ class CardAdapter2(private val trains: List<Train>)
     }
 
     class CardViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView){
-        //TODO Dichiarare e inizializzare riferimenti ai componenti del Layout
-        val trainNumber : TextView
-        init {
-            trainNumber=itemView.findViewById<View>(R.id.train_number) as TextView
-        }
+        val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
+        val departureTime = itemView.findViewById<TextView>(R.id.departure_time)
+        val arrivalTime = itemView.findViewById<TextView>(R.id.arrival_time)
+        val duration = itemView.findViewById<TextView>(R.id.duration)
+        val changes = itemView.findViewById<TextView>(R.id.changes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder2 {
@@ -32,8 +32,17 @@ class CardAdapter2(private val trains: List<Train>)
 
     override fun onBindViewHolder(holder: CardViewHolder2, position: Int) {
         //TODO Modificare campo 'text' con il valore dell'attributo della classe Train
-        holder.trainNumber.text = trains[position].numero
+        var trainString : String = (solutionsInfo[position].trainNumber).first()
+        for(i in 1..(solutionsInfo[position].trainNumber).lastIndex)
+        {
+            trainString = trainString + " + " + (solutionsInfo[position].trainNumber)[i]
+        }
+        holder.trainNumber.text = trainString
+        holder.departureTime.text = (solutionsInfo[position].departureTime).substringAfter("T").substringBeforeLast(":")
+        holder.arrivalTime.text = (solutionsInfo[position].arrivalTime).substringAfter("T").substringBeforeLast(":")
+        holder.duration.text = solutionsInfo[position].duration
+        holder.changes.text = solutionsInfo[position].changes.toString()
     }
 
-    override fun getItemCount(): Int = trains.size
+    override fun getItemCount(): Int = solutionsInfo.size
 }

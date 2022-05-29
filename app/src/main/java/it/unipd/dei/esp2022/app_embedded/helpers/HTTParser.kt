@@ -62,38 +62,41 @@ class HTTParser {
             return tripsList
         }
 
-        fun parseStationsInfo(departingTrains : String, incomingTrains : String): MutableList<TrainStationInfo> {
+        fun parseStationsInfo(departingTrains : String, incomingTrains : String): Array<MutableList<TrainStationInfo>> {
             //DEPARTURES
-            val trainList = mutableListOf<TrainStationInfo>()
+            val departuresList = mutableListOf<TrainStationInfo>()
             var departureTrain : TrainStationInfo
             val tmp = departingTrains.split("\"numeroTreno\":")
             for(i in 1..tmp.lastIndex)
             {
-                departureTrain = TrainStationInfo(TrainStationInfo.DEPARTURE)
+                departureTrain = TrainStationInfo("")
                 departureTrain.trainNumber = tmp[i].substringBefore(",")
-                departureTrain.category = tmp[i].substringAfter("categoriaDescrizione\": \"").substringBefore("\"")
-                departureTrain.departureArrivalTime = tmp[i].substringAfter("compOrarioPartenza\": \"").substringBefore("\"")
-                departureTrain.destinationOrigin = tmp[i].substringAfter("destinazione\": \"").substringBefore("\"")
-                departureTrain.delay = tmp[i].substringAfter("ritardo\": ").substringBefore(",")
-                departureTrain.binary = tmp[i].substringAfter("binarioEffettivoPartenzaDescrizione\": \"").substringBefore("\"")
-                trainList.add(departureTrain)
+                departureTrain.category = tmp[i].substringAfter("categoriaDescrizione\":\"").substringBefore("\"")
+                departureTrain.departureArrivalTime = tmp[i].substringAfter("compOrarioPartenza\":\"").substringBefore("\"")
+                departureTrain.destinationOrigin = tmp[i].substringAfter("destinazione\":\"").substringBefore("\"")
+                departureTrain.delay = tmp[i].substringAfter("ritardo\":").substringBefore(",")
+                departureTrain.track = tmp[i].substringAfter("binarioProgrammatoPartenzaDescrizione\":\"").substringBefore("\"")
+                departuresList.add(departureTrain)
             }
             //ARRIVALS
+            val arrivalsList = mutableListOf<TrainStationInfo>()
             var arrivalTrain : TrainStationInfo
             val tmp2 = incomingTrains.split("\"numeroTreno\":")
             for(i in 1..tmp2.lastIndex)
             {
-                arrivalTrain = TrainStationInfo(TrainStationInfo.ARRIVAL)
+                arrivalTrain = TrainStationInfo("")
                 arrivalTrain.trainNumber = tmp2[i].substringBefore(",")
-                arrivalTrain.category = tmp2[i].substringAfter("categoriaDescrizione\": \"").substringBefore("\"")
-                arrivalTrain.departureArrivalTime = tmp2[i].substringAfter("compOrarioArrivo\": \"").substringBefore("\"")
-                arrivalTrain.destinationOrigin = tmp2[i].substringAfter("origine\": \"").substringBefore("\"")
-                arrivalTrain.delay = tmp2[i].substringAfter("ritardo\": ").substringBefore(",")
-                arrivalTrain.binary = tmp2[i].substringAfter("binarioEffettivoArrivoDescrizione\": \"").substringBefore("\"")
-                trainList.add(arrivalTrain)
+                arrivalTrain.category = tmp2[i].substringAfter("categoriaDescrizione\":\"").substringBefore("\"")
+                arrivalTrain.departureArrivalTime = tmp2[i].substringAfter("compOrarioArrivo\":\"").substringBefore("\"")
+                arrivalTrain.destinationOrigin = tmp2[i].substringAfter("origine\":\"").substringBefore("\"")
+                arrivalTrain.delay = tmp2[i].substringAfter("ritardo\":").substringBefore(",")
+                arrivalTrain.track = tmp2[i].substringAfter("binarioProgrammatoArrivoDescrizione\":\"").substringBefore("\"")
+                arrivalsList.add(arrivalTrain)
             }
-
-            return trainList
+            val trainArray = Array(2, {i -> mutableListOf<TrainStationInfo>()})
+            trainArray.set(0, departuresList)
+            trainArray.set(1, arrivalsList)
+            return trainArray
         }
 
     }
@@ -124,18 +127,12 @@ class HTTParser {
         lateinit var trainNumber : MutableList<String>
     }
 
-    data class TrainStationInfo(val type: Int)
+    data class TrainStationInfo(var category: String)
     {
-        var category : String = ""
         var departureArrivalTime : String = ""
         var destinationOrigin : String = ""
         var delay : String = ""
-        var binary : String = ""
+        var track : String = ""
         var trainNumber : String = ""
-
-        companion object {
-            const val DEPARTURE = 0
-            const val ARRIVAL = 1
-        }
     }
 }

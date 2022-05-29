@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.Train
 
-class CardAdapter(private val trains: List<Train>)
+class CardAdapter(private val trainStationInfo: MutableList<HTTParser.TrainStationInfo>)
     : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
@@ -17,18 +17,11 @@ class CardAdapter(private val trains: List<Train>)
     }
 
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val trainNumber : TextView
-        val trainTime : TextView
-        val trainPlace : TextView
-        val trainBinary : TextView
-        val trainInfo : TextView
-        init {
-            trainNumber=itemView.findViewById<View>(R.id.train_number) as TextView
-            trainTime=itemView.findViewById<View>(R.id.orario) as TextView
-            trainPlace=itemView.findViewById<View>(R.id.place) as TextView
-            trainBinary=itemView.findViewById<View>(R.id.binario) as TextView
-            trainInfo=itemView.findViewById<View>(R.id.information) as TextView
-        }
+        val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
+        val trainTime = itemView.findViewById<TextView>(R.id.orario)
+        val trainPlace = itemView.findViewById<TextView>(R.id.place)
+        val trainBinary = itemView.findViewById<TextView>(R.id.binario)
+        val trainDelay = itemView.findViewById<TextView>(R.id.information)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
@@ -38,17 +31,12 @@ class CardAdapter(private val trains: List<Train>)
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.trainNumber.text = trains[position].numero
-        holder.trainNumber.visibility=View.VISIBLE
-        holder.trainTime.text = trains[position].orario
-        holder.trainTime.visibility=View.VISIBLE
-        holder.trainPlace.text = trains[position].luogo
-        holder.trainPlace.visibility=View.VISIBLE
-        holder.trainBinary.text = trains[position].binario
-        holder.trainBinary.visibility=View.VISIBLE
-        holder.trainInfo.text = trains[position].ritardo
-        holder.trainInfo.visibility=View.VISIBLE
+        holder.trainNumber.text = trainStationInfo[position].trainNumber
+        holder.trainTime.text = trainStationInfo[position].departureArrivalTime
+        holder.trainPlace.text = trainStationInfo[position].destinationOrigin
+        holder.trainBinary.text = trainStationInfo[position].track
+        holder.trainDelay.text = trainStationInfo[position].delay
     }
 
-    override fun getItemCount(): Int = trains.size
+    override fun getItemCount(): Int = trainStationInfo.size
 }

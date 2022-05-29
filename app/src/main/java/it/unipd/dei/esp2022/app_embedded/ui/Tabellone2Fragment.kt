@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,87 +18,29 @@ import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
 import it.unipd.dei.esp2022.app_embedded.trainList
 import it.unipd.dei.esp2022.app_embedded.trainList2
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Tabellone2Fragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Tabellone2Fragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     private val model : StationsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
-    /*private fun populateTrain() {
-        val train1 = Train(
-            "1",
-            "10:30",
-            "Nessuna"
-        )
-        trainList.add(train1)
-
-        val train2 = Train(
-            "2",
-            "19:30",
-            "ritardo"
-        )
-        trainList.add(train2)
-
-        val train3 = Train(
-            "3",
-            "09:00",
-            "Binario rotto"
-        )
-        trainList2.add(train3)
-        trainList2.add(train3)
-        trainList2.add(train3)
-        trainList2.add(train3)
-        trainList2.add(train3)
-        trainList2.add(train3)
-        trainList2.add(train3)
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_tabellone2, container, false)
-
-
-        //populateTrain()
+        savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
-        val trainsInfo = model.getStationTrains()
-        trainsInfo?.forEach {
-            Log.e("Info treno:", "Numero: ${it.trainNumber}, tipo: ${it.type}")
-            val train=Train(
-                it.trainNumber,
-                it.departureArrivalTime,
-                it.destinationOrigin,
-                it.binary,
-                it.category,
-                it.delay,
-                it.type
-            )
-            trainList.add(train)
+        val message = Tabellone2FragmentArgs.fromBundle(requireArguments()).message
+        view.findViewById<TextView>(R.id.station).text = message
+        Log.e("Message:", message)
+        val trainStationInfo = model.getStationTrains()
+        Log.e("trainInfo: ",trainStationInfo?.get(0).toString())
+        trainStationInfo?.get(0)?.forEach {
+            Log.e("Info treno:", "Numero: ${it.trainNumber}, tipo: ${it.category}")
         }
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
@@ -105,7 +48,7 @@ class Tabellone2Fragment : Fragment() {
         recyclerView!!.layoutManager=mLayoutManager
         var adapter:RecyclerView.Adapter<CardAdapter.CardViewHolder>?=null
 
-        adapter= CardAdapter(trainList)
+        adapter= CardAdapter(trainStationInfo!!.get(1))
         recyclerView.adapter = adapter
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
        /* val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)
@@ -136,12 +79,12 @@ class Tabellone2Fragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text=="PARTENZE") {
-                    adapter = CardAdapter(trainList)
+                    adapter = CardAdapter(trainStationInfo!!.get(0))
                     recyclerView.adapter=adapter
                     recyclerView.visibility=View.VISIBLE
                 }
                 else {
-                    adapter = CardAdapter(trainList)
+                    adapter = CardAdapter(trainStationInfo!!.get(1))
                     recyclerView.adapter=adapter
                     recyclerView.visibility=View.VISIBLE
 
@@ -160,26 +103,4 @@ class Tabellone2Fragment : Fragment() {
 
         return view
     }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Tabellone2Fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Tabellone2Fragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-
 }

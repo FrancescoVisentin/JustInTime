@@ -25,7 +25,8 @@ import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
 
 class TabelloneFragment : Fragment() {
     private val model : StationsViewModel by activityViewModels()
-    private lateinit var resObserver : Observer<MutableList<HTTParser.TrainStationInfo>>
+    private lateinit var resObserver : Observer<Array<MutableList<HTTParser.TrainStationInfo>>>
+    private var station : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class TabelloneFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_tabellone, container, false)
 
-        resObserver = Observer<MutableList<HTTParser.TrainStationInfo>> { info ->
+        resObserver = Observer<Array<MutableList<HTTParser.TrainStationInfo>>> { info ->
             if (info == null) {
                 val contextView = view.findViewById<View>(R.id.coordinator_layout)
                 Snackbar.make(contextView, "Stazione non valida", Snackbar.LENGTH_SHORT)
@@ -51,7 +52,8 @@ class TabelloneFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
             fade()
-            view.findNavController().navigate(R.id.action_tabelloneFragment_to_tabellone2Fragment)
+            val action = TabelloneFragmentDirections.actionTabelloneFragmentToTabellone2Fragment("$station")
+            view.findNavController().navigate(action)
         }
 
         val textView = view.findViewById<AutoCompleteTextView>(R.id.text_autocomplete)
@@ -76,7 +78,8 @@ class TabelloneFragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textView.text.isNotEmpty()) {
-                model.searchStation(textView.text.toString().lowercase()).observe(viewLifecycleOwner, resObserver)
+                station = textView.text.toString().lowercase()
+                model.searchStation(station).observe(viewLifecycleOwner, resObserver)
             }
         }
 

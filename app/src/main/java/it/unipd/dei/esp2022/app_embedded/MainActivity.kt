@@ -68,6 +68,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.addPlannerFragment            -> bottomNavigationView.visibility = View.GONE
                 R.id.ricercaViaggioFragment        -> bottomNavigationView.visibility = View.GONE
                 R.id.ricercaViaggioResultFragment  -> bottomNavigationView.visibility = View.GONE
+                R.id.planner2Fragment              -> bottomNavigationView.visibility = View.GONE
+                R.id.planner3Fragment              -> bottomNavigationView.visibility = View.GONE
+                R.id.planner3ResultFragment        -> bottomNavigationView.visibility = View.GONE
+                R.id.tabellone2Fragment            -> bottomNavigationView.visibility = View.GONE
                 else                               -> bottomNavigationView.visibility = View.VISIBLE
             }
 

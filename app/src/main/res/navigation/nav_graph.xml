@@ -49,11 +49,20 @@
     <fragment
     android:id="@+id/ricercaViaggioResultFragment"
     android:name="it.unipd.dei.esp2022.app_embedded.ui.RicercaViaggioResultFragment"
-    android:label="Risultati ricerca viaggio" />
+    android:label="Risultati ricerca viaggio" >
+    <argument
+        android:name="message"
+        app:argType="string" />
+    </fragment>
+
     <fragment
         android:id="@+id/tabellone2Fragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Tabellone2Fragment"
-        android:label="Risultati Tabellone" />
+        android:label="Risultati Tabellone" >
+    <argument
+        android:name="message"
+        app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/addPlannerFragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.AddPlannerFragment"

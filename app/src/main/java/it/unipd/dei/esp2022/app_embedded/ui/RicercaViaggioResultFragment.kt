@@ -10,8 +10,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
+import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter
+import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter2
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
+import it.unipd.dei.esp2022.app_embedded.trainList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RicercaViaggioResultFragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
@@ -21,21 +28,24 @@ class RicercaViaggioResultFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio_result, container, false)
+        val message = RicercaViaggioResultFragmentArgs.fromBundle(requireArguments()).message
+        view.findViewById<TextView>(R.id.departure).text = message.substringBefore("|")
+        view.findViewById<TextView>(R.id.arrival).text = message.substringAfter("|").substringBeforeLast("|")
+        view.findViewById<TextView>(R.id.time2).text = message.substringAfterLast("|")
+        view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
+        Log.e("Message: ", message)
 
-        val trainsInfo = model.getSolutions()
-        trainsInfo?.forEach {
-            Log.e("Info treno:", "Numero: ${it.trainNumber}")
-        }
+        val solutionsInfo = model.getSolutions()
 
-        val cardLayout = view.findViewById<LinearLayout>(R.id.linear)
-        for(i in 0..6)
-        {
-            val card = inflater.inflate(R.layout.card_layout, container, false) as CardView
-            card.setOnClickListener{
-                card.findViewById<TextView>(R.id.train_number).text = "Ciao mondo"
-            }
-            cardLayout.addView(card)
-        }
+
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        recyclerView!!.layoutManager=mLayoutManager
+        var adapter: RecyclerView.Adapter<CardAdapter2.CardViewHolder2>?=null
+
+        adapter= CardAdapter2(solutionsInfo!!)
+        recyclerView.adapter = adapter
+
         return view
     }
 
