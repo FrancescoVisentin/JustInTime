@@ -93,6 +93,78 @@
 
 
             <TextView
+                android:id="@+id/place_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="5dp"
+                android:text="@string/place"
+                android:textAppearance="@style/Text.FancyListHeadline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/place"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_details"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="?attr/colorOnSecondaryContainer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/binario_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:padding="5dp"
+                android:text="@string/binario_nr"
+                android:textAppearance="@style/Text.FancyListHeadline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/binario"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/state_details"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="?attr/colorOnSecondaryContainer"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
                 android:id="@+id/information_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

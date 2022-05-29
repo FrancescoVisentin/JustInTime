@@ -4,8 +4,11 @@ var trainList = mutableListOf<Train>()
 var trainList2 = mutableListOf<Train>()
 
 class Train (
-    var number: String,
+    var numero: String,
     var orario: String,
-    var state: String,
-    val id:Int? = trainList.size
+    var luogo: String,
+    var binario: String,
+    var categoria: String,
+    var ritardo: String?,
+    var tipo:Int,
 )
