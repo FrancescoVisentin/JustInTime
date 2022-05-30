@@ -16,6 +16,7 @@ class SolutionsViewModel : ViewModel() {
     private val ret: MutableLiveData<MutableList<HTTParser.SolutionInfo>> by lazy {
         MutableLiveData<MutableList<HTTParser.SolutionInfo>>()
     }
+    var updated : Boolean = false
 
     fun searchSolutions(firstStation : String, secondStation : String, time: String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
         viewModelScope.launch {
@@ -30,6 +31,7 @@ class SolutionsViewModel : ViewModel() {
 
             val solutions = getSolutions(firstStationID.drop(1), secondStationID.drop(1), time)
 
+            updated = true
             ret.value = HTTParser.parseSolutionsInfo(solutions)
         }
         return ret
