@@ -34,8 +34,15 @@ class CardAdapter(private val trainStationInfo: MutableList<HTTParser.TrainStati
         holder.trainNumber.text = trainStationInfo[position].trainNumber
         holder.trainTime.text = trainStationInfo[position].departureArrivalTime
         holder.trainPlace.text = trainStationInfo[position].destinationOrigin
-        holder.trainBinary.text = trainStationInfo[position].track
-        holder.trainDelay.text = trainStationInfo[position].delay
+        if(trainStationInfo[position].track.contains("null"))
+        {
+            holder.trainBinary.text = "Non disponibile"
+        }
+        else
+        {
+            holder.trainBinary.text = trainStationInfo[position].track.substringAfter("\"").substringBefore("\"")
+        }
+        holder.trainDelay.text = trainStationInfo[position].delay.replace(".","").capitalize()
     }
 
     override fun getItemCount(): Int = trainStationInfo.size

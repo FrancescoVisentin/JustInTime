@@ -74,8 +74,8 @@ class HTTParser {
                 departureTrain.category = tmp[i].substringAfter("categoriaDescrizione\":\"").substringBefore("\"")
                 departureTrain.departureArrivalTime = tmp[i].substringAfter("compOrarioPartenza\":\"").substringBefore("\"")
                 departureTrain.destinationOrigin = tmp[i].substringAfter("destinazione\":\"").substringBefore("\"")
-                departureTrain.delay = tmp[i].substringAfter("ritardo\":").substringBefore(",")
-                departureTrain.track = tmp[i].substringAfter("binarioProgrammatoPartenzaDescrizione\":\"").substringBefore("\"")
+                departureTrain.delay = tmp[i].substringAfter("compRitardo\":[\"").substringBefore("\"")
+                departureTrain.track = tmp[i].substringAfter("binarioEffettivoPartenzaDescrizione\":").substringBefore(",")
                 departuresList.add(departureTrain)
             }
             //ARRIVALS
@@ -89,8 +89,8 @@ class HTTParser {
                 arrivalTrain.category = tmp2[i].substringAfter("categoriaDescrizione\":\"").substringBefore("\"")
                 arrivalTrain.departureArrivalTime = tmp2[i].substringAfter("compOrarioArrivo\":\"").substringBefore("\"")
                 arrivalTrain.destinationOrigin = tmp2[i].substringAfter("origine\":\"").substringBefore("\"")
-                arrivalTrain.delay = tmp2[i].substringAfter("ritardo\":").substringBefore(",")
-                arrivalTrain.track = tmp2[i].substringAfter("binarioProgrammatoArrivoDescrizione\":\"").substringBefore("\"")
+                arrivalTrain.delay = tmp2[i].substringAfter("compRitardo\":[\"").substringBefore("\"")
+                arrivalTrain.track = tmp2[i].substringAfter("binarioEffettivoArrivoDescrizione\":").substringBefore(",")
                 arrivalsList.add(arrivalTrain)
             }
             val trainArray = Array(2, {i -> mutableListOf<TrainStationInfo>()})
