@@ -14,6 +14,7 @@ class TrainViewModel : ViewModel() {
     private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
         MutableLiveData<HTTParser.TrainInfo>()
     }
+    var updated: Boolean = false
 
     fun searchTrain(trainID : String) : MutableLiveData<HTTParser.TrainInfo> {
         viewModelScope.launch {
@@ -37,6 +38,7 @@ class TrainViewModel : ViewModel() {
             val trainState = getTrainState(id, origin, date)
             val trainStops = getTrainRoute(id, origin, date)
 
+            updated = true
             ret.value = HTTParser.parseTrainInfo(trainID, trainState, trainStops)
         }
 

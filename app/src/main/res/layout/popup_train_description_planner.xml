@@ -77,109 +77,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:id="@+id/delay_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/train_position"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/value_stub"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:textColor="?attr/colorOnBackground"
-                android:padding="5dp"
-                android:gravity="left"/>
-
-
-            <TextView
-                android:id="@+id/delay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/value_stub"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:background="@drawable/popup_details"
-                android:textColor="?attr/colorOnSecondaryContainer"
-                android:padding="5dp"
-                android:gravity="center"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/delay_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/last_detection"
-            style="@style/TextAppearance.Material3.LabelSmall"
-            android:textColor="?attr/colorOnBackground"
-            android:paddingHorizontal="5dp"
-            android:gravity="center"/>
-
-        <TextView
-            android:id="@+id/time_last_detection"
-            style="@style/TextAppearance.Material3.LabelSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="5dp"
-            android:text="@string/value_stub"
-            android:textColor="?attr/colorOnBackground"
-            android:background="@drawable/state_details"
-            app:layout_constraintStart_toEndOf="@id/text2"
-            app:layout_constraintTop_toBottomOf="@id/delay_layout" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <View
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="?android:attr/listDivider" />
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stations_recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="none"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <SeekBar
-                android:id="@+id/step_bar"
-                style="@style/Widget.AppCompat.SeekBar.Discrete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="visible"
-                android:focusable="false"
-                android:paddingHorizontal="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/labels_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingHorizontal="10dp"/>
-
-        </LinearLayout>
-
-
-    </HorizontalScrollView>
+        android:paddingHorizontal="15dp"/>
 
     <View
         android:id="@+id/divider2"
@@ -191,6 +100,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">
+
+        <Button
+            android:id="@+id/add_button"
+            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="5dp"
+            android:text="@string/add_train"
+            android:textAlignment="center"/>
 
         <Button
             android:id="@+id/exit_button"
