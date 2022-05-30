@@ -7,20 +7,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
-class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>)
+class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>, private val listener : ClickListener)
     : RecyclerView.Adapter<PlannerCardAdapter.CardViewHolder3>() {
 
-    private val onClickListener = View.OnClickListener { v ->
-        val trainNumber1 = v.findViewById<TextView>(R.id.train_number_label)
-        trainNumber1.text="0000"
+    private val onClickListener = View.OnClickListener {
+        val trainNumber = it.findViewById<TextView>(R.id.train_number).text.toString()
+        listener.onEvent(trainNumber.split(" ")[0])
     }
 
     class CardViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
-        val departureTime = itemView.findViewById<TextView>(R.id.departure_time)
-        val arrivalTime = itemView.findViewById<TextView>(R.id.arrival_time)
-        val duration = itemView.findViewById<TextView>(R.id.duration)
-        val changes = itemView.findViewById<TextView>(R.id.changes)
+        val trainNumber: TextView = itemView.findViewById(R.id.train_number)
+        val departureTime: TextView = itemView.findViewById(R.id.departure_time)
+        val arrivalTime: TextView = itemView.findViewById(R.id.arrival_time)
+        val duration: TextView = itemView.findViewById(R.id.duration)
+        val changes: TextView = itemView.findViewById(R.id.changes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder3 {
@@ -43,4 +43,8 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
     }
 
     override fun getItemCount(): Int = solutionsInfo.size
+
+    interface ClickListener {
+        fun onEvent(number: String)
+    }
 }

@@ -38,11 +38,12 @@ class Planner3Fragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enterTransition = MaterialFadeThrough()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio, container, false)
         val infoDb = Planner3FragmentArgs.fromBundle(requireArguments()).message
@@ -53,6 +54,8 @@ class Planner3Fragment : Fragment() {
                 Snackbar.make(contextView, "Stazioni non valide", Snackbar.LENGTH_SHORT)
                     .setAction("Chiudi") {}
                     .show()
+
+                stopFade()
                 return@Observer
             }
 
@@ -63,7 +66,7 @@ class Planner3Fragment : Fragment() {
             //Hide keyboard if present
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
-            fade()
+            stopFade()
             val action = Planner3FragmentDirections.actionPlanner3FragmentToPlanner3ResultFragment("$departure|$destination|$time|${infoDb}")
             view.findNavController().navigate(action)
         }
@@ -141,6 +144,8 @@ class Planner3Fragment : Fragment() {
 
                 model.updated = false
                 model.searchSolutions(departure, destination, time).observe(viewLifecycleOwner, resObserver)
+
+                startFade()
             }
         }
 
@@ -164,21 +169,23 @@ class Planner3Fragment : Fragment() {
         }
     }
 
-    private fun fade() {
+    private fun startFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
         loadingView.apply {
-            loadingView.alpha = 1f
+            loadingView.alpha = 0f
             visibility = View.VISIBLE
-            animate()
-                .alpha(0f)
-                .setDuration(time)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator) {
-                        loadingView.visibility = View.GONE
-                    }
-                })
+            animate().alpha(1f).duration = time
+        }
+    }
+
+    private fun stopFade() {
+        val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
+
+        loadingView.apply {
+            loadingView.alpha = 0f
+            visibility = View.INVISIBLE
         }
     }
 }

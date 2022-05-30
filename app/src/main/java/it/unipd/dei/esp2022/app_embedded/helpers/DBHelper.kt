@@ -68,6 +68,10 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.insert("Planner", null, cv) != -1L
     }
 
+    fun addTrainToPlanner() : Boolean {
+        return true
+    }
+
     fun getPlannersName(): ArrayList<String> {
         val cursor = readableDatabase.rawQuery("SELECT Nome FROM Planner", null)
         val ret = ArrayList<String>()

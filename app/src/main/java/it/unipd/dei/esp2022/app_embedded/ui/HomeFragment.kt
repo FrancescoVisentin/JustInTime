@@ -56,7 +56,7 @@ class HomeFragment : Fragment(), ListAdapter.ClickListener {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
-        exitButton.setOnClickListener() {
+        exitButton.setOnClickListener {
             popupWindow.dismiss()
         }
 
@@ -68,9 +68,7 @@ class HomeFragment : Fragment(), ListAdapter.ClickListener {
 
         val stepBar = popupView.findViewById<SeekBar>(R.id.step_bar)
 
-        stepBar.setOnTouchListener { _, _ ->
-            true
-        }
+        stepBar.setOnTouchListener { _, _ -> true }
 
         stepBar.progress = 3
         stepBar.max = num
