@@ -24,11 +24,15 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Planner3Fragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<MutableList<HTTParser.SolutionInfo>>
+    private var departure : String = ""
+    private var destination : String = ""
     private var time : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +58,15 @@ class Planner3Fragment : Fragment() {
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
             fade()
-            view.findNavController().navigate(R.id.action_planner3Fragment_to_planner3ResultFragment)
+            val action = Planner3FragmentDirections.actionPlanner3FragmentToPlanner3ResultFragment("$departure|$destination|$time")
+            view.findNavController().navigate(action)
         }
 
 
         val buttonHour: Button = view.findViewById(R.id.button_hour)
         val buttonMin: Button = view.findViewById(R.id.button_min)
+        buttonHour.text = SimpleDateFormat("HH", Locale.ENGLISH).format(Date())
+        buttonMin.text = SimpleDateFormat("mm", Locale.ENGLISH).format(Date())
         buttonHour.setOnClickListener {
             setUpCLock(buttonHour, buttonMin)
         }
@@ -122,9 +129,10 @@ class Planner3Fragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
+                departure = textViewDepartures.text.toString().lowercase()
+                destination = textViewArrivals.text.toString().lowercase()
                 time = "${buttonHour.text}:${buttonMin.text}"
-                model.searchSolutions(textViewDepartures.text.toString().lowercase(), textViewArrivals.text.toString().lowercase(), time)
-                    .observe(viewLifecycleOwner, resObserver)
+                model.searchSolutions(departure, destination, time).observe(viewLifecycleOwner, resObserver)
             }
         }
 

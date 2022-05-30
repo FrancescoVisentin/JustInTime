@@ -6,17 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter
-import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter2
+import it.unipd.dei.esp2022.app_embedded.helpers.RicercaViaggioCardAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
-import it.unipd.dei.esp2022.app_embedded.trainList
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,9 +37,9 @@ class RicercaViaggioResultFragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.layoutManager=mLayoutManager
-        var adapter: RecyclerView.Adapter<CardAdapter2.CardViewHolder2>?=null
+        var adapter: RecyclerView.Adapter<RicercaViaggioCardAdapter.CardViewHolder2>?=null
 
-        adapter= CardAdapter2(solutionsInfo!!)
+        adapter= RicercaViaggioCardAdapter(solutionsInfo!!)
         recyclerView.adapter = adapter
 
         return view

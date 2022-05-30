@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.Train
 
-class CardAdapter2(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>)
-    : RecyclerView.Adapter<CardAdapter2.CardViewHolder2>() {
+class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>)
+    : RecyclerView.Adapter<PlannerCardAdapter.CardViewHolder3>() {
 
     private val onClickListener = View.OnClickListener { v ->
         val trainNumber1 = v.findViewById<TextView>(R.id.train_number_label)
         trainNumber1.text="0000"
     }
 
-    class CardViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class CardViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
         val departureTime = itemView.findViewById<TextView>(R.id.departure_time)
         val arrivalTime = itemView.findViewById<TextView>(R.id.arrival_time)
@@ -24,14 +23,13 @@ class CardAdapter2(private val solutionsInfo:  MutableList<HTTParser.SolutionInf
         val changes = itemView.findViewById<TextView>(R.id.changes)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder2 {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder3 {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout_ricerca_viaggio, parent, false)
         view.setOnClickListener(onClickListener)
-        return CardViewHolder2(view)
+        return CardViewHolder3(view)
     }
 
-    override fun onBindViewHolder(holder: CardViewHolder2, position: Int) {
-        //TODO Modificare campo 'text' con il valore dell'attributo della classe Train
+    override fun onBindViewHolder(holder: CardViewHolder3, position: Int) {
         var trainString : String = (solutionsInfo[position].trainNumber).first()
         for(i in 1..(solutionsInfo[position].trainNumber).lastIndex)
         {

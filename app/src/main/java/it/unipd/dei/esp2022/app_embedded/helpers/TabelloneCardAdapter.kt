@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.Train
 
-class CardAdapter(private val trainStationInfo: MutableList<HTTParser.TrainStationInfo>)
-    : RecyclerView.Adapter<CardAdapter.CardViewHolder>() {
+class TabelloneCardAdapter(private val trainStationInfo: MutableList<HTTParser.TrainStationInfo>)
+    : RecyclerView.Adapter<TabelloneCardAdapter.CardViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
         val trainNumber1 = v.findViewById<TextView>(R.id.train_number_label)

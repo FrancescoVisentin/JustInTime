@@ -90,5 +90,9 @@
     <fragment
         android:id="@+id/planner3ResultFragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Planner3ResultFragment"
-        android:label="Risultati planner 3" />
+        android:label="Risultati planner 3" >
+    <argument
+        android:name="message"
+        app:argType="string" />
+    </fragment>
 </navigation>

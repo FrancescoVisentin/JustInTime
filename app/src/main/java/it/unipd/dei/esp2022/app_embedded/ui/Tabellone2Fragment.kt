@@ -12,11 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.helpers.CardAdapter
-import it.unipd.dei.esp2022.app_embedded.Train
+import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
-import it.unipd.dei.esp2022.app_embedded.trainList
-import it.unipd.dei.esp2022.app_embedded.trainList2
 
 class Tabellone2Fragment : Fragment() {
 
@@ -46,9 +43,9 @@ class Tabellone2Fragment : Fragment() {
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView!!.layoutManager=mLayoutManager
-        var adapter:RecyclerView.Adapter<CardAdapter.CardViewHolder>?=null
+        var adapter:RecyclerView.Adapter<TabelloneCardAdapter.CardViewHolder>?=null
 
-        adapter= CardAdapter(trainStationInfo!!.get(1))
+        adapter= TabelloneCardAdapter(trainStationInfo!!.get(1))
         recyclerView.adapter = adapter
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
        /* val cardLayout = view.findViewById<LinearLayout>(R.id.linear_tab2)
@@ -79,12 +76,12 @@ class Tabellone2Fragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if(tab?.text=="PARTENZE") {
-                    adapter = CardAdapter(trainStationInfo!!.get(0))
+                    adapter = TabelloneCardAdapter(trainStationInfo!!.get(0))
                     recyclerView.adapter=adapter
                     recyclerView.visibility=View.VISIBLE
                 }
                 else {
-                    adapter = CardAdapter(trainStationInfo!!.get(1))
+                    adapter = TabelloneCardAdapter(trainStationInfo!!.get(1))
                     recyclerView.adapter=adapter
                     recyclerView.visibility=View.VISIBLE
 

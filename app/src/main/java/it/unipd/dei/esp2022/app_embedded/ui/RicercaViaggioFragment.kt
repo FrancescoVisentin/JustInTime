@@ -136,6 +136,7 @@ class RicercaViaggioFragment : Fragment() {
                 destination = textViewArrivals.text.toString().lowercase()
                 time = "${buttonHour.text}:${buttonMin.text}"
                 model.searchSolutions(departure, destination, time).observe(viewLifecycleOwner, resObserver)
+
                 startFade()
             }
         }
