@@ -7,9 +7,7 @@ import com.test.app_embedded.R
 
 
 class PlannerListAdapter(private val plannersNames : ArrayList<String>, private val listener : ClickListener) : RecyclerView.Adapter<PlannerListAdapter.ItemViewHolder>(){
-    private val onClickListener = View.OnClickListener {
-        listener.onEvent()
-    }
+
     var selectedPlannerName : String = ""
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
@@ -37,7 +35,10 @@ class PlannerListAdapter(private val plannersNames : ArrayList<String>, private 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(plannersNames[position])
 
-        holder.itemView.setOnClickListener(onClickListener)
+        holder.itemView.setOnClickListener {
+            selectedPlannerName = holder.getName()
+            listener.onEvent(selectedPlannerName)
+        }
         holder.itemView.setOnLongClickListener {
             selectedPlannerName = holder.getName()
             return@setOnLongClickListener false
@@ -49,6 +50,6 @@ class PlannerListAdapter(private val plannersNames : ArrayList<String>, private 
     }
 
     interface ClickListener {
-        fun onEvent()
+        fun onEvent(plannerName:String)
     }
 }

@@ -91,6 +91,42 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.delete("Planner", "Nome='$name'", null) != 0
     }
 
+    fun addItem(numero: String, day: String, planner: String): Boolean
+    {
+        val values = ContentValues().apply {
+            put("Numero", numero)
+            put("Nome", day)
+            put("NomePlanner", planner)
+        }
+        return writableDatabase.insert("Associazione", null, values) != -1L
+    }
+
+    /*fun getAll()
+    {
+        val cursor = readableDatabase.rawQuery("SELECT Numero FROM Associazione", null)
+        val ret = ArrayList<String>()
+
+        while (cursor.moveToNext()) {
+            ret.add(cursor.getString(0))
+            Log.e("")
+        }
+        cursor.close()
+        val cursor2 = readableDatabase.rawQuery("SELECT Nome FROM Associazione", null)
+        val ret2 = ArrayList<String>()
+
+        while (cursor2.moveToNext()) {
+            ret2.add(cursor2.getString(0))
+        }
+        cursor2.close()
+        val cursor3 = readableDatabase.rawQuery("SELECT NomePlanner FROM Associazione", null)
+        val ret3 = ArrayList<String>()
+
+        while (cursor3.moveToNext()) {
+            ret3.add(cursor3.getString(0))
+        }
+        cursor3.close()
+    }*/
+
     companion object
     {
         private const val DB_NAME = "mydb.db"

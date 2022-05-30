@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,8 @@ class Planner3Fragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio, container, false)
-
+        val infoDb = Planner3FragmentArgs.fromBundle(requireArguments()).message
+        Log.e("Info a planner 3:", infoDb)
         resObserver = Observer<MutableList<HTTParser.SolutionInfo>> { info ->
             if (info == null) {
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
@@ -62,7 +64,7 @@ class Planner3Fragment : Fragment() {
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
             fade()
-            val action = Planner3FragmentDirections.actionPlanner3FragmentToPlanner3ResultFragment("$departure|$destination|$time")
+            val action = Planner3FragmentDirections.actionPlanner3FragmentToPlanner3ResultFragment("$departure|$destination|$time|${infoDb}")
             view.findNavController().navigate(action)
         }
 

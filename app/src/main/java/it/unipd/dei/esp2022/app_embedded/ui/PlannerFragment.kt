@@ -123,8 +123,9 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         return super.onContextItemSelected(item)
     }
 
-    override fun onEvent() {
-        (view as View).findNavController().navigate(R.id.action_plannerFragment_to_planner2Fragment)
+    override fun onEvent(plannerName:String) {
+        val action = PlannerFragmentDirections.actionPlannerFragmentToPlanner2Fragment(plannerName)
+        (view as View).findNavController().navigate(action)
     }
 
     private fun checkPlannersCount() {

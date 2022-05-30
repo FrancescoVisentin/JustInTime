@@ -78,6 +78,9 @@
     <action
         android:id="@+id/action_planner2Fragment_to_planner3Fragment"
         app:destination="@id/planner3Fragment" />
+        <argument
+            android:name="message"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/planner3Fragment"
@@ -86,6 +89,9 @@
         <action
             android:id="@+id/action_planner3Fragment_to_planner3ResultFragment"
             app:destination="@id/planner3ResultFragment" />
+        <argument
+            android:name="message"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/planner3ResultFragment"
