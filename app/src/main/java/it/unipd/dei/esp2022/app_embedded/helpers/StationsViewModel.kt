@@ -1,6 +1,5 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,6 +16,7 @@ class StationsViewModel : ViewModel() {
     private val ret: MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>> by lazy {
         MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>>()
     }
+    var updated: Boolean = false
 
     fun searchStation(station: String) : MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>> {
         viewModelScope.launch {
@@ -29,8 +29,8 @@ class StationsViewModel : ViewModel() {
 
             val departingTrains = getStationTrains(stationID, "partenze")
             val incomingTrains = getStationTrains(stationID, "arrivi")
-            Log.e("Departing: ", departingTrains)
-            Log.e("incoming : ", incomingTrains)
+
+            updated = true
             ret.value = HTTParser.parseStationsInfo(departingTrains, incomingTrains)
         }
         return ret
@@ -70,10 +70,8 @@ class StationsViewModel : ViewModel() {
 
     private suspend fun getStationTrains(id : String, mode : String) : String {
         val date = SimpleDateFormat("EE%20MMM%20dd%20yyyy%20HH:mm:ss", Locale.ENGLISH).format(Date()) //TODO controlla come si comporta il format orario di trenitalia
-        Log.e("Data :", "$date")
         return withContext(Dispatchers.IO) {
             val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/$mode/$id/$date%20GMT+0200%20(Ora%20legale%20dell%E2%80%99Europa%20centrale)")
-            Log.e("URL :", url.toString())
             val urlConnection = url.openConnection() as HttpURLConnection
             try {
                 val stream = BufferedInputStream(urlConnection.inputStream)

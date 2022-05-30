@@ -1,7 +1,5 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -47,12 +45,17 @@ class TabelloneFragment : Fragment() {
                     .show()
                 return@Observer
             }
+
+            if (!model.updated) {
+                return@Observer
+            }
+
             //Hide keyboard if present
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
             stopFade()
-            val action = TabelloneFragmentDirections.actionTabelloneFragmentToTabellone2Fragment("$station")
+            val action = TabelloneFragmentDirections.actionTabelloneFragmentToTabellone2Fragment(station)
             view.findNavController().navigate(action)
         }
 
@@ -67,7 +70,9 @@ class TabelloneFragment : Fragment() {
                     textView.clearFocus()
 
                     if (textView.text.isNotEmpty()){
-                        model.searchStation(textView.text.toString().lowercase()).observe(viewLifecycleOwner, resObserver)
+                        model.updated = false
+                        station = textView.text.toString().lowercase()
+                        model.searchStation(station).observe(viewLifecycleOwner, resObserver)
                         startFade()
                     }
                     true
@@ -79,6 +84,7 @@ class TabelloneFragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textView.text.isNotEmpty()) {
+                model.updated = false
                 station = textView.text.toString().lowercase()
                 model.searchStation(station).observe(viewLifecycleOwner, resObserver)
                 startFade()

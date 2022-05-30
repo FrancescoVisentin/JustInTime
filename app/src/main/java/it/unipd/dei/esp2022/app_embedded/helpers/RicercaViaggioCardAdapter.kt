@@ -11,16 +11,15 @@ class RicercaViaggioCardAdapter(private val solutionsInfo:  MutableList<HTTParse
     : RecyclerView.Adapter<RicercaViaggioCardAdapter.CardViewHolder2>() {
 
     private val onClickListener = View.OnClickListener { v ->
-        val trainNumber1 = v.findViewById<TextView>(R.id.train_number_label)
-        trainNumber1.text="0000"
+
     }
 
     class CardViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
-        val departureTime = itemView.findViewById<TextView>(R.id.departure_time)
-        val arrivalTime = itemView.findViewById<TextView>(R.id.arrival_time)
-        val duration = itemView.findViewById<TextView>(R.id.duration)
-        val changes = itemView.findViewById<TextView>(R.id.changes)
+        val trainNumber: TextView = itemView.findViewById(R.id.train_number)
+        val departureTime: TextView = itemView.findViewById(R.id.departure_time)
+        val arrivalTime: TextView = itemView.findViewById(R.id.arrival_time)
+        val duration: TextView = itemView.findViewById(R.id.duration)
+        val changes: TextView = itemView.findViewById(R.id.changes)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder2 {

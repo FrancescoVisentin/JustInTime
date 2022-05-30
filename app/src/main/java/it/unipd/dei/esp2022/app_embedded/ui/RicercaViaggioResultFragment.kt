@@ -35,8 +35,8 @@ class RicercaViaggioResultFragment : Fragment() {
 
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        var mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView!!.layoutManager=mLayoutManager
+        val mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager=mLayoutManager
         var adapter: RecyclerView.Adapter<RicercaViaggioCardAdapter.CardViewHolder2>?=null
 
         adapter= RicercaViaggioCardAdapter(solutionsInfo!!)
