@@ -18,9 +18,6 @@
         android:name="it.unipd.dei.esp2022.app_embedded.ui.PlannerFragment"
         android:label="Planner" >
         <action
-            android:id="@+id/action_plannerFragment_to_addPlannerFragment"
-            app:destination="@id/addPlannerFragment" />
-        <action
             android:id="@+id/action_plannerFragment_to_planner2Fragment"
             app:destination="@id/planner2Fragment" />
     </fragment>
@@ -63,14 +60,6 @@
         android:name="message"
         app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/addPlannerFragment"
-        android:name="it.unipd.dei.esp2022.app_embedded.ui.AddPlannerFragment"
-        android:label="Aggiungi Planner" />
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="it.unipd.dei.esp2022.app_embedded.ui.SettingsFragment"
-        android:label="Impostazioni" />
     <fragment
         android:id="@+id/planner2Fragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Planner2Fragment"
