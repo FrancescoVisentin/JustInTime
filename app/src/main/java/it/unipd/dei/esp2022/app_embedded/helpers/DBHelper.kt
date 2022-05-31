@@ -4,13 +4,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
 {
     override fun onCreate(db: SQLiteDatabase)
     {
         val trainTable = "CREATE TABLE Treno(\n" +
-                "    Numero INTEGER NOT NULL PRIMARY KEY CHECK(Numero>0),\n" +
+                "    Numero VARCHAR(10) NOT NULL PRIMARY KEY,\n" +
                 "    Stazione_partenza VARCHAR(30),\n" +
                 "    Stazione_arrivo VARCHAR(30)\n" +
                 ");"
@@ -24,7 +25,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 ");"
 
         val combinationTable  = "CREATE TABLE Associazione(\n" +
-                "Numero INTEGER NOT NULL CHECK(Numero>0),\n" +
+                "Numero VARCHAR(10) NOT NULL,\n" +
                 "NomePlanner VARCHAR(30),\n" +
                 "Nome VARCHAR(10) NOT NULL,\n" +
                 "PRIMARY KEY (Numero, NomePlanner, Nome),\n" +
@@ -95,7 +96,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.delete("Planner", "Nome='$name'", null) != 0
     }
 
-    fun addItem(numero: String, day: String, planner: String): Boolean
+    fun addTrainToPlanner(numero: String, day: String, planner: String): Boolean
     {
         val values = ContentValues().apply {
             put("Numero", numero)
@@ -105,31 +106,27 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.insert("Associazione", null, values) != -1L
     }
 
-    /*fun getAll()
+    fun checkTable()
     {
         val cursor = readableDatabase.rawQuery("SELECT Numero FROM Associazione", null)
-        val ret = ArrayList<String>()
 
         while (cursor.moveToNext()) {
-            ret.add(cursor.getString(0))
-            Log.e("")
+            Log.e("Colonna 1:", cursor.getString(0))
         }
         cursor.close()
         val cursor2 = readableDatabase.rawQuery("SELECT Nome FROM Associazione", null)
-        val ret2 = ArrayList<String>()
 
         while (cursor2.moveToNext()) {
-            ret2.add(cursor2.getString(0))
+            Log.e("Colonna 2:", cursor2.getString(0))
         }
         cursor2.close()
         val cursor3 = readableDatabase.rawQuery("SELECT NomePlanner FROM Associazione", null)
-        val ret3 = ArrayList<String>()
 
         while (cursor3.moveToNext()) {
-            ret3.add(cursor3.getString(0))
+            Log.e("Colonna 3:", cursor3.getString(0))
         }
         cursor3.close()
-    }*/
+    }
 
     companion object
     {

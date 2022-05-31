@@ -26,8 +26,8 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
     private val trainModel : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private lateinit var db: DBHelper
-    private var day :String = ""
-    private var plannerName = ""
+    private lateinit var day : String
+    private lateinit var plannerName: String
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -97,8 +97,7 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
 
         val addButton = popupView.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
-            //TODO da implementare l'aggiunta
-            if (db.addTrainToPlanner()) {
+            if (db.addTrainToPlanner(trainInfo.trainID, day, plannerName)) {
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
                 contextView.bringToFront()
                 Snackbar.make(contextView, "Treno aggiunto", Snackbar.LENGTH_SHORT)
@@ -111,7 +110,7 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
                     .setAction("Chiudi") {}
                     .show()
             }
-
+            db.checkTable()
             popupWindow.dismiss()
         }
 
