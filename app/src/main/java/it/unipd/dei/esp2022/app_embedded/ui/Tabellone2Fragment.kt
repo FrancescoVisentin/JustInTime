@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
@@ -35,11 +38,9 @@ class Tabellone2Fragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_tabellone2, container, false)
         val message = Tabellone2FragmentArgs.fromBundle(requireArguments()).message
         view.findViewById<TextView>(R.id.station).text = message.capitalize()
-        val trainStationInfo = model.getStationTrains()
+        /*val trainStationInfo = model.getStationTrains()
 
         val toast = Toast.makeText(this.context, "Nessun Treno", Toast.LENGTH_LONG)
-
-
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         val mLayoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.layoutManager=mLayoutManager
@@ -51,14 +52,23 @@ class Tabellone2Fragment : Fragment() {
         }
         else
             toast.show()
-
-
+*/
+        var tabTitle= arrayOf("ARRIVI", "PARTENZE")
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
+        val viewPager : ViewPager2 = view.findViewById(R.id.view_pager)
+        val adapter= ViewPagerAdapter(childFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+
+        TabLayoutMediator (tabLayout, viewPager) {
+            tab, position ->
+            tab.text=tabTitle[position]
+        }.attach()
+
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if(tab?.text=="PARTENZE") {
+                /*if(tab?.text=="PARTENZE") {
                     if(trainStationInfo[0].size==0)
                         toast.show()
                     else {
@@ -77,16 +87,17 @@ class Tabellone2Fragment : Fragment() {
                         recyclerView.visibility = View.VISIBLE
                     }
 
-                }
+                }*/
+                viewPager.currentItem=tab!!.position
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                recyclerView.visibility=View.VISIBLE
+                //recyclerView.visibility=View.VISIBLE
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                recyclerView.visibility=View.INVISIBLE
-                recyclerView.removeAllViews()
+                //recyclerView.visibility=View.INVISIBLE
+                //recyclerView.removeAllViews()
             }
         })
 
