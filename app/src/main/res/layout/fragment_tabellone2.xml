@@ -9,6 +9,8 @@
     android:orientation="vertical"
     android:gravity="top">
 
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +34,9 @@
         android:textColor="?attr/colorOnSecondaryContainer"
         android:background="@drawable/sfondo1"/>
 
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -55,6 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/tab_partenze"/>
     </com.google.android.material.tabs.TabLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

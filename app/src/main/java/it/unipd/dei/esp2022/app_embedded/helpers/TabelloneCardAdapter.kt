@@ -11,15 +11,15 @@ class TabelloneCardAdapter(private val trainStationInfo: MutableList<HTTParser.T
     : RecyclerView.Adapter<TabelloneCardAdapter.CardViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
-        val trainNumber1 = v.findViewById<TextView>(R.id.train_number_label)
+        val trainNumber1 = v.findViewById<TextView>(R.id.train_number)
         trainNumber1.text="0000"
     }
 
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber = itemView.findViewById<TextView>(R.id.train_number)
-        val trainTime = itemView.findViewById<TextView>(R.id.orario)
+        val trainTime = itemView.findViewById<TextView>(R.id.time)
         val trainPlace = itemView.findViewById<TextView>(R.id.place)
-        val trainBinary = itemView.findViewById<TextView>(R.id.binario)
+        val trainBinary = itemView.findViewById<TextView>(R.id.binary)
         val trainDelay = itemView.findViewById<TextView>(R.id.information)
     }
 
