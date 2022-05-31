@@ -26,8 +26,8 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
     private val trainModel : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private lateinit var db: DBHelper
-    private var day :String = ""
-    private var plannerName = ""
+    private lateinit var day : String
+    private lateinit var plannerName: String
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,8 +52,8 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         val message = Planner3ResultFragmentArgs.fromBundle(requireArguments()).message
         Log.e("Info a planner 3 result", message)
         var tmp = message.split("|")
-        view.findViewById<TextView>(R.id.departure).text = tmp[0].capitalize()
-        view.findViewById<TextView>(R.id.arrival).text = tmp[1].capitalize()
+        view.findViewById<TextView>(R.id.departure).text = capitalize(tmp[0])
+        view.findViewById<TextView>(R.id.arrival).text = capitalize(tmp[1])
         view.findViewById<TextView>(R.id.time2).text = tmp[2]
         view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
         day = tmp[3]
@@ -97,11 +97,10 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
 
         val addButton = popupView.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
-            //TODO da implementare l'aggiunta
-            if (db.addTrainToPlanner()) {
+            if (db.addTrainToPlanner(trainInfo.trainID, day, plannerName)) {
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
                 contextView.bringToFront()
-                Snackbar.make(contextView, "Treno aggiunto", Snackbar.LENGTH_SHORT)
+                Snackbar.make(contextView, "Treno ${trainInfo.trainID} aggiunto al planner $plannerName", Snackbar.LENGTH_SHORT)
                     .setAction("Chiudi") {}
                     .show()
             } else {
@@ -111,7 +110,7 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
                     .setAction("Chiudi") {}
                     .show()
             }
-
+            db.checkTable()
             popupWindow.dismiss()
         }
 
