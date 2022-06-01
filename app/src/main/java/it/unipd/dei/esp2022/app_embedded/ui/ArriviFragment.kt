@@ -19,12 +19,13 @@ import it.unipd.dei.esp2022.app_embedded.helpers.TrainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ArriviFragment() : Fragment(), TabelloneCardAdapter.ClickListener {
+class ArriviFragment : Fragment(), TabelloneCardAdapter.ClickListener {
     private val stationsModel : StationsViewModel by activityViewModels()
     private val trainModel : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private var popupWindow: PopupWindow? = null
     private var popupWindowActivated: Boolean = false
+    private var paused: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,7 +38,7 @@ class ArriviFragment() : Fragment(), TabelloneCardAdapter.ClickListener {
                 return@Observer
             }
 
-            if (!trainModel.updated) {
+            if (!trainModel.updated || paused) {
                 return@Observer
             }
 
@@ -77,11 +78,22 @@ class ArriviFragment() : Fragment(), TabelloneCardAdapter.ClickListener {
         outState.putBoolean("popup_visibility", popupWindowActivated)
     }
 
+    override fun onPause() {
+        super.onPause()
+        paused = true
+    }
+
+    override fun onResume() {
+        super.onResume()
+        paused = false
+    }
+
     override fun onStop() {
         super.onStop()
         val restore = popupWindowActivated
         popupWindow?.dismiss()
         popupWindowActivated = restore
+        paused = true
     }
 
     override fun onEvent(number: String) {

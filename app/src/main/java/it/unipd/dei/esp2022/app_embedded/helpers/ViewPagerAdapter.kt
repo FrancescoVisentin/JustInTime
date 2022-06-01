@@ -1,9 +1,11 @@
-package it.unipd.dei.esp2022.app_embedded.ui
+package it.unipd.dei.esp2022.app_embedded.helpers
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import it.unipd.dei.esp2022.app_embedded.ui.ArriviFragment
+import it.unipd.dei.esp2022.app_embedded.ui.PartenzeFragment
 
 private const val NUM_TABS = 2
 
