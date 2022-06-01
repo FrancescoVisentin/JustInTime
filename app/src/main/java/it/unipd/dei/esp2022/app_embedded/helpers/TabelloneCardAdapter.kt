@@ -18,9 +18,9 @@ class TabelloneCardAdapter(private val trainStationInfo: MutableList<HTTParser.T
 
     class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber: TextView = itemView.findViewById(R.id.train_number)
-        val trainTime: TextView = itemView.findViewById(R.id.orario)
+        //val trainTime: TextView = itemView.findViewById(R.id.orario)
         val trainPlace: TextView = itemView.findViewById(R.id.place)
-        val trainBinary: TextView = itemView.findViewById(R.id.binario)
+        val trainBinary: TextView = itemView.findViewById(R.id.binary)
         val trainDelay: TextView = itemView.findViewById(R.id.information)
     }
 
@@ -32,7 +32,7 @@ class TabelloneCardAdapter(private val trainStationInfo: MutableList<HTTParser.T
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         holder.trainNumber.text = trainStationInfo[position].trainNumber
-        holder.trainTime.text = trainStationInfo[position].departureArrivalTime
+        //holder.trainTime.text = trainStationInfo[position].departureArrivalTime
         holder.trainPlace.text = trainStationInfo[position].destinationOrigin
         if(trainStationInfo[position].track.compareTo("null") != 0) {
             holder.trainBinary.text = trainStationInfo[position].track.substringAfter("\"").substringBefore("\"")

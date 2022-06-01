@@ -17,8 +17,8 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
 
     class CardViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber: TextView = itemView.findViewById(R.id.train_number)
-        val trainOrigin: TextView = itemView.findViewById(R.id.origin)
-        val trainDestination: TextView = itemView.findViewById(R.id.destination)
+        //val trainOrigin: TextView = itemView.findViewById(R.id.origin)
+        //val trainDestination: TextView = itemView.findViewById(R.id.destination)
         val departureTime: TextView = itemView.findViewById(R.id.departure_time)
         val arrivalTime: TextView = itemView.findViewById(R.id.arrival_time)
         val duration: TextView = itemView.findViewById(R.id.duration)
