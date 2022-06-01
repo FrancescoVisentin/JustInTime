@@ -64,5 +64,6 @@
     <string name="last_detection">Ultimo rilevamento alle:</string>
     <string name="close">Chiudi</string>
     <string name="route_details">Dettagli viaggio:</string>
+    <string name="trak">Binario:</string>
 
 </resources>

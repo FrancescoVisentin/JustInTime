@@ -1,10 +1,7 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -113,8 +110,7 @@ class ArriviFragment : Fragment(), TabelloneCardAdapter.ClickListener {
         popupView.findViewById<TextView>(R.id.delay).text = if (trainInfo.delay.toInt() >= 0) "+${trainInfo.delay} min" else "${trainInfo.delay} min"
 
         val width = ((view as View).width*0.85).toInt()
-        val height = ((view as View).height*0.6).toInt()
-        popupWindow = PopupWindow(popupView, width, height,true)
+        popupWindow = PopupWindow(popupView, width, WindowManager.LayoutParams.WRAP_CONTENT,true)
 
         popupWindow?.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
         popupWindow?.elevation = 100F
@@ -127,11 +123,10 @@ class ArriviFragment : Fragment(), TabelloneCardAdapter.ClickListener {
 
         val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
 
-        if (height == 0 || width == 0) {
+        if (width == 0) {
             popupContainerView.post {
                 val updatedWidth = ((view as View).width*0.85).toInt()
-                val updatedHeight = ((view as View).height*0.6).toInt()
-                popupWindow?.update(0,0, updatedWidth, updatedHeight)
+                popupWindow?.update(0,0, updatedWidth, WindowManager.LayoutParams.WRAP_CONTENT)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
             }
         } else {
