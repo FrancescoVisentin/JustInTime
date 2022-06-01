@@ -51,6 +51,7 @@ class RicercaViaggioFragment : Fragment() {
                 Snackbar.make(contextView, "Stazioni non valide", Snackbar.LENGTH_SHORT)
                     .setAction("Chiudi") {}
                     .show()
+                stopFade()
                 return@Observer
             }
 

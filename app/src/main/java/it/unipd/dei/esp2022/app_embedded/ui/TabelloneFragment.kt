@@ -43,6 +43,7 @@ class TabelloneFragment : Fragment() {
                 Snackbar.make(contextView, "Stazione non valida", Snackbar.LENGTH_SHORT)
                     .setAction("Chiudi") {}
                     .show()
+                stopFade()
                 return@Observer
             }
 

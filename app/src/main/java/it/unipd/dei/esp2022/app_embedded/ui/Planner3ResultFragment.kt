@@ -3,19 +3,18 @@ package it.unipd.dei.esp2022.app_embedded.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.transition.MaterialFadeThrough
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,9 +25,16 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
     private val trainModel : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private lateinit var db: DBHelper
+    private var popupWindow: PopupWindow? = null
+    private var popupWindowActivated: Boolean = false
     private var day :String = ""
     private var plannerName = ""
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = MaterialFadeThrough()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio_result, container, false)
@@ -50,10 +56,9 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         }
 
         val message = Planner3ResultFragmentArgs.fromBundle(requireArguments()).message
-        Log.e("Info a planner 3 result", message)
-        var tmp = message.split("|")
-        view.findViewById<TextView>(R.id.departure).text = tmp[0].capitalize()
-        view.findViewById<TextView>(R.id.arrival).text = tmp[1].capitalize()
+        val tmp = message.split("|")
+        view.findViewById<TextView>(R.id.departure).text = capitalize(tmp[0])
+        view.findViewById<TextView>(R.id.arrival).text = capitalize(tmp[1])
         view.findViewById<TextView>(R.id.time2).text = tmp[2]
         view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
         day = tmp[3]
@@ -66,6 +71,31 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         recyclerView.adapter = PlannerCardAdapter(solutionsInfo, this)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            popupWindowActivated= savedInstanceState.getBoolean("popup_visibility")
+
+            if (popupWindowActivated) {
+                val info = trainModel.getTrainState() ?: return
+                createPopup(info)
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("popup_visibility", popupWindowActivated)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val restore = popupWindowActivated
+        popupWindow?.dismiss()
+        popupWindowActivated = restore
     }
 
     override fun onEvent(number: String) {
@@ -83,16 +113,33 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
 
         val width = ((view as View).width*0.85).toInt()
         val height = ((view as View).height*0.6).toInt()
-        val popupWindow = PopupWindow(popupView, width, height,false)
+        popupWindow = PopupWindow(popupView, width, height,true)
 
-        popupWindow.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
-        popupWindow.elevation = 100F
-        popupWindow.isOutsideTouchable = true
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+        popupWindow?.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+        popupWindow?.elevation = 100F
+        popupWindow?.isOutsideTouchable = true
+        popupWindowActivated = true
+        popupWindow?.setOnDismissListener {
+            popupWindowActivated = false
+            popupWindow = null
+        }
+
+        val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
+
+        if (height == 0 || width == 0) {
+            popupContainerView.post {
+                val updatedWidth = ((view as View).width*0.85).toInt()
+                val updatedHeight = ((view as View).height*0.6).toInt()
+                popupWindow?.update(0,0, updatedWidth, updatedHeight)
+                popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            }
+        } else {
+            popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+        }
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
         exitButton.setOnClickListener {
-            popupWindow.dismiss()
+            popupWindow?.dismiss()
         }
 
         val addButton = popupView.findViewById<Button>(R.id.add_button)
@@ -112,14 +159,14 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
                     .show()
             }
 
-            popupWindow.dismiss()
+            popupWindow?.dismiss()
         }
 
-        addStationsBar(popupView, trainInfo.stops, trainInfo.currentIndex)
+        addStationsBar(popupView, trainInfo.stops)
     }
 
-    private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>, currentIndex : Int) {
-        val stationsAdapter = StationsListAdapter(stops, currentIndex)
+    private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>) {
+        val stationsAdapter = StationsListAdapter(stops, -1)
         val recyclerView = popupView.findViewById<RecyclerView>(R.id.stations_recycler_view)
         recyclerView.adapter = stationsAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)

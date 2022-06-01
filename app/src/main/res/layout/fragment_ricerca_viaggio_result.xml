@@ -1,4 +1,6 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/popup_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -48,13 +50,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
-            android:drawableStart="@drawable/ic_baseline_trending_flat_24"
             android:textAlignment="center"
             android:textColor="?attr/colorOnSecondaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:drawableStartCompat="@drawable/ic_baseline_trending_flat_24" />
 
         <TextView
             android:id="@+id/arrival"
@@ -100,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Data"
+            android:text="@string/value_stub"
             android:textAlignment="center"
             android:textColor="?attr/colorOnTertiaryContainer"
             android:background="@drawable/sfondo4"
@@ -129,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Ora"
+            android:text="@string/value_stub"
             android:textAlignment="center"
             android:textColor="?attr/colorOnTertiaryContainer"
             android:background="@drawable/sfondo4"
@@ -157,15 +159,12 @@
             android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="5dp">
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:paddingHorizontal="5dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/cardview_light_background">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent" />
 
         <ProgressBar android:id="@+id/loading_spinner"
             style="?android:progressBarStyleLarge"

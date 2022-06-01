@@ -7,11 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
-class RicercaViaggioCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>)
+class RicercaViaggioCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>, private val listener : ClickListener)
     : RecyclerView.Adapter<RicercaViaggioCardAdapter.CardViewHolder2>() {
 
-    private val onClickListener = View.OnClickListener { v ->
-
+    private val onClickListener = View.OnClickListener {
+        val trainNumber = it.findViewById<TextView>(R.id.train_number).text.toString()
+        listener.onEvent(trainNumber.split(" ")[0])
     }
 
     class CardViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -42,4 +43,8 @@ class RicercaViaggioCardAdapter(private val solutionsInfo:  MutableList<HTTParse
     }
 
     override fun getItemCount(): Int = solutionsInfo.size
+
+    interface ClickListener {
+        fun onEvent(number: String)
+    }
 }
