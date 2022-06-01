@@ -16,8 +16,8 @@ import org.w3c.dom.Text
 
 
 class Planner2Fragment : Fragment() {
-    private var day: String = ""
-    private var plannerName:String = ""
+    private lateinit var day: String
+    private lateinit var plannerName:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

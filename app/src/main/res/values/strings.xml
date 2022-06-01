@@ -47,6 +47,7 @@
     <string name="planner_treni_seguiti">Treni seguiti:</string>
     <string name="delete">Elimina</string>
     <string name="no_planner">Nessun planner presente</string>
+    <string name="not_available">Non disponibile</string>
 
     <string-array name="train_list">
         <item>Treno 134</item>

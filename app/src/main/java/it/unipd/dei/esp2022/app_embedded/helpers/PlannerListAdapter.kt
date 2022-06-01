@@ -34,7 +34,7 @@ class PlannerListAdapter(private val plannersNames : ArrayList<String>, private 
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(plannersNames[position])
-
+        //TODO Trovare un'alternativa a questo
         holder.itemView.setOnClickListener {
             selectedPlannerName = holder.getName()
             listener.onEvent(selectedPlannerName)

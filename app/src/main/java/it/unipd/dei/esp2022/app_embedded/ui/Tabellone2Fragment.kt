@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.tabs.TabLayoutMediator
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
@@ -57,34 +58,53 @@ class Tabellone2Fragment : Fragment(), TabelloneCardAdapter.ClickListener {
         view.findViewById<TextView>(R.id.station).text = message.replaceFirstChar {
             if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
         }
+        view.findViewById<TextView>(R.id.station).text = message.capitalize()
 
-        val trainStationInfo = stationsModel.getStationTrains() ?: return view
-
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[1], this)
-
+        val tabTitle= arrayOf("ARRIVI", "PARTENZE")
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
+        val viewPager : ViewPager2 = view.findViewById(R.id.view_pager)
+        val adapter= ViewPagerAdapter(childFragmentManager, lifecycle)
+        viewPager.adapter = adapter
+
+        TabLayoutMediator (tabLayout, viewPager) {
+            tab, position ->
+            tab.text=tabTitle[position]
+        }.attach()
+
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab?.text == getString(R.string.tab_partenze)) {
-                    recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[0], this@Tabellone2Fragment)
-                    recyclerView.visibility = View.VISIBLE
-                } else {
-                    recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[1], this@Tabellone2Fragment)
-                    recyclerView.visibility = View.VISIBLE
+                /*if(tab?.text=="PARTENZE") {
+                    if(trainStationInfo[0].size==0)
+                        toast.show()
+                    else {
+                        adapter = TabelloneCardAdapter(trainStationInfo[0])
+                        recyclerView.adapter = adapter
+                        recyclerView.visibility = View.VISIBLE
+                    }
+
                 }
+                else {
+                    if(trainStationInfo[1].size==0)
+                        toast.show()
+                    else {
+                        adapter = TabelloneCardAdapter(trainStationInfo[1])
+                        recyclerView.adapter = adapter
+                        recyclerView.visibility = View.VISIBLE
+                    }
+
+                }*/
+                viewPager.currentItem=tab!!.position
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                recyclerView.visibility = View.VISIBLE
+                //recyclerView.visibility=View.VISIBLE
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
-                recyclerView.visibility = View.INVISIBLE
-                recyclerView.removeAllViews()
+                //recyclerView.visibility=View.INVISIBLE
+                //recyclerView.removeAllViews()
             }
         })
 

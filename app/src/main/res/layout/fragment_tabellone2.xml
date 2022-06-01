@@ -29,34 +29,34 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="7dp"
-        android:text="@string/value_stub"
+        android:text="Stazione"
         android:textAlignment="center"
         android:textColor="?attr/colorOnSecondaryContainer"
         android:background="@drawable/sfondo1"/>
 
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
         app:tabIndicatorFullWidth="true"
+        app:tabIndicatorAnimationMode="elastic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_arrivi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_arrivi"/>
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_partenze"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tab_partenze"/>
     </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabs" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,4 +78,5 @@
             android:layout_height="match_parent"
             android:background="@color/cardview_light_background" />
     </RelativeLayout>
+
 </LinearLayout>
