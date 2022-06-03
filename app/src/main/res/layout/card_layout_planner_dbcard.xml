@@ -47,6 +47,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/origin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:padding="5dp"
+                android:text="Luogo"
+                android:textAppearance="@style/Text.FancyListHeadline"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/departure_time"
@@ -58,8 +70,20 @@
                 android:textAppearance="@style/Text.FancyListHeadline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.60"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/origin"/>
 
+            <TextView
+                android:id="@+id/destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:padding="5dp"
+                android:text="Luogo"
+                android:textAppearance="@style/Text.FancyListHeadline"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/dash"
@@ -86,7 +110,8 @@
                 android:textAppearance="@style/Text.FancyListHeadline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.40" />
+                app:layout_constraintHorizontal_bias="0.40"
+                app:layout_constraintTop_toBottomOf="@id/destination"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
