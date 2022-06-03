@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
+import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.ListAdapter
 
 

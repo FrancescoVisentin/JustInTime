@@ -86,7 +86,7 @@ class Planner3Fragment : Fragment() {
         val textViewDepartures = view.findViewById<AutoCompleteTextView>(R.id.text_departures)
         val textViewArrivals = view.findViewById<AutoCompleteTextView>(R.id.text_arrivals)
         val items = resources.getStringArray(R.array.stations)
-        val adapter = ArrayAdapter(context as Context, R.layout.list_layout, items)
+        val adapter = ArrayAdapter(context as Context, android.R.layout.simple_dropdown_item_1line, items)
         textViewDepartures.setAdapter(adapter)
         textViewArrivals.setAdapter(adapter)
 

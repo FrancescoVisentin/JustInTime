@@ -29,6 +29,13 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
     private var popupWindowActivated: Boolean = false
     private var day :String = ""
     private var plannerName = ""
+    private var lastTrip = ""
+    private var lastDepartureStation = ""
+    private var lastArrivalStation = ""
+    private var lastDepartureTime = ""
+    private var lastArrivalTime = ""
+    private var lastDuration = ""
+    private var lastChanges = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +47,7 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio_result, container, false)
 
         db = DBHelper(context as Context)
-
+        db.checkTable()
         resObserver = Observer<HTTParser.TrainInfo> { info ->
             if (info.trainID.compareTo("null") == 0) {
                 stopFade()
@@ -63,6 +70,8 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
         day = tmp[3]
         plannerName = tmp[4]
+        lastDepartureStation = tmp[0]
+        lastArrivalStation = tmp[1]
 
         val solutionsInfo = solutionsModel.getSolutions() ?: return view
 
@@ -98,9 +107,14 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
         popupWindowActivated = restore
     }
 
-    override fun onEvent(number: String) {
+    override fun onEvent(number: String, departureTime: String, arrivalTime: String, duration: String, changes: String) {
+        lastTrip = number
+        lastDepartureTime = departureTime
+        lastArrivalTime = arrivalTime
+        lastDuration = duration
+        lastChanges = changes
         trainModel.updated = false
-        trainModel.searchTrain(number).observe(viewLifecycleOwner, resObserver)
+        trainModel.searchTrain(number.split(" ")[0]).observe(viewLifecycleOwner, resObserver)
         startFade()
     }
 
@@ -144,7 +158,7 @@ class Planner3ResultFragment : Fragment(), PlannerCardAdapter.ClickListener {
 
         val addButton = popupView.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
-            if (db.addTrainToPlanner(trainInfo.trainID, day, plannerName)) {
+            if (db.addTripToPlanner(lastTrip, day, plannerName, lastDepartureStation, lastArrivalStation, lastDepartureTime, lastArrivalTime, lastDuration, lastChanges)) {
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
                 contextView.bringToFront()
                 Snackbar.make(contextView, "Treno ${trainInfo.trainID} aggiunto al planner $plannerName", Snackbar.LENGTH_SHORT)

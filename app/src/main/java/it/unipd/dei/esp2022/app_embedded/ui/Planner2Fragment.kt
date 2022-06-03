@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
+import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
 import org.w3c.dom.Text
 
@@ -25,9 +27,11 @@ class Planner2Fragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_planner2, container, false)
+        val db = DBHelper(context as Context)
         plannerName = Planner2FragmentArgs.fromBundle(requireArguments()).message
         view.findViewById<TextView>(R.id.planner_name).text = plannerName
         day = "Lunedi"
+        var tripList = db.getTrips(plannerName,day)
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

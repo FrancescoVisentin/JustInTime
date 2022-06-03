@@ -12,13 +12,15 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
 
     private val onClickListener = View.OnClickListener {
         val trainNumber = it.findViewById<TextView>(R.id.train_number).text.toString()
-        listener.onEvent(trainNumber.split(" ")[0])
+        val departureTime = it.findViewById<TextView>(R.id.departure_time).text.toString()
+        val arrivalTime = it.findViewById<TextView>(R.id.arrival_time).text.toString()
+        val duration = it.findViewById<TextView>(R.id.duration).text.toString()
+        val changes = it.findViewById<TextView>(R.id.changes).text.toString()
+        listener.onEvent(trainNumber, departureTime, arrivalTime, duration, changes)
     }
 
     class CardViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber: TextView = itemView.findViewById(R.id.train_number)
-        //val trainOrigin: TextView = itemView.findViewById(R.id.origin)
-        //val trainDestination: TextView = itemView.findViewById(R.id.destination)
         val departureTime: TextView = itemView.findViewById(R.id.departure_time)
         val arrivalTime: TextView = itemView.findViewById(R.id.arrival_time)
         val duration: TextView = itemView.findViewById(R.id.duration)
@@ -47,6 +49,6 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
     override fun getItemCount(): Int = solutionsInfo.size
 
     interface ClickListener {
-        fun onEvent(number: String)
+        fun onEvent(number: String, departureTime: String, arrivalTime: String, duration: String, changes: String)
     }
 }

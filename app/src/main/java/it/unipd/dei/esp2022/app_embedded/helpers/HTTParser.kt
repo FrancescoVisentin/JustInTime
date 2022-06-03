@@ -56,7 +56,7 @@ class HTTParser {
                     (trip.category).add(tmp2[j].substringAfter("categoriaDescrizione\":\"").substringBefore("\""))
                     (trip.trainNumber).add(tmp2[j].substringAfter("numeroTreno\":\"").substringBefore("\""))
                 }
-                trip.changes = tmp2.size
+                trip.changes = (tmp2.size)-1
                 tripsList.add(trip)
             }
             return tripsList
