@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                <AutoCompleteTextView
+                <it.unipd.dei.esp2022.app_embedded.helpers.AutocompleteDropDown
                     android:id="@+id/text_departures"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,7 +43,8 @@
                     android:completionThreshold="3"
                     android:imeOptions="actionDone"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"/>
+                    android:focusableInTouchMode="true"
+                    android:dropDownAnchor="@id/dropdown_container"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +62,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                <AutoCompleteTextView
+                <it.unipd.dei.esp2022.app_embedded.helpers.AutocompleteDropDown
                     android:id="@+id/text_arrivals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,7 +70,8 @@
                     android:completionThreshold="3"
                     android:imeOptions="actionDone"
                     android:focusable="true"
-                    android:focusableInTouchMode="true"/>
+                    android:focusableInTouchMode="true"
+                    android:dropDownAnchor="@id/dropdown_container"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -162,12 +164,20 @@
 
     </LinearLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+    <RelativeLayout
+        android:id="@+id/dropdown_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="5dp">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="5dp">
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

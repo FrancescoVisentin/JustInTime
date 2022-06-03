@@ -24,13 +24,14 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-        <AutoCompleteTextView
+        <it.unipd.dei.esp2022.app_embedded.helpers.AutocompleteDropDown
             android:id="@+id/text_autocomplete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:completionThreshold="3"
-            android:imeOptions="actionSearch"/>
+            android:imeOptions="actionSearch"
+            android:dropDownAnchor="@id/dropdown_container"/>
 
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -50,19 +51,27 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+    <RelativeLayout
+        android:id="@+id/dropdown_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="5dp">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-    <ProgressBar android:id="@+id/loading_spinner"
-        style="?android:progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"/>
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="5dp">
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <ProgressBar android:id="@+id/loading_spinner"
+            style="?android:progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="50dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
