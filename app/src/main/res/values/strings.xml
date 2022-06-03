@@ -50,14 +50,14 @@
     <string name="not_available">Non disponibile</string>
 
     <string-array name="train_list">
-        <item>Treno 134</item>
-        <item>Treno 267</item>
-        <item>Treno 646</item>
-        <item>Treno 555</item>
-        <item>Treno 126</item>
-        <item>Treno 968</item>
-        <item>Treno 257</item>
-        <item>Treno 538</item>
+        <item>85</item>
+        <item>3982</item>
+        <item>9423</item>
+        <item>17241</item>
+        <item>16983</item>
+        <item>9743</item>
+        <item>16530</item>
+        <item>17218</item>
     </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="route">Tratta:</string>
@@ -65,5 +65,6 @@
     <string name="close">Chiudi</string>
     <string name="route_details">Dettagli viaggio:</string>
     <string name="trak">Binario:</string>
+    <string name="trains_of_the_day">Treni del giorno</string>
 
 </resources>
