@@ -9,15 +9,19 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
+import it.unipd.dei.esp2022.app_embedded.helpers.PlannerCardAdapter2
+import it.unipd.dei.esp2022.app_embedded.helpers.RicercaViaggioCardAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
 import org.w3c.dom.Text
 
 
-class Planner2Fragment : Fragment() {
+class Planner2Fragment : Fragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var day: String
     private lateinit var plannerName:String
 
@@ -32,6 +36,9 @@ class Planner2Fragment : Fragment() {
         view.findViewById<TextView>(R.id.planner_name).text = plannerName
         day = "Lunedi"
         var tripList = db.getTrips(plannerName,day)
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = PlannerCardAdapter2(tripList, this)
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -54,5 +61,10 @@ class Planner2Fragment : Fragment() {
             view.findNavController().navigate(action)
         }
         return view
+    }
+
+    override fun onEvent(number: String)
+    {
+
     }
 }

@@ -120,9 +120,9 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.insert("Associazione", null, values) != -1L
     }
 
-    fun getTrips(planner:String, day: String): ArrayList<TripInfo> {
-        val cursor = readableDatabase.rawQuery("SELECT Numero, StazionePartenza, StazioneArrivo, OrarioPartenza, OrarioArrivo, Durata, Cambi FROM Associazione WHERE NomePlanner='${planner}' AND Giorno='${day}'", null)
-        val ret = ArrayList<TripInfo>()
+    fun getTrips(planner:String, day: String): MutableList<TripInfo> {
+        val cursor = readableDatabase.rawQuery("SELECT Numero, StazionePartenza, StazioneArrivo, OrarioPartenza, OrarioArrivo, Durata, Cambi FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
+        val ret = mutableListOf<TripInfo>()
         var trip : TripInfo
 
         while (cursor.moveToNext()) {
