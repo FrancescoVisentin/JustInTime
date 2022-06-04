@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -12,18 +13,18 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
-import it.unipd.dei.esp2022.app_embedded.helpers.PlannerCardAdapter2
-import it.unipd.dei.esp2022.app_embedded.helpers.RicercaViaggioCardAdapter
-import it.unipd.dei.esp2022.app_embedded.helpers.TabelloneCardAdapter
+import it.unipd.dei.esp2022.app_embedded.helpers.*
 import org.w3c.dom.Text
 
 
 class Planner2Fragment : Fragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var day: String
     private lateinit var plannerName:String
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var db : DBHelper
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +32,13 @@ class Planner2Fragment : Fragment(), PlannerCardAdapter2.ClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_planner2, container, false)
-        val db = DBHelper(context as Context)
+        db = DBHelper(context as Context)
         plannerName = Planner2FragmentArgs.fromBundle(requireArguments()).message
         view.findViewById<TextView>(R.id.planner_name).text = plannerName
         day = "Lunedi"
-        var tripList = db.getTrips(plannerName,day)
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = PlannerCardAdapter2(tripList, this)
+        recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -61,6 +61,28 @@ class Planner2Fragment : Fragment(), PlannerCardAdapter2.ClickListener {
             view.findNavController().navigate(action)
         }
         return view
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.delete_option -> {
+                val number = (recyclerView.adapter as PlannerCardAdapter2).selectedTripNumber
+                val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
+                if (db.deleteTrip(number)){
+                    Snackbar.make(contextView, "Viaggio $number eliminato", Snackbar.LENGTH_SHORT)
+                        .setAction("Chiudi") {}
+                        .show()
+
+                    recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
+                } else  {
+                    Snackbar.make(contextView, "Errore", Snackbar.LENGTH_SHORT)
+                        .setAction("Chiudi") {}
+                        .show()
+                }
+            }
+        }
+
+        return super.onContextItemSelected(item)
     }
 
     override fun onEvent(number: String)

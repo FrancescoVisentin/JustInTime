@@ -136,12 +136,22 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
             trip.changes = cursor.getString(cursor.getColumnIndexOrThrow("Cambi"))
             ret.add(trip)
         }
+        cursor.close()
         return ret
     }
 
     fun deleteTrip(numero: String): Boolean
     {
         return writableDatabase.delete("Viaggio","NUmero='$numero'", null) != 0
+    }
+
+    fun getTripsCount(planner: String, day: String): Int
+    {
+        val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
+        cursor.moveToFirst()
+        val ret = cursor.getInt(0)
+        cursor.close()
+        return ret
     }
 
     fun checkTable()
@@ -176,11 +186,6 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         }
         cursor4.close()
     }
-
-    /*fun deleteRows()
-    {
-    writableDatabase.delete("Associazione", "Nome='Martedi'",null)
-    }*/
 
     companion object
     {

@@ -67,22 +67,36 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/add_train_button"
-        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginVertical="15dp"
-        android:color="?attr/colorPrimaryContainer"
-        android:text="@string/add_train"
-        android:textColor="?attr/colorOnPrimaryContainer"
-        app:icon="@drawable/ic_baseline_add_24"
-        app:iconSize="30dp" />
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="5dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/add_train_button"
+            style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="15dp"
+            android:color="?attr/colorPrimaryContainer"
+            android:text="@string/add_train"
+            android:textColor="?attr/colorOnPrimaryContainer"
+            app:icon="@drawable/ic_baseline_add_24"
+            app:iconSize="30dp" />
+
+    </LinearLayout>
 
 </LinearLayout>
