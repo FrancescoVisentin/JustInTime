@@ -1,8 +1,11 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -10,9 +13,11 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
+import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.HomeListAdapter
 import it.unipd.dei.esp2022.app_embedded.helpers.TrainViewModel
@@ -23,6 +28,7 @@ import java.util.*
 class HomeFragment : Fragment(), HomeListAdapter.ClickListener {
     private val trainModel : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
+    private lateinit var db : DBHelper
     private var popupWindow: PopupWindow? = null
     private var popupWindowActivated: Boolean = false
 
@@ -51,17 +57,32 @@ class HomeFragment : Fragment(), HomeListAdapter.ClickListener {
             createPopup(info)
         }
 
+        db = DBHelper(context as Context)
+
+        val today = getDay()
+        var trainsInfo = mutableListOf<DBHelper.TripInfo>()
+        for (planner in db.getPlannersName()) {
+            trainsInfo = trainsInfo.plus(db.getTrips(planner, today)) as MutableList<DBHelper.TripInfo>
+        }
+
+        if (trainsInfo.isEmpty()) {
+            view.findViewById<ConstraintLayout>(R.id.empty_list_popup).visibility = View.VISIBLE
+            view.findViewById<Button>(R.id.add_button).setOnClickListener {
+                (activity as Activity).findViewById<BottomNavigationView>(R.id.bottomNavigation)
+                    .selectedItemId = R.id.plannerFragment
+            }
+        }
+
+        val recyclerView : RecyclerView = view.findViewById(R.id.recycler_view)
+        recyclerView.adapter = HomeListAdapter(trainsInfo, this)
+        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
+
         val fab = view.findViewById<FloatingActionButton>(R.id.home_fab)
         fab.setOnClickListener {
             view.findNavController()
                 .navigate(R.id.action_homeFragment_to_ricercaViaggioFragment)
         }
-
-        val recyclerView : RecyclerView = view.findViewById(R.id.recycler_view)
-        //TODO recyclerView.adapter = HomeListAdapter(db, this)
-        recyclerView.adapter = HomeListAdapter(requireContext().resources.getStringArray(R.array.train_list), this)
-        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
 
         return view
     }
@@ -175,6 +196,18 @@ class HomeFragment : Fragment(), HomeListAdapter.ClickListener {
         return when (date) {
             "null" -> "--"
             else -> SimpleDateFormat("HH:mm", Locale.ENGLISH).format(date.toLong())
+        }
+    }
+
+    private fun getDay() : String {
+        return when (SimpleDateFormat("u", Locale.ENGLISH).format(Date())) {
+            "1"   -> "Lunedi"
+            "2"   -> "Martedi"
+            "3"   -> "Mercoledi"
+            "4"   -> "Giovedi"
+            "5"   -> "Venerdi"
+            "6"   -> "Sabato"
+            else  -> "Domenica"
         }
     }
 

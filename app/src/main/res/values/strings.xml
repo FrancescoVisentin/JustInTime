@@ -22,10 +22,8 @@
     <string name="add_train">Aggiungi treno</string>
     <string name="place">Luogo:</string>
     <string name="binario_nr">Binario:</string>
-
     <string name="tab_arrivi">ARRIVI</string>
     <string name="tab_partenze">PARTENZE</string>
-
     <string name="tab_lunedi">LUNEDI</string>
     <string name="tab_martedi">MARTEDI</string>
     <string name="tab_mercoledi">MERCOLEDI</string>
@@ -48,17 +46,6 @@
     <string name="delete">Elimina</string>
     <string name="no_planner">Nessun planner presente</string>
     <string name="not_available">Non disponibile</string>
-
-    <string-array name="train_list">
-        <item>85</item>
-        <item>3982</item>
-        <item>9423</item>
-        <item>17241</item>
-        <item>16983</item>
-        <item>9743</item>
-        <item>16530</item>
-        <item>17218</item>
-    </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="route">Tratta:</string>
     <string name="last_detection">Ultimo rilevamento alle:</string>
@@ -66,5 +53,4 @@
     <string name="route_details">Dettagli viaggio:</string>
     <string name="trak">Binario:</string>
     <string name="trains_of_the_day">Treni del giorno</string>
-
 </resources>

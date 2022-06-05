@@ -136,6 +136,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/empty_list_popup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/no_train_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/add_button"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="Nessun treno per oggi"
+                        app:drawableTopCompat="@drawable/stato_treno_icon" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/add_button"
+                        style="@style/Widget.Material3.Button.ElevatedButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/no_train_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:padding="5dp"
+                        android:text="@string/add_train"
+                        android:textAlignment="center"
+                        android:textColor="?attr/colorOnSecondaryContainer"
+                        android:backgroundTint="?attr/colorSecondaryContainer"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </RelativeLayout>
         </LinearLayout>
 

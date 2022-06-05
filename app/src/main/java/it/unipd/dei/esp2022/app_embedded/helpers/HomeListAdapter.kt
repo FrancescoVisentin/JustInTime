@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,25 +8,29 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
-class HomeListAdapter(private val trainList : Array<String>, private  val listener : ClickListener) : RecyclerView.Adapter<HomeListAdapter.ItemViewHolder>() {
+class HomeListAdapter(private val trainList : MutableList<DBHelper.TripInfo>, private  val listener : ClickListener) : RecyclerView.Adapter<HomeListAdapter.ItemViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
         val number = v.findViewById<TextView>(R.id.train_id).text.toString()
-        listener.onEvent(number)
+        listener.onEvent(number.split(" ")[0])
     }
 
-    class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val trainTextView : TextView = itemView.findViewById(R.id.train_id)
+    class ItemViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
+        private val trainId : TextView = itemView.findViewById(R.id.train_id)
+        private val plannerName: TextView = itemView.findViewById(R.id.planner_name)
+        private val trainRoute: TextView = itemView.findViewById(R.id.train_route)
 
-        fun bind(word: String) {
-            trainTextView.text=word
+        fun bind(tripInfo: DBHelper.TripInfo) {
+            trainId.text = tripInfo.trainNumber
+            plannerName.text = tripInfo.plannerName
+            trainRoute.text = context.getString(R.string.train_route, tripInfo.departureStation, tripInfo.arrivalStation)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.home_item, parent, false)
         view.setOnClickListener(onClickListener)
-        return ItemViewHolder(view)
+        return ItemViewHolder(view, parent.context)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

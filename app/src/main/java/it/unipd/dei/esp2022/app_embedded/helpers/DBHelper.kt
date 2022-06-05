@@ -127,6 +127,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
 
         while (cursor.moveToNext()) {
             trip = TripInfo("")
+            trip.plannerName = planner
             trip.trainNumber = cursor.getString(cursor.getColumnIndexOrThrow("Numero"))
             trip.departureStation = cursor.getString(cursor.getColumnIndexOrThrow("StazionePartenza"))
             trip.arrivalStation = cursor.getString(cursor.getColumnIndexOrThrow("StazioneArrivo"))
@@ -195,7 +196,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
 
     data class TripInfo(var changes: String)
     {
-
+        var plannerName : String = ""
         var trainNumber : String = ""
         var departureStation : String = ""
         var arrivalStation : String = ""
