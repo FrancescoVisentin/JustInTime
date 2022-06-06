@@ -12,9 +12,11 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 import org.w3c.dom.Text
@@ -32,23 +34,28 @@ class Planner2Fragment : Fragment(), PlannerCardAdapter2.ClickListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_planner2, container, false)
-        db = DBHelper(context as Context)
         plannerName = Planner2FragmentArgs.fromBundle(requireArguments()).message
         view.findViewById<TextView>(R.id.planner_name).text = plannerName
-        day = "Lunedi"
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
+        day="Lunedi"
+
+        val tabTitle= arrayOf(getString(R.string.tab_lunedi), getString(R.string.tab_martedi), getString(R.string.tab_mercoledi), getString(R.string.tab_giovedi), getString(R.string.tab_venerdi), getString(R.string.tab_sabato), getString(R.string.tab_domenica))
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
+        val viewPager : ViewPager2 = view.findViewById(R.id.view_pager)
+        viewPager.adapter = ViewPagerAdapter2(childFragmentManager, lifecycle)
+
+        TabLayoutMediator (tabLayout, viewPager) {
+                tab, position -> tab.text = tabTitle[position]
+        }.attach()
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager.currentItem=tab!!.position
                 day = tab?.text.toString().lowercase().capitalize()
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {
-                day = tab?.text.toString().lowercase().capitalize()
+                //day = tab?.text.toString().lowercase().capitalize()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {
