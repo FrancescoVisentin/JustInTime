@@ -146,9 +146,9 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.delete("Viaggio","NUmero='$numero'", null) != 0
     }
 
-    fun getTripsCount(planner: String, day: String): Int
+    fun getPlannerTrains(planner: String): Int
     {
-        val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
+        val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}'", null)
         cursor.moveToFirst()
         val ret = cursor.getInt(0)
         cursor.close()
