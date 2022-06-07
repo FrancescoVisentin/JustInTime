@@ -19,11 +19,15 @@ class HomeListAdapter(private val trainList : MutableList<DBHelper.TripInfo>, pr
         private val trainId : TextView = itemView.findViewById(R.id.train_id)
         private val plannerName: TextView = itemView.findViewById(R.id.planner_name)
         private val trainRoute: TextView = itemView.findViewById(R.id.train_route)
+        private val departureTime: TextView = itemView.findViewById(R.id.departure_time)
+        private val arrivalTime: TextView = itemView.findViewById(R.id.arrival_time)
 
         fun bind(tripInfo: DBHelper.TripInfo) {
             trainId.text = tripInfo.trainNumber
             plannerName.text = tripInfo.plannerName
             trainRoute.text = context.getString(R.string.train_route, tripInfo.departureStation, tripInfo.arrivalStation)
+            departureTime.text = context.getString(R.string.home_departure, tripInfo.departureTime)
+            arrivalTime.text = context.getString(R.string.home_arrival, tripInfo.arrivalTime)
         }
     }
 
