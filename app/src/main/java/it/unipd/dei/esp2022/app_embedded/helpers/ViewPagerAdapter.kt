@@ -4,8 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import it.unipd.dei.esp2022.app_embedded.ui.ArriviFragment
-import it.unipd.dei.esp2022.app_embedded.ui.PartenzeFragment
+import it.unipd.dei.esp2022.app_embedded.ui.RoutesFragment
 
 private const val NUM_TABS = 2
 
@@ -17,10 +16,12 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     }
 
     override fun createFragment(position: Int): Fragment {
+        val tab = RoutesFragment()
         when (position) {
-            0 -> return ArriviFragment()
-            1 -> return PartenzeFragment()
+            0 -> tab.setUp(RoutesFragment.ARRIVALS)
+            1 -> tab.setUp(RoutesFragment.DEPARTURES)
         }
-        return ArriviFragment()
+
+        return tab
     }
 }

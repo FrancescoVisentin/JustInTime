@@ -8,7 +8,7 @@ import it.unipd.dei.esp2022.app_embedded.ui.*
 
 private const val NUM_TABS = 7
 
-class ViewPagerAdapter2(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+class ViewPagerAdapter2(fragmentManager: FragmentManager, lifecycle: Lifecycle, private val planner: String) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {
@@ -16,15 +16,16 @@ class ViewPagerAdapter2(fragmentManager: FragmentManager, lifecycle: Lifecycle) 
     }
 
     override fun createFragment(position: Int): Fragment {
-      when (position) {
-          0 -> return LunediFragment()
-          1 -> return MartediFragment()
-          2 -> return MercolediFragment()
-          3 -> return GiovediFragment()
-          4 -> return VenerdiFragment()
-          5 -> return SabatoFragment()
-          6 -> return DomenicaFragment()
+        val tab = DayFragment()
+        when (position) {
+          0 -> tab.setUp("Lunedi", planner)
+          1 -> tab.setUp("Martedi", planner)
+          2 -> tab.setUp("Mercoledi", planner)
+          3 -> tab.setUp("Giovedi", planner)
+          4 -> tab.setUp("Venerdi", planner)
+          5 -> tab.setUp("Sabato", planner)
+          6 -> tab.setUp("Domenica", planner)
         }
-        return LunediFragment()
+        return tab
     }
 }

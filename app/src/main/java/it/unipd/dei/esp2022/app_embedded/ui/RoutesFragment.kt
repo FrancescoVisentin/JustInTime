@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 
-class ArriviFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListener {
+class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListener {
     private val stationsModel : StationsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private var paused: Boolean = true
+    private var mode = ARRIVALS
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,13 +34,23 @@ class ArriviFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
             createPopup(info)
         }
 
+        if (savedInstanceState != null) {
+            mode = savedInstanceState.getInt("Mode", ARRIVALS)
+        }
+
         val trainStationInfo = stationsModel.getStationTrains() ?: return view
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[1], this)
+        recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[mode], this)
 
         return view
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putInt("Mode", mode)
     }
 
     override fun onPause() {
@@ -56,5 +67,14 @@ class ArriviFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
         trainModel.updated = false
         trainModel.searchTrain(number).observe(viewLifecycleOwner, resObserver)
         startFade()
+    }
+
+    fun setUp(m: Int) {
+        mode = m
+    }
+
+    companion object {
+        const val DEPARTURES = 0
+        const val ARRIVALS = 1
     }
 }

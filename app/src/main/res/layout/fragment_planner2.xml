@@ -20,6 +20,21 @@
         android:padding="5dp"
         style="@style/TextAppearance.Material3.TitleLarge"/>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorAnimationMode="elastic"/>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <Button
         android:id="@+id/add_train_button"
         style="@style/Widget.Material3.Button.OutlinedButton.Icon"
@@ -32,33 +47,5 @@
         android:textColor="?attr/colorOnPrimaryContainer"
         app:icon="@drawable/ic_baseline_add_24"
         app:iconSize="30dp" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorAnimationMode="elastic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
-        </com.google.android.material.tabs.TabLayout>
-
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabs" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </LinearLayout>
