@@ -22,6 +22,8 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
     private lateinit var db : DBHelper
     private lateinit var recyclerView : RecyclerView
     private lateinit var plannerImageView : LinearLayout
+    private var popupWindow: PopupWindow? = null
+    private var popupWindowActivated: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,59 +47,34 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
 
         val fab = view.findViewById<FloatingActionButton>(R.id.planner_fab)
         fab.setOnClickListener {
-            val popupView = inflater.inflate(R.layout.popup_add_planner, view.parent as ViewGroup, false)
-
-            val width = (view.width*0.85).toInt()
-            val popupWindow = PopupWindow(popupView, width, ViewGroup.LayoutParams.WRAP_CONTENT,true)
-
-            popupWindow.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
-            popupWindow.elevation = 100F
-            popupWindow.isOutsideTouchable = true
-            popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-
-            val popupTextView = popupView.findViewById<AutoCompleteTextView>(R.id.text_autocomplete)
-            popupTextView.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    popupTextView.clearFocus()
-                    //hide keyboard
-                    val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
-
-                    return@setOnEditorActionListener true
-                }
-
-                return@setOnEditorActionListener false
-            }
-
-            val cancelButton = popupView.findViewById<Button>(R.id.exit_button)
-            cancelButton.setOnClickListener {
-                popupWindow.dismiss()
-            }
-
-            val addButton = popupView.findViewById<Button>(R.id.add_button)
-            addButton.setOnClickListener {
-                if (popupTextView.text.isNotEmpty()) {
-                    //hide keyboard
-                    val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                    imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
-
-                    if (db.addPlanner(popupTextView.text.toString())) {
-                        recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
-                        checkPlannersCount()
-                    } else {
-                        val contextView = view.findViewById<View>(R.id.coordinator_layout)
-                        Snackbar.make(contextView, "Nome non valido", Snackbar.LENGTH_SHORT)
-                            .setAction("Chiudi") {}
-                            .show()
-                    }
-
-                    popupWindow.dismiss()
-                }
-
-            }
+            createPopup()
         }
 
         return  view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            popupWindowActivated= savedInstanceState.getBoolean("popup_visibility")
+
+            if (popupWindowActivated) {
+                createPopup()
+            }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("popup_visibility", popupWindowActivated)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val restore = popupWindowActivated
+        popupWindow?.dismiss()
+        popupWindowActivated = restore
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -128,7 +105,76 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         (view as View).findNavController().navigate(action)
     }
 
+    private fun createPopup() {
+        val inflater = LayoutInflater.from((view as View).context)
+        val popupView = inflater.inflate(R.layout.popup_add_planner, view as ViewGroup, false)
+
+        val width = ((view as View).width*0.85).toInt()
+        popupWindow = PopupWindow(popupView, width, ViewGroup.LayoutParams.WRAP_CONTENT,true)
+
+        popupWindow?.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
+        popupWindow?.elevation = 100F
+        popupWindow?.isOutsideTouchable = true
+        popupWindowActivated = true
+        popupWindow?.setOnDismissListener {
+            popupWindowActivated = false
+            popupWindow = null
+        }
+
+        val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
+
+        if (width == 0) {
+            popupContainerView.post {
+                val updatedWidth = ((view as View).width*0.85).toInt()
+                popupWindow?.update(0,0, updatedWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
+                popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            }
+        } else {
+            popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+        }
+
+        val popupTextView = popupView.findViewById<AutoCompleteTextView>(R.id.text_autocomplete)
+        popupTextView.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                popupTextView.clearFocus()
+                //hide keyboard
+                val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
+
+                return@setOnEditorActionListener true
+            }
+
+            return@setOnEditorActionListener false
+        }
+
+        val cancelButton = popupView.findViewById<Button>(R.id.exit_button)
+        cancelButton.setOnClickListener {
+            popupWindow?.dismiss()
+        }
+
+        val addButton = popupView.findViewById<Button>(R.id.add_button)
+        addButton.setOnClickListener {
+            if (popupTextView.text.isNotEmpty()) {
+                //hide keyboard
+                val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
+
+                if (db.addPlanner(popupTextView.text.toString())) {
+                    recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
+                    checkPlannersCount()
+                } else {
+                    val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
+                    Snackbar.make(contextView, "Nome non valido", Snackbar.LENGTH_SHORT)
+                        .setAction("Chiudi") {}
+                        .show()
+                }
+
+                popupWindow?.dismiss()
+            }
+        }
+    }
+
     private fun checkPlannersCount() {
-            plannerImageView.visibility = if (db.getPlannersCount() == 0) View.VISIBLE else View.INVISIBLE
+        plannerImageView.visibility = if (db.getPlannersCount() == 0) View.VISIBLE else View.INVISIBLE
     }
 }
