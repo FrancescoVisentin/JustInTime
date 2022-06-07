@@ -112,7 +112,7 @@ class StatoTrenoFragment : Fragment() {
         trainView.findViewById<TextView>(R.id.delay).text = if (info.delay.toInt() >= 0) "+${info.delay} min" else "${info.delay} min"
         addStationsBar(trainView, info.stops, info.currentIndex)
 
-        crossfade(trainView)
+        crossFade(trainView)
     }
 
     private fun getDate(date : String) : String {
@@ -129,7 +129,7 @@ class StatoTrenoFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun crossfade(contentView : View) {
+    private fun crossFade(contentView : View) {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 

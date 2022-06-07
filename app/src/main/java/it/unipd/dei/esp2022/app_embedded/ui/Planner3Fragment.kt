@@ -1,7 +1,5 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle

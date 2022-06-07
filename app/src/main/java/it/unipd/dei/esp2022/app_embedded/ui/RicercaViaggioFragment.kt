@@ -20,7 +20,6 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
-import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.HTTParser
 import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 import java.text.SimpleDateFormat
@@ -45,8 +44,6 @@ class RicercaViaggioFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio, container, false)
-        /*var db = DBHelper(context as Context)
-        db.checkTable()*/
 
         resObserver = Observer<MutableList<HTTParser.SolutionInfo>> { info ->
             if (info == null) {

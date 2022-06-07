@@ -8,18 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.tabs.TabLayoutMediator
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.ViewPagerAdapter
 import java.util.*
 
 class Tabellone2Fragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        enterTransition = MaterialFadeThrough()
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
