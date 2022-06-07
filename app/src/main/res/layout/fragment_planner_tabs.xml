@@ -34,4 +34,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+        android:id="@+id/no_trips_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/no_trips_icon"
+            android:layout_gravity="center"
+            android:contentDescription="@string/no_planner" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/no_trips"
+            android:textColor="?attr/colorPrimary"
+            style="@style/TextAppearance.Material3.TitleMedium"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

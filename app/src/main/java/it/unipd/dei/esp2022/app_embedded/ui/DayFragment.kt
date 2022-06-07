@@ -4,6 +4,7 @@ import android.content.Context
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var plannerName:String
     private lateinit var recyclerView : RecyclerView
     private lateinit var db : DBHelper
+    private lateinit var tripsImageView : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,6 +39,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
         }
 
         db = DBHelper(context as Context)
+        tripsImageView = view.findViewById(R.id.no_trips_image)
 
         if (savedInstanceState != null) {
             plannerName = savedInstanceState.getString("Planner", "")
@@ -46,7 +49,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
-
+        checkTripsCount()
         return view
     }
 
@@ -60,6 +63,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
                     Snackbar.make(contextView, "Viaggio $number eliminato", Snackbar.LENGTH_SHORT)
                         .setAction("Chiudi") {}
                         .show()
+                    checkTripsCount()
 
                     recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
                 } else {
@@ -88,5 +92,9 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
         trainModel.updated = false
         trainModel.searchTrain(number).observe(viewLifecycleOwner, resObserver)
         startFade()
+    }
+
+    private fun checkTripsCount() {
+        tripsImageView.visibility = if (db.getTripsCount(plannerName, day) == 0) View.VISIBLE else View.INVISIBLE
     }
 }

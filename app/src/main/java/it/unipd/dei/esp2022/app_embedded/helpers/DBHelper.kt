@@ -155,6 +155,15 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return ret
     }
 
+    fun getTripsCount(planner: String, day: String): Int
+    {
+        val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
+        cursor.moveToFirst()
+        val ret = cursor.getInt(0)
+        cursor.close()
+        return ret
+    }
+
     fun checkTable()
     {
         val cursor = readableDatabase.rawQuery("SELECT * FROM Associazione", null)
