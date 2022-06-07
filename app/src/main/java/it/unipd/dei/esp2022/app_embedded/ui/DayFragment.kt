@@ -19,6 +19,15 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var db : DBHelper
     private lateinit var tripsImageView : LinearLayout
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            plannerName = savedInstanceState.getString("Planner", "")
+            day = savedInstanceState.getString("Day", "")
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -40,11 +49,6 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
 
         db = DBHelper(context as Context)
         tripsImageView = view.findViewById(R.id.no_trips_image)
-
-        if (savedInstanceState != null) {
-            plannerName = savedInstanceState.getString("Planner", "")
-            day = savedInstanceState.getString("Day", "")
-        }
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)

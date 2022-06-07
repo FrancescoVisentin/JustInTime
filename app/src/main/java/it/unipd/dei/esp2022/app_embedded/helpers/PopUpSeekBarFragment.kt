@@ -37,9 +37,11 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
                 val updatedWidth = ((view as View).width*0.85).toInt()
                 popupWindow?.update(0,0, updatedWidth, WindowManager.LayoutParams.WRAP_CONTENT)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+                popupWindow?.dimBehind()
             }
         } else {
             popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            popupWindow?.dimBehind()
         }
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
@@ -48,7 +50,6 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
         }
 
         addStationsBar(popupView, trainInfo.stops, trainInfo.currentIndex)
-        //popupWindow?.dimBehind()
     }
 
     private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>, currentIndex: Int){

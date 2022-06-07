@@ -128,9 +128,11 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
                 val updatedWidth = ((view as View).width*0.85).toInt()
                 popupWindow?.update(0,0, updatedWidth, ViewGroup.LayoutParams.WRAP_CONTENT)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+                popupWindow?.dimBehind()
             }
         } else {
             popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            popupWindow?.dimBehind()
         }
 
         val popupTextView = popupView.findViewById<AutoCompleteTextView>(R.id.text_autocomplete)
@@ -176,5 +178,15 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
 
     private fun checkPlannersCount() {
         plannerImageView.visibility = if (db.getPlannersCount() == 0) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun PopupWindow.dimBehind() {
+        val container = contentView.rootView
+        val context = contentView.context
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val p = container.layoutParams as WindowManager.LayoutParams
+        p.flags = p.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        p.dimAmount = 0.3f
+        wm.updateViewLayout(container, p)
     }
 }

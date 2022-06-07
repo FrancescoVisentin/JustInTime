@@ -38,9 +38,11 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
                 val updatedHeight = ((view as View).height*0.6).toInt()
                 popupWindow?.update(0,0, updatedWidth, updatedHeight)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+                popupWindow?.dimBehind()
             }
         } else {
             popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            popupWindow?.dimBehind()
         }
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
@@ -50,7 +52,6 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
 
         setupAddButton(popupView, trainInfo.trainID)
         addStationsBar(popupView, trainInfo.stops)
-        //popupWindow?.dimBehind()
     }
 
     protected open fun setupAddButton(popupView: View, trainID: String) {

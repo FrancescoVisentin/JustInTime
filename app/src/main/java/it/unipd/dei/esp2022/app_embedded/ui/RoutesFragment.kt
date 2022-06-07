@@ -15,6 +15,14 @@ class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
     private var paused: Boolean = true
     private var mode = ARRIVALS
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            mode = savedInstanceState.getInt("Mode", ARRIVALS)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -32,10 +40,6 @@ class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
 
             stopFade()
             createPopup(info)
-        }
-
-        if (savedInstanceState != null) {
-            mode = savedInstanceState.getInt("Mode", ARRIVALS)
         }
 
         val trainStationInfo = stationsModel.getStationTrains() ?: return view
