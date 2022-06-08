@@ -19,7 +19,7 @@
     <string name="results_for">Risultati per:</string>
     <string name="state">Stato Treno:</string>
     <string name="planner_name">Nome planner</string>
-    <string name="add_train">Aggiungi treno</string>
+    <string name="add_train">Aggiungi viaggio</string>
     <string name="place">Luogo:</string>
     <string name="binario_nr">Binario:</string>
     <string name="tab_arrivi">ARRIVI</string>

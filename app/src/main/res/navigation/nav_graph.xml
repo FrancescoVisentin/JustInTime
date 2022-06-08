@@ -63,7 +63,7 @@
     <fragment
         android:id="@+id/planner2Fragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Planner2Fragment"
-        android:label="Planner 2" >
+        android:label="Planner" >
     <action
         android:id="@+id/action_planner2Fragment_to_planner3Fragment"
         app:destination="@id/planner3Fragment" />
@@ -74,7 +74,7 @@
     <fragment
         android:id="@+id/planner3Fragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Planner3Fragment"
-        android:label="Planner 3" >
+        android:label="Ricerca viaggio" >
         <action
             android:id="@+id/action_planner3Fragment_to_planner3ResultFragment"
             app:destination="@id/planner3ResultFragment" />
@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/planner3ResultFragment"
         android:name="it.unipd.dei.esp2022.app_embedded.ui.Planner3ResultFragment"
-        android:label="Risultati planner 3" >
+        android:label="Risultati ricerca viaggio" >
     <argument
         android:name="message"
         app:argType="string" />
