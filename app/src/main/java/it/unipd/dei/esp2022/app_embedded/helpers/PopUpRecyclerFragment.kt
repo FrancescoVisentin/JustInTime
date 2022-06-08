@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
+//Classe base per fragment che utilizzano una PopupWindow per descrivere la tratta di un treno.
 abstract class PopUpRecyclerFragment: PopUpFragment() {
 
+    //Inserisce tutte le informazioni della tratta all'interno della PopupWindow utilizzando una RecyclerView.
     override fun createPopup(trainInfo: HTTParser.TrainInfo) {
         val inflater = LayoutInflater.from((view as View).context)
         val popupView = inflater.inflate(R.layout.popup_train_description_planner, view as ViewGroup, false)
@@ -32,15 +34,20 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
 
         val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
 
+        //Quando la PopupWindow viene ricreta in automatico da PopupFragment.onViewCreated l'activity sottostante non è
+        //ancora stata inizializzata completamente. View.width e View.higth ritorneranno allora 0
+        //Il metodo post "rallenta" la creazione dalla PopupWindow a quando questi parametri saranno stati inizializzati correttamente.
         if (height == 0 || width == 0) {
             popupContainerView.post {
                 val updatedWidth = ((view as View).width*0.85).toInt()
                 val updatedHeight = ((view as View).height*0.6).toInt()
                 popupWindow?.update(0,0, updatedWidth, updatedHeight)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+                popupWindow?.dimBehind()
             }
         } else {
             popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            popupWindow?.dimBehind()
         }
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
@@ -50,17 +57,16 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
 
         setupAddButton(popupView, trainInfo.trainID)
         addStationsBar(popupView, trainInfo.stops)
-        //popupWindow?.dimBehind()
     }
 
     protected open fun setupAddButton(popupView: View, trainID: String) {
         popupView.findViewById<Button>(R.id.add_button).visibility = View.INVISIBLE
     }
 
+    //Aggiungo RecyclerView contenente tutte le fermate alla PopupWindow.
     private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>) {
-        val stationsAdapter = StationsListAdapter(stops, -1)
         val recyclerView = popupView.findViewById<RecyclerView>(R.id.stations_recycler_view)
-        recyclerView.adapter = stationsAdapter
+        recyclerView.adapter = StationsListAdapter(stops, -1)
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 }

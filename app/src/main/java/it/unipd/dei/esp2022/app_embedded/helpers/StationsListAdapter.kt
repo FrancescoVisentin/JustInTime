@@ -10,6 +10,7 @@ import com.test.app_embedded.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Adapter per la RecyclerView utilizzata da PopUpRecyclerFragment per caricare le informazioni di ogni fermata.
 class StationsListAdapter(private val stations : MutableList<HTTParser.StationInfo>, private val currentIndex : Int) : RecyclerView.Adapter<StationsListAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View, private val currentIndex: Int, private val context: Context) : RecyclerView.ViewHolder(itemView) {
@@ -27,6 +28,7 @@ class StationsListAdapter(private val stations : MutableList<HTTParser.StationIn
             scheduledDeparture.text = getDate(stationInfo.scheduledDeparture)
             scheduledArrival.text = getDate(stationInfo.scheduledArrival)
 
+            //Fermate già effettuate, carico partenza/arrivo effettivi
             if (position <= currentIndex) {
                 departureText.text = context.getString(R.string.real_departure)
                 arrivalText.text = context.getString(R.string.real_arrival)
@@ -41,6 +43,7 @@ class StationsListAdapter(private val stations : MutableList<HTTParser.StationIn
             }           
         }
 
+        //Trasforma unix timestamp in una orario nel formato 'ore:min' (Es: 15:48)
         private fun getDate(date : String) : String {
             return when (date) {
                 "null" -> "--"

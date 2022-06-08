@@ -54,4 +54,8 @@
     <string name="route_details">Dettagli viaggio:</string>
     <string name="trak">Binario:</string>
     <string name="trains_of_the_day">Treni del giorno</string>
+    <string name="home_departure">Partenza: %s</string>
+    <string name="home_arrival">Arrivo: %s</string>
+    <string name="cancel">Annulla</string>
+    <string name="new_planner">Nuovo planner:</string>
 </resources>

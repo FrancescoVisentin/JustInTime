@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.test.app_embedded.R
 
-
+//Classe di base per Fragment che utilizzano PopupWindow per descrivere l'andamento o la tratta di un treno.
+//Gestisce salvataggio di stato ed le animazioni per il caricamento delle PopupWindow.
 abstract class PopUpFragment: Fragment() {
     protected val trainModel: TrainViewModel by activityViewModels()
     protected var popupWindow: PopupWindow? = null
@@ -20,6 +21,7 @@ abstract class PopUpFragment: Fragment() {
         if (savedInstanceState != null) {
             popupWindowActivated= savedInstanceState.getBoolean("popup_visibility")
 
+            //Ricreo PopupWindow se questa era attiva quando l'activity è stata terminata.
             if (popupWindowActivated) {
                 val info = trainModel.getTrainState() ?: return
                 createPopup(info)
@@ -32,6 +34,7 @@ abstract class PopUpFragment: Fragment() {
         outState.putBoolean("popup_visibility", popupWindowActivated)
     }
 
+    //Salvo la visibilità della PopupWindow quando l'activity viene terminata, anche automaticamente (Es. ruoto schermo).
     override fun onStop() {
         super.onStop()
         val restore = popupWindowActivated
@@ -39,6 +42,7 @@ abstract class PopUpFragment: Fragment() {
         popupWindowActivated = restore
     }
 
+    //Definisce il layout effettivo della PopupWindow.
     protected abstract fun createPopup(trainInfo: HTTParser.TrainInfo)
 
     protected fun startFade() {

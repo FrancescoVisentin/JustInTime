@@ -12,12 +12,14 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 
+//ViewModel relativo ai dati di una singola stazione. Effettua richieste HTTP e gestisce la relativa business logic.
 class SolutionsViewModel : ViewModel() {
     private val ret: MutableLiveData<MutableList<HTTParser.SolutionInfo>> by lazy {
         MutableLiveData<MutableList<HTTParser.SolutionInfo>>()
     }
     var updated : Boolean = false
 
+    //Se le stazioni cercate esistono effettivamente restituisce un oggetto LiveData contentente le informazioni dei treni che percorrono quella tratta.
     fun searchSolutions(firstStation : String, secondStation : String, time: String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
         viewModelScope.launch {
             val firstStationID = getStationID(firstStation)
@@ -37,12 +39,16 @@ class SolutionsViewModel : ViewModel() {
         return ret
     }
 
-    //funzione per richiedere i dati alla view model senza effettuare nuovamente la query (utili per recuperare stato)
+    //Funzione usata per recupero dello stato/passaggio parametri senza ripetere nuovamente le richieste HTTP.
+    //Restituisce i dati relativi all'ultima ricerca effettuata (se sono già avvenute richieste) altrimenti null.
     fun getSolutions(): MutableList<HTTParser.SolutionInfo>? {
         return ret.value
     }
 
+    //Se la stazione esiste effettivamente restituisce l'ID univoco associato.
     private suspend fun getStationID(station: String) : String {
+        //Il server non processa correttamente le stazioni aventi nome più lungo di 20 caratteri.
+        //É necessario troncare il nome della stringa e verificare poi che i risultati combacino.
         val st = if (station.length < 20) station else station.substring(0,20)
 
         return withContext(Dispatchers.IO) {
@@ -60,6 +66,7 @@ class SolutionsViewModel : ViewModel() {
                 val stationName = stationTokens[0].lowercase()
                 val stationID = stationTokens[1]
 
+                //Verifico se il nome cercato ed il nome relativo all'ID restituito combaciano.
                 if (station.compareTo(stationName) != 0) {
                     return@withContext ""
                 }
@@ -70,8 +77,9 @@ class SolutionsViewModel : ViewModel() {
         }
     }
 
+    //Ritorna come stringa un json contenente l'elenco di tutti i treni che percorrono la tratta selezionata, con le relative informazioni.
     private suspend fun getSolutions(firstStationID: String, secondStationID: String, time: String) : String {
-        val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date()) //TODO controlla come si comporta il format orario di trenitalia
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date())
 
         return withContext(Dispatchers.IO) {
             val url = URL("http://www.viaggiatreno.it/infomobilita/resteasy/viaggiatreno/soluzioniViaggioNew/$firstStationID/$secondStationID/${date}T$time:00")

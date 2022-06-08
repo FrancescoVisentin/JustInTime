@@ -99,7 +99,7 @@
                 style="@style/TextAppearance.Material3.TitleMedium"
                 android:textColor="?attr/colorOnBackground"
                 android:padding="5dp"
-                android:gravity="left"/>
+                android:gravity="start"/>
 
 
             <TextView

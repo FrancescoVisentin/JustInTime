@@ -6,8 +6,10 @@ import com.test.app_embedded.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Classe base per fragment che utilizzano una PopupWindow per descrivere l'andamento di un treno.
 abstract class PopUpSeekBarFragment: PopUpFragment() {
 
+    //Inserisce tutte le informazioni relative all'andamento del treno all'interno della PopupWindow.
     override fun createPopup(trainInfo: HTTParser.TrainInfo) {
         val inflater = LayoutInflater.from((view as View).context)
         val popupView = inflater.inflate(R.layout.popup_train_description, view as ViewGroup, false)
@@ -32,14 +34,19 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
 
         val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
 
+        //Quando la PopupWindow viene ricreta in automatico da PopupFragment.onViewCreated l'activity sottostante non è
+        //ancora stata inizializzata completamente. View.width ritorna allora 0
+        //Il metodo post "rallenta" la creazione dalla PopupWindow a quando questo parametro sarà stato inizializzato correttamente.
         if (width == 0) {
             popupContainerView.post {
                 val updatedWidth = ((view as View).width*0.85).toInt()
                 popupWindow?.update(0,0, updatedWidth, WindowManager.LayoutParams.WRAP_CONTENT)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+                popupWindow?.dimBehind()
             }
         } else {
             popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
+            popupWindow?.dimBehind()
         }
 
         val exitButton = popupView.findViewById<Button>(R.id.exit_button)
@@ -48,11 +55,12 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
         }
 
         addStationsBar(popupView, trainInfo.stops, trainInfo.currentIndex)
-        //popupWindow?.dimBehind()
     }
 
+    //Aggiunge l'elenco delle stazioni della tratta ed una progress bar che indica la stazione corrente.
     private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>, currentIndex: Int){
         val stepBar = popupView.findViewById<SeekBar>(R.id.step_bar)
+        //Rendo la SeekBar non interagibile dall'utente.
         stepBar.setOnTouchListener { _, _ -> true }
 
         val stationsNum = stops.size-1
@@ -64,6 +72,7 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
         val labelsLayout = popupView.findViewById<LinearLayout>(R.id.labels_layout)
         labelsLayout.removeAllViews()
 
+        //Per ogni stazione aggiungo una nuova label al mio layout.
         stops.forEachIndexed { index, stationInfo ->
             val label = TextView(popupView.context)
             label.text = stationInfo.stationName
@@ -71,6 +80,7 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
             labelsLayout.addView(label)
 
             if (index == stationsNum-1) {
+                //L'ultima label occuperà tutto lo spazio rimanente.
                 label.layoutParams = getLayoutParams(1.0f)
             }
             else {
@@ -83,6 +93,7 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
         return LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.WRAP_CONTENT, weight)
     }
 
+    //Trasforma unix timestamp in una orario nel formato 'ore:min' (Es: 15:48)
     private fun getDate(date : String) : String {
         return when (date) {
             "null" -> "--"
