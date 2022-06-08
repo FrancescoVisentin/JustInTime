@@ -8,10 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
+//Adapter per la RecyclerView utilizzata nella schermata 'Home'.
 class HomeListAdapter(private val trainList : MutableList<DBHelper.TripInfo>, private  val listener : ClickListener) : RecyclerView.Adapter<HomeListAdapter.ItemViewHolder>() {
 
     private val onClickListener = View.OnClickListener { v ->
         val number = v.findViewById<TextView>(R.id.train_id).text.toString()
+
+        //Delego la gestione del click al ClickListener legato alla mia RecyclerView.
+        //In questo caso sarà il fragment 'Home' stesso ad occuparsene.
         listener.onEvent(number.split(" ")[0])
     }
 

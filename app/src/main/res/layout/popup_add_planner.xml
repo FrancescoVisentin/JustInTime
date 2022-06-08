@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="Nuovo planner:"
+            android:text="@string/new_planner"
             app:drawableStartCompat="@drawable/planner_icon"
             android:drawablePadding="2dp"
             app:drawableTint="?attr/colorOnPrimaryContainer"
@@ -36,7 +36,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
-            android:hint="Nome planner"
             app:startIconDrawable="@drawable/add_icon"
             app:endIconMode="clear_text"
             android:layout_width="match_parent"
@@ -53,7 +52,8 @@
                 android:inputType="text"
                 android:completionThreshold="3"
                 android:maxLength="20"
-                android:imeOptions="actionDone" />
+                android:imeOptions="actionDone"
+                android:hint="@string/planner_name"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,12 +67,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textField"
-            android:text="Aggiungi"
+            android:text="@string/planner_fab_content_desc"
             android:textAlignment="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     <View
         android:id="@+id/divider2"
@@ -93,7 +91,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="5dp"
-            android:text="Annulla"
+            android:text="@string/cancel"
             android:textAlignment="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

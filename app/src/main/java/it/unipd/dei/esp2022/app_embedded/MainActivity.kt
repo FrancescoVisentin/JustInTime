@@ -23,11 +23,14 @@ import com.google.android.material.color.DynamicColors
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.test.app_embedded.R
 
+//Activity di base dell'app.
+//Gestisce view condivise come AppBar e BottomNavigationView e gestice la navigazione tra i vari fragment.
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView : BottomNavigationView
     private lateinit var appBarConfiguration: AppBarConfiguration
 
+    //Configura NavigationCotroller, BottomNavigationView ed AppBar.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
+    //Configuara il menu dell'AppBar.
+    //Inserisce e configura lo switch responsabile del cambio di tema presente nell'AppBar.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater : MenuInflater = menuInflater
         inflater.inflate(R.menu.app_bar_menu, menu)
@@ -52,15 +57,18 @@ class MainActivity : AppCompatActivity() {
         setUpMenuSwitch(appBarSwitch)
 
         appBarSwitch.setOnCheckedChangeListener { _, isChecked ->
+            //Ricrea l'activity ricaricandola con il tema selezionato.
             saveColorPreference(isChecked)
         }
         return true
     }
 
+    //Comportamento della 'freccia indietro' presente nell'AppBar dei fragment non di primo livello.
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration)
     }
 
+    //Gestisce visibilità della BottomNavigationView ed aspetto dell'AppBar per i vari fragment.
     private fun setupNavController() {
         navController.addOnDestinationChangedListener {_, destination, _ ->
             when (destination.id) {
@@ -86,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Imposta i colori e lo stato dello switch presente nell'AppBar basandosi sullo stato persistente.
     private fun setUpMenuSwitch(switch : SwitchMaterial) {
         val typedValue = TypedValue()
         theme.resolveAttribute(com.google.android.material.R.attr.colorTertiary, typedValue, true)
@@ -101,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         switch.isChecked = sharedPref.getBoolean("dynamic_colors", false)
     }
 
+    //Sulla base della modalità selezionata ricrea l'activity con il tema scelto ed aggiorna lo stato persistente.
     private fun saveColorPreference(mode : Boolean) {
         if (DynamicColors.isDynamicColorAvailable()) {
             val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE) ?: return

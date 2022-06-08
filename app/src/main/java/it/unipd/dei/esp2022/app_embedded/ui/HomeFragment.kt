@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+//Fragment resposabile della presentation logic per la schermata 'Home'.
 class HomeFragment : PopUpSeekBarFragment(), HomeListAdapter.ClickListener {
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private lateinit var db : DBHelper
@@ -35,6 +36,8 @@ class HomeFragment : PopUpSeekBarFragment(), HomeListAdapter.ClickListener {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+        //Observer sul LiveData restituito da TrainViewModel.searchTrain()
+        //Apre una PopupWindow quando il LiveData viene aggiornato.
         resObserver = Observer<HTTParser.TrainInfo> { info ->
             if (info.trainID.compareTo("null") == 0) {
                 stopFade()
@@ -51,6 +54,7 @@ class HomeFragment : PopUpSeekBarFragment(), HomeListAdapter.ClickListener {
 
         db = DBHelper(context as Context)
 
+        //Recupero i treni del giorno dal database.
         val today = getDay()
         var trainsInfo = mutableListOf<DBHelper.TripInfo>()
         for (planner in db.getPlannersName()) {
@@ -79,6 +83,8 @@ class HomeFragment : PopUpSeekBarFragment(), HomeListAdapter.ClickListener {
         return view
     }
 
+    //OnClickListener per la RecyclerView.
+    //Sfrutta TrainViewModel ed un observer per aprire un PopupWindow contenente le informazioni del treno.
     override fun onEvent(number: String) {
         trainModel.updated = false
         trainModel.searchTrain(number).observe(viewLifecycleOwner, resObserver)

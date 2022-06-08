@@ -23,12 +23,11 @@
                 android:id="@+id/planner_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome planner"
+                android:text="@string/value_stub"
                 android:textSize="25sp"
                 android:padding="5dp"
                 app:drawableLeftCompat="@drawable/planner_icon"
-                android:drawablePadding="5dp"
-                tools:ignore="HardcodedText" />
+                android:drawablePadding="5dp" />
 
             <View
                 android:id="@+id/divider"

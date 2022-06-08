@@ -18,10 +18,12 @@ import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.DBHelper
 import it.unipd.dei.esp2022.app_embedded.helpers.PlannerListAdapter
 
+//Fragment resposabile della presentation logic per la schermata 'Planner'.
+//Gestisce salvataggio di stato ed le animazioni della PopupWindow usata per aggiungere nuovi planner.
 class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
     private lateinit var db : DBHelper
     private lateinit var recyclerView : RecyclerView
-    private lateinit var plannerImageView : LinearLayout
+    private lateinit var plannerImageView : TextView
     private var popupWindow: PopupWindow? = null
     private var popupWindowActivated: Boolean = false
 
@@ -40,6 +42,7 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         recyclerView = view.findViewById(R.id.planner_recycler_view)
         plannerImageView = view.findViewById(R.id.no_planners_image)
 
+        //Carico i planner creati dall'utente.
         recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
         recyclerView.layoutManager = LinearLayoutManager(context)
         registerForContextMenu(recyclerView)
@@ -59,6 +62,7 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         if (savedInstanceState != null) {
             popupWindowActivated= savedInstanceState.getBoolean("popup_visibility")
 
+            //Ricreo PopupWindow se questa era attiva quando l'activity è stata terminata.
             if (popupWindowActivated) {
                 createPopup()
             }
@@ -70,6 +74,7 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         outState.putBoolean("popup_visibility", popupWindowActivated)
     }
 
+    //Salvo la visibilità della PopupWindow quando l'activity viene terminata, anche automaticamente (Es. ruoto schermo).
     override fun onStop() {
         super.onStop()
         val restore = popupWindowActivated
@@ -77,11 +82,14 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         popupWindowActivated = restore
     }
 
+    //Configura il context menu associato da un long click su un planner.
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_option -> {
                 val name = (recyclerView.adapter as PlannerListAdapter).selectedPlannerName
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
+
+                //Elimino il planner dal database.
                 if (db.deletePlanner(name)){
                     Snackbar.make(contextView, "Planner $name eliminato", Snackbar.LENGTH_SHORT)
                         .setAction("Chiudi") {}
@@ -100,11 +108,13 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         return super.onContextItemSelected(item)
     }
 
+    //OnClickListener per la RecyclerView contenente i planner creati dall'utente.
     override fun onEvent(plannerName:String) {
         val action = PlannerFragmentDirections.actionPlannerFragmentToPlanner2Fragment(plannerName)
         (view as View).findNavController().navigate(action)
     }
 
+    //Crea la PopupWindow usata per aggiungere un nuovo planner.
     private fun createPopup() {
         val inflater = LayoutInflater.from((view as View).context)
         val popupView = inflater.inflate(R.layout.popup_add_planner, view as ViewGroup, false)
@@ -123,6 +133,9 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
 
         val popupContainerView = (view as View).findViewById<View>(R.id.popup_container)
 
+        //Quando la PopupWindow viene ricreta in automatico da PlannerFragment.onViewCreated l'activity sottostante non è
+        //ancora stata inizializzata completamente. View.width ritorna allora 0
+        //Il metodo post "rallenta" la creazione dalla PopupWindow a quando questo parametro sarà stato inizializzato correttamente.
         if (width == 0) {
             popupContainerView.post {
                 val updatedWidth = ((view as View).width*0.85).toInt()
@@ -139,7 +152,7 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         popupTextView.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 popupTextView.clearFocus()
-                //hide keyboard
+                //Nascondo la tastiera.
                 val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
 
@@ -157,10 +170,11 @@ class PlannerFragment : Fragment(), PlannerListAdapter.ClickListener {
         val addButton = popupView.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
             if (popupTextView.text.isNotEmpty()) {
-                //hide keyboard
+                //Nascondo la tastiera.
                 val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 imm?.hideSoftInputFromWindow(popupView.windowToken, 0)
 
+                //Creo un nuovo planner e lo aggiungo al database.
                 if (db.addPlanner(popupTextView.text.toString())) {
                     recyclerView.adapter = PlannerListAdapter(db.getPlannersName(), this)
                     checkPlannersCount()
