@@ -23,7 +23,7 @@ import it.unipd.dei.esp2022.app_embedded.helpers.StationsViewModel
 
 class TabelloneFragment : Fragment() {
     private val model : StationsViewModel by activityViewModels()
-    private lateinit var resObserver : Observer<Array<MutableList<HTTParser.TrainStationInfo>>>
+    private lateinit var resObserver : Observer<ArrayList<MutableList<HTTParser.TrainStationInfo>>>
     private var station : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class TabelloneFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_tabellone, container, false)
 
-        resObserver = Observer<Array<MutableList<HTTParser.TrainStationInfo>>> { info ->
+        resObserver = Observer<ArrayList<MutableList<HTTParser.TrainStationInfo>>> { info ->
             if (info == null) {
                 val contextView = view.findViewById<View>(R.id.coordinator_layout)
                 Snackbar.make(contextView, "Stazione non valida", Snackbar.LENGTH_SHORT)

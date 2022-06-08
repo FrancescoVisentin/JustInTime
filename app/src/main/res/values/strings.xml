@@ -58,4 +58,6 @@
     <string name="home_arrival">Arrivo: %s</string>
     <string name="cancel">Annulla</string>
     <string name="new_planner">Nuovo planner:</string>
+    <string name="train_details">Dettagli treno</string>
+    <string name="two_points">:</string>
 </resources>

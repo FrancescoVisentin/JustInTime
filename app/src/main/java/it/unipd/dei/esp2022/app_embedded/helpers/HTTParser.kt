@@ -62,7 +62,7 @@ class HTTParser {
             return tripsList
         }
 
-        fun parseStationsInfo(departingTrains : String, incomingTrains : String): Array<MutableList<TrainStationInfo>> {
+        fun parseStationsInfo(departingTrains : String, incomingTrains : String): ArrayList<MutableList<TrainStationInfo>> {
             //DEPARTURES
             val departuresList = mutableListOf<TrainStationInfo>()
             var departureTrain : TrainStationInfo
@@ -93,9 +93,9 @@ class HTTParser {
                 arrivalTrain.track = tmp2[i].substringAfter("binarioEffettivoArrivoDescrizione\":").substringBefore(",")
                 arrivalsList.add(arrivalTrain)
             }
-            val trainArray = Array(2, {i -> mutableListOf<TrainStationInfo>()})
-            trainArray.set(0, departuresList)
-            trainArray.set(1, arrivalsList)
+            val trainArray = ArrayList<MutableList<TrainStationInfo>>(2)
+            trainArray.add(0, departuresList)
+            trainArray.add(1, arrivalsList)
             return trainArray
         }
 

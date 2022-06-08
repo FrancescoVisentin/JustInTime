@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
 {
@@ -58,15 +57,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.execSQL(dateValues)
     }
 
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if (oldVersion != newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS Planner")
-            db.execSQL("DROP TABLE IF EXISTS Giorno")
-            db.execSQL("DROP TABLE IF EXISTS Associazione")
-            db.execSQL("DROP TABLE IF EXISTS Viaggio")
-            onCreate(db)
-        }
-    }
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
     override fun onConfigure(db: SQLiteDatabase) {
         db.setForeignKeyConstraintsEnabled(true)
@@ -162,39 +153,6 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         val ret = cursor.getInt(0)
         cursor.close()
         return ret
-    }
-
-    fun checkTable()
-    {
-        val cursor = readableDatabase.rawQuery("SELECT * FROM Associazione", null)
-        var column : String = ""
-        Log.e("TYPE:", "Numero | Nome | NomePlanner | StazionePartenza | StazioneArrivo | OrarioPartenza | OrarioArrivo | Durata | Cambi")
-        while (cursor.moveToNext()) {
-            column = ""
-            for(i in 0..cursor.columnCount-1) {
-                column = column + "${cursor.getString(i)} | "
-            }
-            Log.e("Riga ${cursor.position}", column)
-        }
-        cursor.close()
-
-        val cursor2 = readableDatabase.rawQuery("SELECT Numero FROM Viaggio", null)
-        while (cursor2.moveToNext()) {
-            Log.e("Colonna Numero di Viaggio:", cursor2.getString(0))
-        }
-        cursor2.close()
-
-        val cursor3 = readableDatabase.rawQuery("SELECT Nome FROM Planner", null)
-        while (cursor3.moveToNext()) {
-            Log.e("Colonna Nome di Planner:", cursor3.getString(0))
-        }
-        cursor3.close()
-
-        val cursor4 = readableDatabase.rawQuery("SELECT Nome FROM Giorno", null)
-        while (cursor4.moveToNext()) {
-            Log.e("Colonna Nome di Giorno:", cursor4.getString(0))
-        }
-        cursor4.close()
     }
 
     companion object

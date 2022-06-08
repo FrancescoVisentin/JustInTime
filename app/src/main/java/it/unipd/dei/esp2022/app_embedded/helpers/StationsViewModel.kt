@@ -14,13 +14,13 @@ import java.util.*
 
 //ViewModel relativo ai dati di una singola stazione. Effettua richieste HTTP e gestisce la relativa business logic.
 class StationsViewModel : ViewModel() {
-    private val ret: MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>> by lazy {
-        MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>>()
+    private val ret: MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>> by lazy {
+        MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>>()
     }
     var updated: Boolean = false
 
     //Se la stazione cercata esiste effettivamente restituisce un oggetto LiveData contentente le informazioni dei treni in partenza/arrivo.
-    fun searchStation(station: String) : MutableLiveData<Array<MutableList<HTTParser.TrainStationInfo>>> {
+    fun searchStation(station: String) : MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>> {
         viewModelScope.launch {
             val stationID = getStationID(station)
 
@@ -42,7 +42,7 @@ class StationsViewModel : ViewModel() {
 
     //Funzione usata per recupero dello stato/passaggio parametri senza ripetere nuovamente le richieste HTTP.
     //Restituisce i dati relativi all'ultima ricerca effettuata (se sono già avvenute richieste) altrimenti null.
-    fun getStationTrains(): Array<MutableList<HTTParser.TrainStationInfo>>? {
+    fun getStationTrains(): ArrayList<MutableList<HTTParser.TrainStationInfo>>? {
         return ret.value
     }
 
