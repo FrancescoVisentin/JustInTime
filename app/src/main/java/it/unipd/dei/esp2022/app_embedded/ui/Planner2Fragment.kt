@@ -25,7 +25,7 @@ class Planner2Fragment : Fragment() {
         val plannerName = Planner2FragmentArgs.fromBundle(requireArguments()).message
         view.findViewById<TextView>(R.id.planner_name).text = plannerName
 
-        val tabTitle= arrayOf(getString(R.string.tab_lunedi), getString(R.string.tab_martedi), getString(R.string.tab_mercoledi), getString(R.string.tab_giovedi), getString(R.string.tab_venerdi), getString(R.string.tab_sabato), getString(R.string.tab_domenica))
+        val tabTitle= arrayOf(getString(R.string.tab_lunedi).uppercase(), getString(R.string.tab_martedi).uppercase(), getString(R.string.tab_mercoledi).uppercase(), getString(R.string.tab_giovedi).uppercase(), getString(R.string.tab_venerdi).uppercase(), getString(R.string.tab_sabato).uppercase(), getString(R.string.tab_domenica).uppercase())
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
         val viewPager : ViewPager2 = view.findViewById(R.id.view_pager)
         viewPager.adapter = ViewPagerAdapter2(childFragmentManager, lifecycle, plannerName)
@@ -49,13 +49,13 @@ class Planner2Fragment : Fragment() {
         bu.setOnClickListener {
             var day = ""
             when (viewPager.currentItem) {
-                0 -> day = "Lunedi"
-                1 -> day = "Martedi"
-                2 -> day = "Mercoledi"
-                3 -> day = "Giovedi"
-                4 -> day = "Venerdi"
-                5 -> day = "Sabato"
-                6 -> day = "Domenica"
+                0 -> day = getString(R.string.tab_lunedi)
+                1 -> day = getString(R.string.tab_lunedi)
+                2 -> day = getString(R.string.tab_lunedi)
+                3 -> day = getString(R.string.tab_lunedi)
+                4 -> day = getString(R.string.tab_lunedi)
+                5 -> day = getString(R.string.tab_lunedi)
+                6 -> day = getString(R.string.tab_lunedi)
             }
 
             val action = Planner2FragmentDirections.actionPlanner2FragmentToPlanner3Fragment("$day|$plannerName")

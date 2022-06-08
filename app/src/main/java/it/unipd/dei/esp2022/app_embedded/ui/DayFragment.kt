@@ -13,7 +13,7 @@ import com.test.app_embedded.R
 
 class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
-    lateinit var day: String
+    private lateinit var day: String
     private lateinit var plannerName:String
     private lateinit var recyclerView : RecyclerView
     private lateinit var db : DBHelper
@@ -71,7 +71,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
 
                     recyclerView.adapter = PlannerCardAdapter2(db.getTrips(plannerName,day), this)
                 } else {
-                    Snackbar.make(contextView, "Errore", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(contextView, "Error", Snackbar.LENGTH_SHORT)
                         .setAction("Chiudi") {}
                         .show()
                 }
