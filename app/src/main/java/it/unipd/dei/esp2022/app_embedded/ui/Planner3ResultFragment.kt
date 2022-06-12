@@ -14,7 +14,7 @@ import it.unipd.dei.esp2022.app_embedded.helpers.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+//Fragment che permette la visualizzazione dei risultati di Ricerca Viaggio di planner 3
 class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.ClickListener {
     private val solutionsModel : SolutionsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
@@ -32,7 +32,9 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio_result, container, false)
 
+        //Recupero il database
         db = DBHelper(context as Context)
+        //Observer per ottenere i dati elaborati dal parsing quando si clicca su una card per ottenere maggiori informazioni (tramite popup)
         resObserver = Observer<HTTParser.TrainInfo> { info ->
             if (info.trainID.compareTo("null") == 0) {
                 stopFade()
@@ -47,6 +49,7 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
             createPopup(info)
         }
 
+        //Interpreto informazioni di Ricerca Viaggio tramite Navigation Safe Args
         val message = Planner3ResultFragmentArgs.fromBundle(requireArguments()).message
         val tmp = message.split("|")
         view.findViewById<TextView>(R.id.departure).text = capitalize(tmp[0])
@@ -58,8 +61,10 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
         lastDepartureStation = tmp[0]
         lastArrivalStation = tmp[1]
 
+        //Recupero Viaggi corrispondenti alla ricerca effettuata
         val solutionsInfo = solutionsModel.getSolutions() ?: return view
 
+        //Creo la recyclerView che contiene tutte le card rappresentanti i vari viaggi
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = PlannerCardAdapter(solutionsInfo, this)
@@ -67,6 +72,7 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
         return view
     }
 
+    //chiamato quando si clicca su una card
     override fun onEvent(number: String, departureTime: String, arrivalTime: String, duration: String, changes: String) {
         lastTrip = number
         lastDepartureTime = departureTime
@@ -78,6 +84,7 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
         startFade()
     }
 
+    //Configura il pulsante (contenuto nella popupView)per aggiungere un viaggio al database
     override fun setupAddButton(popupView: View, trainID: String) {
         val addButton = popupView.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {

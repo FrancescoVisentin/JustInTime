@@ -25,7 +25,7 @@ import it.unipd.dei.esp2022.app_embedded.helpers.SolutionsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-
+//Fragment resposabile della presentation logic per la schermata 'Ricerca Viaggio' di planner3.
 class Planner3Fragment : Fragment() {
     private val model : SolutionsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<MutableList<HTTParser.SolutionInfo>>
@@ -44,6 +44,7 @@ class Planner3Fragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_ricerca_viaggio, container, false)
         val infoDb = Planner3FragmentArgs.fromBundle(requireArguments()).message
+        //Observer per ottenere i dati elaborati dal parsing
         resObserver = Observer<MutableList<HTTParser.SolutionInfo>> { info ->
             if (info == null) {
                 val contextView = (view as View).findViewById<View>(R.id.coordinator_layout)
@@ -59,19 +60,21 @@ class Planner3Fragment : Fragment() {
                 return@Observer
             }
 
-            //Hide keyboard if present
+            //Nascondo la tastiera se presente
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
             stopFade()
+            //Tramite navigation component mi sposto sul fragment Risultati Ricerca Viaggio (di planner3) passando stazione di partenza, di arrivo e orario con Navigation safe args
             val action = Planner3FragmentDirections.actionPlanner3FragmentToPlanner3ResultFragment("$departure|$destination|$time|${infoDb}")
             view.findNavController().navigate(action)
         }
 
-
+        //Imposto il timePicker inserendo l'ora attuale come Default
         val buttonHour: Button = view.findViewById(R.id.button_hour)
         val buttonMin: Button = view.findViewById(R.id.button_min)
         buttonHour.text = SimpleDateFormat("HH", Locale.ENGLISH).format(Date())
         buttonMin.text = SimpleDateFormat("mm", Locale.ENGLISH).format(Date())
+        //setOnClickListener() dei pulsanti per modificare l'ora di viaggio
         buttonHour.setOnClickListener {
             setUpCLock(buttonHour, buttonMin)
         }
@@ -79,6 +82,7 @@ class Planner3Fragment : Fragment() {
             setUpCLock(buttonHour, buttonMin)
         }
 
+        //Configuro i menu di autocompletamento per le text filds stazione di partenza e stazione di arrivo
         val textViewDepartures = view.findViewById<AutoCompleteTextView>(R.id.text_departures)
         val textViewArrivals = view.findViewById<AutoCompleteTextView>(R.id.text_arrivals)
         val items = resources.getStringArray(R.array.stations)
@@ -94,7 +98,7 @@ class Planner3Fragment : Fragment() {
                         return@setOnEditorActionListener true
                     }
 
-                    //Hide keyboard
+                    //Nascondo la tastiera
                     textViewDepartures.clearFocus()
                     val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                     imm?.hideSoftInputFromWindow(v.windowToken, 0)
@@ -112,7 +116,7 @@ class Planner3Fragment : Fragment() {
                         return@setOnEditorActionListener true
                     }
 
-                    //Hide keyboard
+                    //Nascondo la tastiera
                     textViewArrivals.clearFocus()
                     val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                     imm?.hideSoftInputFromWindow(v.windowToken, 0)
@@ -122,7 +126,7 @@ class Planner3Fragment : Fragment() {
             }
         }
 
-
+        //setOnclickListener() del pulsante per scambiare la text field partenza con quella di arrivo
         val swapButton = view.findViewById<Button>(R.id.swap_button)
         swapButton.setOnClickListener {
             val tmp = textViewArrivals.text
@@ -130,7 +134,7 @@ class Planner3Fragment : Fragment() {
             textViewDepartures.text = tmp
         }
 
-
+        //setOnclickListener() del pulsante per cercare il viaggio
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textViewDepartures.text.isNotEmpty() && textViewArrivals.text.isNotEmpty()){
@@ -148,6 +152,7 @@ class Planner3Fragment : Fragment() {
         return view
     }
 
+    //Metodo per impostare il timePicker
     private fun setUpCLock(buttonHour : Button, buttonMin : Button) {
         val picker: MaterialTimePicker =
             MaterialTimePicker.Builder()
@@ -165,6 +170,7 @@ class Planner3Fragment : Fragment() {
         }
     }
 
+    //Gestisce l'avvvio dell'animazione che mostra il caricamento
     private fun startFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
@@ -176,6 +182,7 @@ class Planner3Fragment : Fragment() {
         }
     }
 
+    //Gestisce la terminazione dell'animazione che mostra il caricamento
     private fun stopFade() {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
 

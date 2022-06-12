@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION)
 {
+    //Inizializzo il database con le tabelle Viaggio, Planner, Associazione, Giorno
     override fun onCreate(db: SQLiteDatabase)
     {
         val trainTable = "CREATE TABLE Viaggio(\n" +
@@ -40,6 +41,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
                 "ON DELETE CASCADE ON UPDATE CASCADE\n" +
                 ");\n"
 
+        //Inserisco in Giorno tutti i giorni della settimana
         val dateValues = "INSERT INTO Giorno(Nome) VALUES\n" +
                 "('Lunedi'),\n" +
                 "('Martedi'),\n" +
@@ -57,18 +59,22 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         db.execSQL(dateValues)
     }
 
+    //Metodo vuoto, non sono previsti aggiornamenti del database
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
+    //Permette di abilitare l'utilizzo delle Foreign Key
     override fun onConfigure(db: SQLiteDatabase) {
         db.setForeignKeyConstraintsEnabled(true)
     }
 
+    //Aggiunge un record alla tabella Planner
     fun addPlanner(name : String): Boolean {
         val cv = ContentValues()
         cv.put("Nome", name)
         return writableDatabase.insert("Planner", null, cv) != -1L
     }
 
+    //Restituisce un arrayList contenente tutti i nomi dei Planner
     fun getPlannersName(): ArrayList<String> {
         val cursor = readableDatabase.rawQuery("SELECT Nome FROM Planner", null)
         val ret = ArrayList<String>()
@@ -80,6 +86,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return ret
     }
 
+    //Restitusce il numero di elementi contenuti nella tabella Planner
     fun getPlannersCount(): Int {
         val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Planner", null)
         cursor.moveToFirst()
@@ -88,10 +95,12 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return ret
     }
 
+    //Elimina un elemento dalla tabella Plannr
     fun deletePlanner(name : String): Boolean {
         return writableDatabase.delete("Planner", "Nome='$name'", null) != 0
     }
 
+    //Aggiunge un elemento nella tabella Associazione
     fun addTripToPlanner(numero: String, day: String, planner: String, departureStation: String, arrivalStation: String, departureTime: String, arrivalTime: String, duration: String, changes: String): Boolean
     {
         val cv = ContentValues()
@@ -111,6 +120,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return writableDatabase.insert("Associazione", null, values) != -1L
     }
 
+    //Restituisce una lista contenente i viaggi dato un Planner e un giorno
     fun getTrips(planner:String, day: String): MutableList<TripInfo> {
         val cursor = readableDatabase.rawQuery("SELECT Numero, StazionePartenza, StazioneArrivo, OrarioPartenza, OrarioArrivo, Durata, Cambi FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
         val ret = mutableListOf<TripInfo>()
@@ -132,11 +142,13 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return ret
     }
 
+    //Elimina un elemento dalla tabella Viaggio (e quindi automaticamente anche dalla tabella Associazione)
     fun deleteTrip(numero: String): Boolean
     {
         return writableDatabase.delete("Viaggio","NUmero='$numero'", null) != 0
     }
 
+    //Restitusce il numero di viaggi inseriti in un Planner specifico
     fun getPlannerTrains(planner: String): Int
     {
         val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}'", null)
@@ -146,6 +158,7 @@ class DBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VE
         return ret
     }
 
+    //Restituisce i viaggi dato un planner e un giorno
     fun getTripsCount(planner: String, day: String): Int
     {
         val cursor =  readableDatabase.rawQuery("SELECT count(*) FROM Associazione WHERE NomePlanner='${planner}' AND Nome='${day}'", null)
