@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 
+//Fragment che contiene la Recycler View per visualizzare i risultati in Tabellone2
 class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListener {
     private val stationsModel : StationsViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
@@ -73,6 +74,7 @@ class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
         startFade()
     }
 
+    //Imposta quali dati devono essere visualizati (ARRIVI o PARTENZE)
     fun setUp(m: Int) {
         mode = m
     }

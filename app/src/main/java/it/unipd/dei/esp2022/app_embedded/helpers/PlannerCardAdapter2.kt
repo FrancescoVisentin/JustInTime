@@ -5,15 +5,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
+//Classe Adapter per gestire la componente Card nella Recycler View del Fragment Planner2
+//Il parametro trainDB di tipo MutableList prende i dati salvati sul Database
 class PlannerCardAdapter2(private val trainDB:  MutableList<DBHelper.TripInfo>, private val listener : ClickListener)
     : RecyclerView.Adapter<PlannerCardAdapter2.CardViewHolder4>() {
     var selectedTripNumber = ""
 
+    //Comportamento del metodo onClickListener
     private val onClickListener = View.OnClickListener {
         val trainNumber = it.findViewById<TextView>(R.id.train_number).text.toString()
         listener.onEvent(trainNumber.split(" ")[0])
     }
 
+    //Classe interna CardViewHolder contenente gli elementi dell'interfaccia utente di Card (card_layout_planner_dbcard)
     class CardViewHolder4(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
         val trainNumber: TextView = itemView.findViewById(R.id.train_number)
         val trainOrigin: TextView = itemView.findViewById(R.id.origin)
@@ -31,17 +35,20 @@ class PlannerCardAdapter2(private val trainDB:  MutableList<DBHelper.TripInfo>, 
             return trainNumber.text.toString()
         }
 
+        //Creazione del Menu per Eliminare un elemento Card dalla RecyclerView
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             menu?.add(Menu.NONE, R.id.delete_option, Menu.NONE, R.string.delete)
         }
     }
 
+    //Imposta la view (inflated) e il metodo OnClickListener e ritorna il CardViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder4 {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_layout_planner_dbcard, parent, false)
         view.setOnClickListener(onClickListener)
         return CardViewHolder4(view)
     }
 
+    //Ottiene il treno corrente e lo usa per associare la view (binding). Imposta il comportamento del metodo OnLongClickListener()
     override fun onBindViewHolder(holder: CardViewHolder4, position: Int) {
         holder.bind()
         holder.trainNumber.text = trainDB[position].trainNumber

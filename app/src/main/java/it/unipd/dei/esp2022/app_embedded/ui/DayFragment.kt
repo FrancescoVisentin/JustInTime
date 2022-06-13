@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.test.app_embedded.R
 
+//Fragment che visualizza il programma dei treni (preso dal DB) in base al giorno e al nome del planner
 class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private lateinit var day: String
@@ -47,6 +48,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
             createPopup(info)
         }
 
+        //Il primo argomento della Recycler View contiene dati presi direttamente dal Database
         db = DBHelper(context as Context)
         tripsImageView = view.findViewById(R.id.no_trips_image)
 
@@ -57,6 +59,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
         return view
     }
 
+    //Funzione per eliminare un viaggio selezionato
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.delete_option -> {
@@ -81,6 +84,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
         return super.onContextItemSelected(item)
     }
 
+    //Imposta il giorno della settimana e il nome del planner
     fun setUp(tabDay: String, planner: String) {
         day = tabDay
         plannerName = planner

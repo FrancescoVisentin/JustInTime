@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.test.app_embedded.R
 
+
+//Classe Adapter per la gestione delle Cards nella Recycler View del Fragment Planner3Result
 class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.SolutionInfo>, private val listener : ClickListener)
     : RecyclerView.Adapter<PlannerCardAdapter.CardViewHolder3>() {
 
@@ -18,7 +20,7 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
         val changes = it.findViewById<TextView>(R.id.changes).text.toString()
         listener.onEvent(trainNumber, departureTime, arrivalTime, duration, changes)
     }
-
+    //Classe interna CardViewHolder contenente gli elementi dell'interfaccia utente di Card (card_layout_ricerca_viaggio)
     class CardViewHolder3(itemView: View) : RecyclerView.ViewHolder(itemView){
         val trainNumber: TextView = itemView.findViewById(R.id.train_number)
         val departureTime: TextView = itemView.findViewById(R.id.departure_time)
@@ -33,6 +35,7 @@ class PlannerCardAdapter(private val solutionsInfo:  MutableList<HTTParser.Solut
         return CardViewHolder3(view)
     }
 
+    //Ottiene il treno corrente e lo usa per associare la view (binding)
     override fun onBindViewHolder(holder: CardViewHolder3, position: Int) {
         var trainString : String = (solutionsInfo[position].trainNumber).first()
         for(i in 1..(solutionsInfo[position].trainNumber).lastIndex)
