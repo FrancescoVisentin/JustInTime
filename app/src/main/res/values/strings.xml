@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App-Embedded</string>
+    <string name="app_name">JustInTime</string>
     <string name="home_nav_button">Home</string>
     <string name="tabellone_nav_button">Tabellone</string>
     <string name="stato_treno_nav_button">Stato treno</string>
