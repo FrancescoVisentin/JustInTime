@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.transition.MaterialFadeThrough
 import com.test.app_embedded.R
 import it.unipd.dei.esp2022.app_embedded.helpers.*
@@ -74,7 +74,7 @@ class HomeFragment : PopUpSeekBarFragment(), HomeListAdapter.ClickListener {
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         recyclerView.addItemDecoration(DividerItemDecoration(recyclerView.context, LinearLayoutManager.VERTICAL))
 
-        val fab = view.findViewById<FloatingActionButton>(R.id.home_fab)
+        val fab = view.findViewById<ExtendedFloatingActionButton>(R.id.home_fab)
         fab.setOnClickListener {
             view.findNavController()
                 .navigate(R.id.action_homeFragment_to_ricercaViaggioFragment)

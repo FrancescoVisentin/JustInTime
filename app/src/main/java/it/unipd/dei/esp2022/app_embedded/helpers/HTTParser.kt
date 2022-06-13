@@ -3,6 +3,8 @@ package it.unipd.dei.esp2022.app_embedded.helpers
 class HTTParser {
 
     companion object {
+        //Parsing delle informazioni per il fragment "stato treno"
+        //Viene restituito un oggetto di tipo TrainInfo contenente le info associate allo stato del treno, compresa un lista contenente le info per ogni fermata
         fun parseTrainInfo(trainID: String, trainState : String, trainRoute: String): TrainInfo {
             val info = TrainInfo(trainID)
             info.delay = trainState.substringAfter("],\"ritardo\":").substringBefore(",")
@@ -10,7 +12,7 @@ class HTTParser {
             info.lastDetectionStation = trainState.substringAfter("stazioneUltimoRilevamento\":\"").substringBefore("\",")
             info.stops  = mutableListOf()
 
-
+            //Parsing informazioni relative a orari di partenza/arrivo programmati ed effettivi per ogni stazione
             val trainStops = trainRoute.split(",{")
             trainStops.forEachIndexed { index, station ->
                 val stationName = station.substringAfter("stazione\":\"").substringBefore("\",")
@@ -38,6 +40,8 @@ class HTTParser {
             return info
         }
 
+        //Parsing delle informazioni per il fragment "Ricerca viaggio"
+        //Le varie soluzioni di viaggio vengono inserite in una lista contenente oggetti di tipo SolutionInfo
         fun parseSolutionsInfo(solutions: String): MutableList<SolutionInfo> {
             val tripsList = mutableListOf<SolutionInfo>()
             var trip : SolutionInfo
@@ -62,8 +66,11 @@ class HTTParser {
             return tripsList
         }
 
+        //Parsing delle informazioni per il fragment "Tabellone"
+        //Viene restituita un'arrayList contenente esattamente due liste
+        //Nella posizione 0 dell'arrayList viene inserita una lista contenente i treni in partenza, nella poszione 1 viene inserita una lista contenente i treni in arrivo
         fun parseStationsInfo(departingTrains : String, incomingTrains : String): ArrayList<MutableList<TrainStationInfo>> {
-            //DEPARTURES
+            //Informazioni che riguardano i treni in partenza dalla stazione
             val departuresList = mutableListOf<TrainStationInfo>()
             var departureTrain : TrainStationInfo
             val tmp = departingTrains.split("\"numeroTreno\":")
@@ -78,7 +85,7 @@ class HTTParser {
                 departureTrain.track = tmp[i].substringAfter("binarioEffettivoPartenzaDescrizione\":").substringBefore(",")
                 departuresList.add(departureTrain)
             }
-            //ARRIVALS
+            //Informazioni che riguardano i treni in arrivo alla stazione
             val arrivalsList = mutableListOf<TrainStationInfo>()
             var arrivalTrain : TrainStationInfo
             val tmp2 = incomingTrains.split("\"numeroTreno\":")

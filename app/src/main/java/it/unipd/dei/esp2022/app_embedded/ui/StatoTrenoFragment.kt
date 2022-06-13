@@ -24,6 +24,8 @@ import it.unipd.dei.esp2022.app_embedded.helpers.TrainViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+//Fragment resposabile della presentation logic per la schermata 'Stato treno'.
 class StatoTrenoFragment : Fragment() {
     private val model : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
@@ -39,6 +41,7 @@ class StatoTrenoFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_stato_treno, container, false)
 
+        //Observer per ottenere i dati elaborati dal parsing
         resObserver = Observer<HTTParser.TrainInfo> { info ->
             if (info.trainID.compareTo("null") == 0) {
                 val trainView = view.findViewById<LinearLayout>(R.id.train_description)
@@ -50,7 +53,7 @@ class StatoTrenoFragment : Fragment() {
                     .show()
                 return@Observer
             }
-            //Hide keyboard if present
+            //Nascondo la tastiera se presente
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
@@ -72,6 +75,7 @@ class StatoTrenoFragment : Fragment() {
             return@setOnEditorActionListener false
         }
 
+        //setOnclickListener() del pulsante per cercare il treno
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textView.text.toString().isNotEmpty()) {
@@ -82,6 +86,7 @@ class StatoTrenoFragment : Fragment() {
         return  view
     }
 
+    //Gestisce il salvataggio di stato
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
@@ -97,12 +102,14 @@ class StatoTrenoFragment : Fragment() {
 
     }
 
+    //Gestisce il salvataggio di stato
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         val v = (view as View).findViewById<LinearLayout>(R.id.train_description)
         outState.putInt("vis", v.visibility)
     }
 
+    //Recupera le informazioni elaborate dal parsing e le inserisce nelle textView dell'interfaccia utente
     private fun updateTrainInfo(info : HTTParser.TrainInfo) {
         val trainView = (view as View).findViewById<LinearLayout>(R.id.train_description)
         trainView.findViewById<TextView>(R.id.train_number).text = info.trainID
@@ -115,6 +122,7 @@ class StatoTrenoFragment : Fragment() {
         crossFade(trainView)
     }
 
+    //Recupero la data corrente
     private fun getDate(date : String) : String {
         return when (date) {
             "null" -> "--"
@@ -122,6 +130,7 @@ class StatoTrenoFragment : Fragment() {
         }
     }
 
+    //Aggiungo la recyclerView che mostra i dettagli del percorso del treno, includento tutti gli orari di partenza e arrivo ad ogni stazione
     private fun addStationsBar(trainView: View, stations : MutableList<HTTParser.StationInfo>, currentIndex : Int) {
         val stationsAdapter = StationsListAdapter(stations, currentIndex)
         val recyclerView = trainView.findViewById<RecyclerView>(R.id.stations_recycler_view)
@@ -129,6 +138,7 @@ class StatoTrenoFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
 
+    //Animazione che mostra il caricamento
     private fun crossFade(contentView : View) {
         val loadingView = (view as View).findViewById<View>(R.id.loading_spinner)
         val time = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
