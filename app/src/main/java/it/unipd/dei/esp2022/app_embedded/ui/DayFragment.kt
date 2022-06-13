@@ -4,7 +4,7 @@ import android.content.Context
 import it.unipd.dei.esp2022.app_embedded.helpers.*
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +18,7 @@ class DayFragment : PopUpRecyclerFragment(), PlannerCardAdapter2.ClickListener {
     private lateinit var plannerName:String
     private lateinit var recyclerView : RecyclerView
     private lateinit var db : DBHelper
-    private lateinit var tripsImageView : LinearLayout
+    private lateinit var tripsImageView : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

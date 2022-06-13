@@ -10,7 +10,7 @@
         android:id="@+id/menu_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Colori\ndinamici"
+        android:text="@string/dynamic_color"
         android:textAlignment="center"
         android:textSize="11sp"/>
 

@@ -6,7 +6,6 @@
     <string name="planner_nav_button">Planner</string>
     <string name="home_fab_content_desc">Cerca treno</string>
     <string name="planner_fab_content_desc">Aggiungi planner</string>
-    <string name="app_bar_settings">Settings</string>
     <string name="teabellone_hint">Ricerca stazione</string>
     <string name="label1">Stazione partenza</string>
     <string name="label2">Stazione arrivo</string>
@@ -16,7 +15,6 @@
     <string name="date">Data:</string>
     <string name="time">Orario:</string>
     <string name="results_for">Risultati per:</string>
-    <string name="state">Stato Treno:</string>
     <string name="planner_name">Nome planner</string>
     <string name="planner_name_">Nome planner:</string>
     <string name="add_train">Aggiungi viaggio</string>
@@ -44,8 +42,6 @@
     <string name="delete">Elimina</string>
     <string name="no_planner">Nessun planner presente</string>
     <string name="no_trips">Nessun viaggio presente</string>
-    <string name="not_available">Non disponibile</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="route">Tratta:</string>
     <string name="last_detection">Ultimo rilevamento alle:</string>
     <string name="close">Chiudi</string>
@@ -62,4 +58,5 @@
     <string name="two_points">:</string>
     <string name="no_train">Nessun treno per oggi</string>
     <string name="image_description">Immagine di sfondo con treno e orologio</string>
+    <string name="dynamic_color">Colori\ndinamici</string>
 </resources>

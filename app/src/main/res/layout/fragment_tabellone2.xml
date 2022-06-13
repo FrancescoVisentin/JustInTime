@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="7dp"
-        android:text="Stazione"
+        android:text="@string/value_stub"
         android:textAlignment="center"
         android:textColor="?attr/colorOnSecondaryContainer"
         android:background="@drawable/sfondo1"/>
