@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ class Planner2Fragment : Fragment() {
         val tabTitle= arrayOf(getString(R.string.tab_lunedi).uppercase(), getString(R.string.tab_martedi).uppercase(), getString(R.string.tab_mercoledi).uppercase(), getString(R.string.tab_giovedi).uppercase(), getString(R.string.tab_venerdi).uppercase(), getString(R.string.tab_sabato).uppercase(), getString(R.string.tab_domenica).uppercase())
         val tabLayout : TabLayout = view.findViewById(R.id.tabs)
         val viewPager : ViewPager2 = view.findViewById(R.id.view_pager)
-        viewPager.adapter = ViewPagerAdapter2(childFragmentManager, lifecycle, plannerName)
+        viewPager.adapter = ViewPagerAdapter2(childFragmentManager, lifecycle, plannerName, context as Context)
 
         //Collegamento tra il TabLayout e il ViewPager
         //Sincronizza il ViewPager e il TabLayout nei casi di selezione tab e scroll da parte dell'utente
