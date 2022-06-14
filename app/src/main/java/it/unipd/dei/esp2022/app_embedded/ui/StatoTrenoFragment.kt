@@ -29,6 +29,7 @@ import java.util.*
 class StatoTrenoFragment : Fragment() {
     private val model : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
+    private var lastQuery: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +54,19 @@ class StatoTrenoFragment : Fragment() {
                     .show()
                 return@Observer
             }
+
+            if (!model.updated) {
+                return@Observer
+            }
+
             //Nascondo la tastiera se presente
             val imm = (activity as Activity).getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
 
             updateTrainInfo(info)
         }
+        model.updated = false
+        model.ret.observe(viewLifecycleOwner, resObserver)
 
         val textView = view.findViewById<TextInputEditText>(R.id.text_train_number)
         textView.setOnEditorActionListener { _, actionId, _ ->
@@ -66,7 +74,8 @@ class StatoTrenoFragment : Fragment() {
                 textView.clearFocus()
 
                 if (textView.text.toString().isNotEmpty()) {
-                    model.searchTrain(textView.text.toString()).observe(viewLifecycleOwner, resObserver)
+                    lastQuery = textView.text.toString()
+                    model.searchTrain(lastQuery)
                 }
 
                 return@setOnEditorActionListener true
@@ -79,7 +88,8 @@ class StatoTrenoFragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.search_button)
         searchButton.setOnClickListener{
             if (textView.text.toString().isNotEmpty()) {
-                model.searchTrain(textView.text.toString()).observe(viewLifecycleOwner, resObserver)
+                lastQuery = textView.text.toString()
+                model.searchTrain(lastQuery)
             }
         }
 
@@ -90,13 +100,18 @@ class StatoTrenoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
-            val oldVisibility = savedInstanceState.getInt("vis")
+            val oldVisibility = savedInstanceState.getInt("vis", View.INVISIBLE)
             val trainView = view.findViewById<LinearLayout>(R.id.train_description)
             trainView.visibility = oldVisibility
 
+            lastQuery = savedInstanceState.getString("query", "")
+
             if (oldVisibility == View.VISIBLE){
-                val info = model.getTrainState() ?: return
-                updateTrainInfo(info)
+                val info = model.getTrainState()
+                if (info != null)
+                    updateTrainInfo(info)
+                else
+                    model.searchTrain(lastQuery)
             }
         }
 
@@ -107,6 +122,7 @@ class StatoTrenoFragment : Fragment() {
         super.onSaveInstanceState(outState)
         val v = (view as View).findViewById<LinearLayout>(R.id.train_description)
         outState.putInt("vis", v.visibility)
+        outState.putString("query", lastQuery)
     }
 
     //Recupera le informazioni elaborate dal parsing e le inserisce nelle textView dell'interfaccia utente

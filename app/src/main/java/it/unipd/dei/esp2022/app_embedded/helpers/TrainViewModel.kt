@@ -12,7 +12,7 @@ import java.net.URL
 
 //ViewModel relativo ai dati di un singolo treno. Effettua richieste HTTP e gestisce la relativa business logic.
 class TrainViewModel : ViewModel() {
-    private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
+    val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
         MutableLiveData<HTTParser.TrainInfo>()
     }
     var updated: Boolean = false

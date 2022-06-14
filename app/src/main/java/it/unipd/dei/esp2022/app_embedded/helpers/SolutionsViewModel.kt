@@ -1,6 +1,7 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +14,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //ViewModel relativo ai dati di una singola stazione. Effettua richieste HTTP e gestisce la relativa business logic.
-class SolutionsViewModel : ViewModel() {
+class SolutionsViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val ret: MutableLiveData<MutableList<HTTParser.SolutionInfo>> by lazy {
         MutableLiveData<MutableList<HTTParser.SolutionInfo>>()
     }
-    var updated : Boolean = false
+    private val lastQuery = savedStateHandle.get<String>("query") ?: ""
+    var updated: Boolean = false
 
     //Se le stazioni cercate esistono effettivamente restituisce un oggetto LiveData contentente le informazioni dei treni che percorrono quella tratta.
     fun searchSolutions(firstStation : String, secondStation : String, time: String) : MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
@@ -36,13 +38,20 @@ class SolutionsViewModel : ViewModel() {
             updated = true
             ret.value = HTTParser.parseSolutionsInfo(solutions)
         }
+
+        savedStateHandle["query"] = "$firstStation|$secondStation|$time"
         return ret
     }
 
     //Funzione usata per recupero dello stato/passaggio parametri senza ripetere nuovamente le richieste HTTP.
     //Restituisce i dati relativi all'ultima ricerca effettuata (se sono già avvenute richieste) altrimenti null.
-    fun getSolutions(): MutableList<HTTParser.SolutionInfo>? {
-        return ret.value
+    fun getSolutions(): MutableLiveData<MutableList<HTTParser.SolutionInfo>> {
+        if (ret.value == null && lastQuery != ""){
+            val info = lastQuery.split("|")
+            searchSolutions(info[0], info[1], info[2])
+        }
+
+        return ret
     }
 
     //Se la stazione esiste effettivamente restituisce l'ID univoco associato.

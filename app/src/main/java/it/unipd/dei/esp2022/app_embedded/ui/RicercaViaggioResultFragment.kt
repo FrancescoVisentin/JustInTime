@@ -44,13 +44,14 @@ class RicercaViaggioResultFragment : PopUpRecyclerFragment(), RicercaViaggioCard
         view.findViewById<TextView>(R.id.time2).text = message.substringAfterLast("|")
         view.findViewById<TextView>(R.id.date2).text = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(Date())
 
-        //Recupero Viaggi corrispondenti alla ricerca effettuata
-        val solutionsInfo = solutionsModel.getSolutions() ?: return view
-
         //Creo la recyclerView che contiene tutte le card rappresentanti i vari viaggi
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = RicercaViaggioCardAdapter(solutionsInfo, this)
+
+        //Recupero Viaggi corrispondenti alla ricerca effettuata
+        solutionsModel.getSolutions().observe(viewLifecycleOwner) { solutionsInfo ->
+            recyclerView.adapter = RicercaViaggioCardAdapter(solutionsInfo, this)
+        }
 
         return view
     }

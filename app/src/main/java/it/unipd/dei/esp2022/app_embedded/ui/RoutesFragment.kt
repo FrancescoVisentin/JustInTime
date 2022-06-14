@@ -43,11 +43,13 @@ class RoutesFragment : PopUpSeekBarFragment(), TabelloneCardAdapter.ClickListene
             createPopup(info)
         }
 
-        val trainStationInfo = stationsModel.getStationTrains() ?: return view
-
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[mode], this)
+
+        //Recupero i treni corrispondenti alla ricerca effettuata
+        stationsModel.getStationTrains().observe(viewLifecycleOwner) { trainStationInfo ->
+            recyclerView.adapter = TabelloneCardAdapter(trainStationInfo[mode], this)
+        }
 
         return view
     }

@@ -61,13 +61,14 @@ class Planner3ResultFragment : PopUpRecyclerFragment(), PlannerCardAdapter.Click
         lastDepartureStation = tmp[0]
         lastArrivalStation = tmp[1]
 
-        //Recupero Viaggi corrispondenti alla ricerca effettuata
-        val solutionsInfo = solutionsModel.getSolutions() ?: return view
-
         //Creo la recyclerView che contiene tutte le card rappresentanti i vari viaggi
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = PlannerCardAdapter(solutionsInfo, this)
+
+        //Recupero Viaggi corrispondenti alla ricerca effettuata
+        solutionsModel.getSolutions().observe(viewLifecycleOwner) { solutionsInfo ->
+            recyclerView.adapter = PlannerCardAdapter(solutionsInfo, this)
+        }
 
         return view
     }

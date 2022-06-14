@@ -1,6 +1,7 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +14,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //ViewModel relativo ai dati di una singola stazione. Effettua richieste HTTP e gestisce la relativa business logic.
-class StationsViewModel : ViewModel() {
+class StationsViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     private val ret: MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>> by lazy {
         MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>>()
     }
+    private val lastQuery = savedStateHandle.get<String>("query") ?: ""
     var updated: Boolean = false
 
     //Se la stazione cercata esiste effettivamente restituisce un oggetto LiveData contentente le informazioni dei treni in partenza/arrivo.
@@ -37,13 +39,19 @@ class StationsViewModel : ViewModel() {
             //Effettua il parsing dei json ottenuti.
             ret.value = HTTParser.parseStationsInfo(departingTrains, incomingTrains)
         }
+
+        savedStateHandle["query"] = station
         return ret
     }
 
     //Funzione usata per recupero dello stato/passaggio parametri senza ripetere nuovamente le richieste HTTP.
     //Restituisce i dati relativi all'ultima ricerca effettuata (se sono già avvenute richieste) altrimenti null.
-    fun getStationTrains(): ArrayList<MutableList<HTTParser.TrainStationInfo>>? {
-        return ret.value
+    fun getStationTrains(): MutableLiveData<ArrayList<MutableList<HTTParser.TrainStationInfo>>> {
+        if (ret.value == null && lastQuery != ""){
+            searchStation(lastQuery)
+        }
+
+        return ret
     }
 
     //Se la stazione esiste effettivamente restituisce l'ID univoco associato.
