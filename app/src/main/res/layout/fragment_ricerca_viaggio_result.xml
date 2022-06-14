@@ -22,26 +22,23 @@
         android:padding="7dp"
         style="@style/TextAppearance.Material3.TitleMedium"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/sfondo1"
+        android:orientation="horizontal"
         android:padding="5dp">
 
         <TextView
             android:id="@+id/departure"
             style="@style/TextAppearance.Material3.TitleLarge"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/departure"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/dash"
-            app:layout_constraintHorizontal_bias="0.75"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="?attr/colorOnSecondaryContainer"/>
 
         <TextView
             android:id="@+id/dash"
@@ -52,28 +49,20 @@
             android:text=""
             android:textAlignment="center"
             android:textColor="?attr/colorOnSecondaryContainer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:drawableStartCompat="@drawable/ic_baseline_trending_flat_24" />
 
         <TextView
             android:id="@+id/arrival"
             style="@style/TextAppearance.Material3.TitleLarge"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/arrival"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnSecondaryContainer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintStart_toEndOf="@id/dash"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textColor="?attr/colorOnSecondaryContainer"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
