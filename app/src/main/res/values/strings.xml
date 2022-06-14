@@ -4,11 +4,11 @@
     <string name="tabellone_nav_button">Tabellone</string>
     <string name="stato_treno_nav_button">Stato treno</string>
     <string name="planner_nav_button">Planner</string>
-    <string name="home_fab_content_desc">Cerca treno</string>
+    <string name="home_fab_content_desc">Cerca viaggio</string>
     <string name="planner_fab_content_desc">Aggiungi planner</string>
     <string name="teabellone_hint">Ricerca stazione</string>
-    <string name="label1">Stazione partenza</string>
-    <string name="label2">Stazione arrivo</string>
+    <string name="departure_station">Stazione partenza</string>
+    <string name="arrival_station">Stazione arrivo</string>
     <string name="train_number">Numero treno:</string>
     <string name="departure">Partenza</string>
     <string name="arrival">Arrivo</string>

@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
+import android.annotation.SuppressLint
 import android.view.*
 import android.widget.*
 import com.test.app_embedded.R
@@ -58,9 +59,11 @@ abstract class PopUpSeekBarFragment: PopUpFragment() {
     }
 
     //Aggiunge l'elenco delle stazioni della tratta ed una progress bar che indica la stazione corrente.
+    @SuppressLint("ClickableViewAccessibility")
     private fun addStationsBar(popupView: View, stops: MutableList<HTTParser.StationInfo>, currentIndex: Int){
         val stepBar = popupView.findViewById<SeekBar>(R.id.step_bar)
         //Rendo la SeekBar non interagibile dall'utente.
+        //Suppress warning Lint relativo all'accessibilità del componente (in realtà non è più possibile interagire con questa SeekBar)
         stepBar.setOnTouchListener { _, _ -> true }
 
         val stationsNum = stops.size-1
