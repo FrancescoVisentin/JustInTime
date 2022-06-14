@@ -39,6 +39,6 @@ I dati relativi ai treni, stazioni e soluzioni di viaggio vengono reperiti dal s
 
 ### Autori
 Il progetto è stato sviluppato da:
-- Christian Marchiori
-- Francesco Visentin
-- Massimiliano Comin
+- [Christian Marchiori](https://github.com/christianmarch)
+- [Francesco Visentin](https://github.com/FrancescoVisentin)
+- [Massimiliano Comin](https://github.com/Massimiliano-Comin)
