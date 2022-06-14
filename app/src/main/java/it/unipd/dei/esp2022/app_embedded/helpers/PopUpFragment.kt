@@ -23,8 +23,10 @@ abstract class PopUpFragment: Fragment() {
 
             //Ricreo PopupWindow se questa era attiva quando l'activity è stata terminata.
             if (popupWindowActivated) {
-                val info = trainModel.getTrainState() ?: return
-                createPopup(info)
+                trainModel.getTrainState().observe(viewLifecycleOwner){ info ->
+                    createPopup(info)
+                    trainModel.getTrainState().removeObservers(viewLifecycleOwner)
+                }
             }
         }
     }
@@ -40,6 +42,16 @@ abstract class PopUpFragment: Fragment() {
         val restore = popupWindowActivated
         popupWindow?.dismiss()
         popupWindowActivated = restore
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (popupWindowActivated && popupWindow == null) {
+            trainModel.getTrainState().observe(viewLifecycleOwner) { info ->
+                createPopup(info)
+                trainModel.getTrainState().removeObservers(viewLifecycleOwner)
+            }
+        }
     }
 
     //Definisce il layout effettivo della PopupWindow.

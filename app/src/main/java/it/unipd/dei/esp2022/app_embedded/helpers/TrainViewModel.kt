@@ -1,6 +1,7 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -11,10 +12,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 //ViewModel relativo ai dati di un singolo treno. Effettua richieste HTTP e gestisce la relativa business logic.
-class TrainViewModel : ViewModel() {
-    val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
+class TrainViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+    private val ret: MutableLiveData<HTTParser.TrainInfo> by lazy {
         MutableLiveData<HTTParser.TrainInfo>()
     }
+    private val lastQuery = savedStateHandle.get<String>("query") ?: ""
     var updated: Boolean = false
 
     //Se il trainID cercato esiste effettivamente restituisce un opportuno oggetto LiveData contentente tutte le informazioni del treno.
@@ -46,13 +48,18 @@ class TrainViewModel : ViewModel() {
             ret.value = HTTParser.parseTrainInfo(trainID, trainState, trainStops)
         }
 
+        savedStateHandle["query"] = trainID
         return ret
     }
 
     //Funzione usata per recupero dello stato/passaggio parametri senza ripetere nuovamente le richieste HTTP.
     //Restituisce i dati relativi all'ultima ricerca effettuata (se sono già avvenute richieste) altrimenti null.
-    fun getTrainState(): HTTParser.TrainInfo? {
-        return ret.value
+    fun getTrainState(): MutableLiveData<HTTParser.TrainInfo> {
+        if (ret.value == null && lastQuery != ""){
+            searchTrain(lastQuery)
+        }
+
+        return ret
     }
 
     //Se il trainID cercato esiste effettivamente, ritorna 'ID-Stazione d'origine-Giorno di partenza' per il treno cercato.

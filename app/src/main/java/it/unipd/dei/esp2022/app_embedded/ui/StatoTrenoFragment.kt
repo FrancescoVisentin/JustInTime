@@ -27,6 +27,7 @@ import java.util.*
 
 //Fragment resposabile della presentation logic per la schermata 'Stato treno'.
 class StatoTrenoFragment : Fragment() {
+    private lateinit var trainView: View
     private val model : TrainViewModel by activityViewModels()
     private lateinit var resObserver : Observer<HTTParser.TrainInfo>
     private var lastQuery: String = ""
@@ -42,10 +43,13 @@ class StatoTrenoFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_stato_treno, container, false)
 
+        //View contenente la descrizione del treno
+        trainView = view.findViewById<LinearLayout>(R.id.train_description)
+
         //Observer per ottenere i dati elaborati dal parsing
         resObserver = Observer<HTTParser.TrainInfo> { info ->
             if (info.trainID.compareTo("null") == 0) {
-                val trainView = view.findViewById<LinearLayout>(R.id.train_description)
+
                 trainView.visibility = View.INVISIBLE
 
                 val contextView = view.findViewById<View>(R.id.coordinator_layout)
@@ -65,8 +69,6 @@ class StatoTrenoFragment : Fragment() {
 
             updateTrainInfo(info)
         }
-        model.updated = false
-        model.ret.observe(viewLifecycleOwner, resObserver)
 
         val textView = view.findViewById<TextInputEditText>(R.id.text_train_number)
         textView.setOnEditorActionListener { _, actionId, _ ->
@@ -75,7 +77,8 @@ class StatoTrenoFragment : Fragment() {
 
                 if (textView.text.toString().isNotEmpty()) {
                     lastQuery = textView.text.toString()
-                    model.searchTrain(lastQuery)
+                    model.updated = false
+                    model.searchTrain(lastQuery).observe(viewLifecycleOwner, resObserver)
                 }
 
                 return@setOnEditorActionListener true
@@ -89,7 +92,8 @@ class StatoTrenoFragment : Fragment() {
         searchButton.setOnClickListener{
             if (textView.text.toString().isNotEmpty()) {
                 lastQuery = textView.text.toString()
-                model.searchTrain(lastQuery)
+                model.updated = false
+                model.searchTrain(lastQuery).observe(viewLifecycleOwner, resObserver)
             }
         }
 
@@ -101,17 +105,15 @@ class StatoTrenoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
             val oldVisibility = savedInstanceState.getInt("vis", View.INVISIBLE)
-            val trainView = view.findViewById<LinearLayout>(R.id.train_description)
             trainView.visibility = oldVisibility
 
             lastQuery = savedInstanceState.getString("query", "")
 
             if (oldVisibility == View.VISIBLE){
-                val info = model.getTrainState()
-                if (info != null)
+                model.getTrainState().observe(viewLifecycleOwner) { info ->
                     updateTrainInfo(info)
-                else
-                    model.searchTrain(lastQuery)
+                    model.getTrainState().removeObservers(viewLifecycleOwner)
+                }
             }
         }
 
@@ -120,8 +122,7 @@ class StatoTrenoFragment : Fragment() {
     //Gestisce il salvataggio di stato
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        val v = (view as View).findViewById<LinearLayout>(R.id.train_description)
-        outState.putInt("vis", v.visibility)
+        outState.putInt("vis", trainView.visibility)
         outState.putString("query", lastQuery)
     }
 
