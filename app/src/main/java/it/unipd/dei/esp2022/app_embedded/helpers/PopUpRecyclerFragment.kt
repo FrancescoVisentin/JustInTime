@@ -1,5 +1,6 @@
 package it.unipd.dei.esp2022.app_embedded.helpers
 
+import android.content.res.Configuration
 import android.view.*
 import android.widget.Button
 import android.widget.PopupWindow
@@ -19,8 +20,10 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
         popupView.findViewById<TextView>(R.id.train_number).text = trainInfo.trainID
         popupView.findViewById<TextView>(R.id.train_route).text = getString(R.string.train_route, trainInfo.stops.first().stationName, trainInfo.stops.last().stationName)
 
+        val percent = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 0.95 else 0.6
+
         val width = ((view as View).width*0.85).toInt()
-        val height = ((view as View).height*0.6).toInt()
+        val height = ((view as View).height*percent).toInt()
         popupWindow = PopupWindow(popupView, width, height,true)
 
         popupWindow?.animationStyle = androidx.appcompat.R.style.Animation_AppCompat_DropDownUp
@@ -40,7 +43,7 @@ abstract class PopUpRecyclerFragment: PopUpFragment() {
         if (height == 0 || width == 0) {
             popupContainerView.post {
                 val updatedWidth = ((view as View).width*0.85).toInt()
-                val updatedHeight = ((view as View).height*0.6).toInt()
+                val updatedHeight = ((view as View).height*percent).toInt()
                 popupWindow?.update(0,0, updatedWidth, updatedHeight)
                 popupWindow?.showAtLocation(popupContainerView, Gravity.CENTER, 0, 0)
                 popupWindow?.dimBehind()
